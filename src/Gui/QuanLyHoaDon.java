@@ -134,7 +134,7 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                 btn3ActionPerformed(evt);
             }
         });
-        add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 10, 210, 40));
+        add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, 210, 40));
 
         btn8.setBackground(new java.awt.Color(153, 255, 204));
         btn8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -147,7 +147,7 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                 btn8ActionPerformed(evt);
             }
         });
-        add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 60, 210, 40));
+        add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 100, 210, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("THÔNG TIN TÌM KIẾM"));

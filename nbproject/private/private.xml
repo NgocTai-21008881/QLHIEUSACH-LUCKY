@@ -3,16 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/thanhToan.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/QuanLySanPham.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/Tab_VPP.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/Tab_Sach.java</file>
+            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/Login.java</file>
             <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/TrangChu_QL.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/QuanLyKhachHang.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/QuanLyBanHang.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/QuanLyNhanVien.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/QuanLyHoaDon.java</file>
-            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/trangNen.java</file>
+            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/connectDB/ConnectDB.java</file>
+            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Dao/LoginDao.java</file>
+            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/entyti/taiKhoan.java</file>
+            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/ThanhToan.java</file>
+            <file>file:/F:/QUANLYHIEUSACH/QLHIEUSACH/src/Gui/QuenMatKhau.java</file>
         </group>
     </open-files>
 </project-private>

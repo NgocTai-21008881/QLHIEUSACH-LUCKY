@@ -4,17 +4,32 @@
  */
 package Gui;
 
+import connectDB.ConnectDB;
+import java.sql.SQLException;
+import Dao.LoginDao;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LENOVO
  */
 public class Login extends javax.swing.JFrame {
-
     /**
      * Creates new form Login
      */
+    private ConnectDB connectDB;
+    private LoginDao LoginDao;
+
     public Login() {
         initComponents();
+        LoginDao = new LoginDao();
+        connectDB = new ConnectDB();
+        try {
+            connectDB.connect();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -83,21 +98,16 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 102, 51));
         jLabel3.setText("Login");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Email");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Mật khẩu");
 
         jButton1.setBackground(new java.awt.Color(0, 102, 51));
@@ -112,6 +122,11 @@ public class Login extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 51));
         jLabel6.setText("Quên mật khẩu ?");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,11 +183,42 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        TrangChu_QL tc_ql = new TrangChu_QL();
-        tc_ql.setVisible(true);
-        tc_ql.setLocationRelativeTo(null);
-        dispose();
+
+        if (jTextField1.getText().isEmpty() || jPasswordField1.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Hãy nhập đầy đủ thông tin!!!", "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (LoginDao.checkLogin(jTextField1.getText(),
+                    String.valueOf(jPasswordField1.getPassword())) == true) {
+                if (jTextField1.getText().contains("NV001")) {
+                    JOptionPane.showMessageDialog(null, "Bạn Login thành công!");
+                    TrangChu_QL tc_ql = new TrangChu_QL();
+                    tc_ql.setVisible(true);
+                    tc_ql.setLocationRelativeTo(null);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Bạn Login thành công!");
+                    TrangChu_NV TrangChu_NV = new TrangChu_NV();
+                    TrangChu_NV.setVisible(true);
+                    TrangChu_NV.setLocationRelativeTo(null);
+                    dispose();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu sai!", "Cảnh báo",
+                        JOptionPane.ERROR_MESSAGE);
+                jTextField1.setText("NV001");
+                jPasswordField1.setText("admin");
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        QuenMatKhau qmk = new QuenMatKhau();
+        qmk.setVisible(true);
+        qmk.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments

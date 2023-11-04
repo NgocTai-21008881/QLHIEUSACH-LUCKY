@@ -168,7 +168,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
         });
         jPanel1.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 110, 120, 40));
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1260, 170));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1300, 170));
 
         jTable_Sach.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -183,7 +183,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable_Sach);
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 1260, 320));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 1300, 440));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

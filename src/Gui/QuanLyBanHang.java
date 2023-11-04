@@ -366,7 +366,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
-        thanhToan th = new thanhToan();
+        ThanhToan th = new ThanhToan();
         th.setLocationRelativeTo(null);
         th.setVisible(true);
     }//GEN-LAST:event_btn1ActionPerformed

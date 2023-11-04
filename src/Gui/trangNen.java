@@ -8,12 +8,12 @@ package Gui;
  *
  * @author LENOVO
  */
-public class trangNen extends javax.swing.JPanel {
+public class TrangNen extends javax.swing.JPanel {
 
     /**
      * Creates new form TrangChu
      */
-    public trangNen() {
+    public TrangNen() {
         initComponents();
     }
 
