@@ -12,6 +12,10 @@ public class HoaDon {
 	private NhanVien nhanVien;
 	private KhachHang khachHang;
 
+	public HoaDon() {
+		super();
+	}
+	
 	public HoaDon(HoaDon hd) {
 		this.ngayLapHD = hd.ngayLapHD;
 		this.nhanVien = hd.nhanVien;
