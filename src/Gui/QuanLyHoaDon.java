@@ -349,11 +349,11 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                     excelCell.setCellValue(Columns[j]);
                 }
                 //Vòng lặp qua cột và hàng của bảng jtable_DanhSachHoaDon để lấy giá trị
-                for (int i = 1; i < jTable_DanhSachHoaDon.getRowCount(); i++) {
+                for (int i = 1; i <= jTable_DanhSachHoaDon.getRowCount(); i++) {
                     excelRow = excelSheet.createRow(i);
                     for (int j = 0; j < jTable_DanhSachHoaDon.getColumnCount(); j++) {
                         excelCell = excelRow.createCell(j);
-                        excelCell.setCellValue(jTable_DanhSachHoaDon.getValueAt(i, j).toString());
+                        excelCell.setCellValue(jTable_DanhSachHoaDon.getValueAt(i - 1, j).toString());
                     }
                 }
                 FileOutputStream excelFos = new FileOutputStream(excelFileChooser.getSelectedFile() + ".xlsx");
