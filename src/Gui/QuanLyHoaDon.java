@@ -315,7 +315,7 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
             if((hoaDon.getNgayLapHD().before(ngayKetThuc) && hoaDon.getNgayLapHD().after(ngayBatDau)) || hoaDon.getNgayLapHD().equals(ngayBatDau) || hoaDon.getNgayLapHD().equals(ngayKetThuc)) {
 
             Object[] rowdata={hoaDon.getMaHD(),hoaDon.getNgayLapHD(), hoaDon.getNhanVien().getTenNhanVien(), 
-                hoaDon.getKhachHang().getTenKhachHang()};
+                hoaDon.getKhachHang().getTenKhachHang(), hoaDon.tongTien()};
             dtml.addRow(rowdata);
 
             }
