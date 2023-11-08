@@ -39,19 +39,19 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField3 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         btn1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         btn3 = new javax.swing.JButton();
         btn8 = new javax.swing.JButton();
         btn4 = new javax.swing.JButton();
         jTextField5 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        btn2 = new javax.swing.JButton();
         jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jTextField9 = new javax.swing.JTextField();
+        btn9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Sach = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -66,23 +66,23 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("MÃ SẢN PHẨM:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 120, 40));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 130, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("NGÀY NHẬP:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 140, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("SỐ LƯỢNG:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, 100, 40));
+        jLabel5.setText("ĐƠN GIÁ:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 150, 40));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("TÊN PHIẾU NHẬP:");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 140, 40));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("ĐƠN GIÁ:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 100, 40));
+        jLabel7.setText("SỐ LƯỢNG:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 110, 40));
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -90,16 +90,9 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 jTextField2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 410, 40));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, 290, 40));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 290, 40));
+        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 410, 40));
+        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 260, 40));
+        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 300, 40));
 
         btn1.setBackground(new java.awt.Color(255, 153, 0));
         btn1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -111,17 +104,16 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 btn1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 160, 160, 40));
+        jPanel1.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 160, 140, 40));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 153, 0));
         jLabel10.setText("Tìm kiếm:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 70, 40));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, 90, 40));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("MÃ PHIẾU NHẬP:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 40));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 260, 40));
 
         btn3.setBackground(new java.awt.Color(255, 102, 102));
         btn3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -134,7 +126,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 btn3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 90, 170, 50));
+        jPanel1.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 60, 140, 40));
 
         btn8.setBackground(new java.awt.Color(153, 255, 204));
         btn8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -147,7 +139,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 btn8ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 30, 160, 50));
+        jPanel1.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 110, 140, 40));
 
         btn4.setBackground(new java.awt.Color(102, 255, 102));
         btn4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -160,23 +152,44 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 btn4ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 90, 160, 50));
+        jPanel1.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 10, 140, 40));
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 260, 40));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 260, 40));
 
-        btn2.setBackground(new java.awt.Color(102, 255, 102));
-        btn2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn2.setForeground(new java.awt.Color(255, 255, 255));
-        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_ms_excel_30px.png"))); // NOI18N
-        btn2.setText("XUẤT EXCEL");
-        btn2.setBorder(null);
-        btn2.addActionListener(new java.awt.event.ActionListener() {
+        jTextField7.setEnabled(false);
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
+                jTextField7ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 30, 170, 50));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, 290, 40));
+        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, 300, 40));
+
+        jTextField8.setEnabled(false);
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 260, 40));
+
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, 300, 40));
+
+        btn9.setBackground(new java.awt.Color(153, 255, 204));
+        btn9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn9.setForeground(new java.awt.Color(255, 255, 255));
+        btn9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_maintenance_30px.png"))); // NOI18N
+        btn9.setText("XUẤT PHIẾU NHẬP");
+        btn9.setBorder(null);
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 70, 180, 40));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1300, 220));
 
@@ -190,7 +203,7 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "MÃ PHIẾU NHẬP", "TÊN PHIẾU NHẬP", "MÃ SẢN PHẨM", "ĐƠN GIÁ", "SỐ LƯỢNG", "NGÀY NHẬP"
+                "MÃ PHIẾU NHẬP", "TÊN PHIẾU NHẬP", "MÃ SẢN PHẨM", "NGÀY NHẬP", "SỐ LƯỢNG", "ĐƠN GIÁ"
             }
         ));
         jScrollPane1.setViewportView(jTable_Sach);
@@ -217,10 +230,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn8ActionPerformed
@@ -229,19 +238,30 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btn2ActionPerformed
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
+
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        // TODO add your handling code here:
+        // Chọn vị trí file
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
-    private javax.swing.JButton btn2;
     private javax.swing.JButton btn3;
     private javax.swing.JButton btn4;
     private javax.swing.JButton btn8;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton btn9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -254,9 +274,11 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Sach;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
