@@ -49,7 +49,6 @@ public class Tab_VPP extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jlabel_img = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
@@ -63,6 +62,8 @@ public class Tab_VPP extends javax.swing.JPanel {
         btn4 = new javax.swing.JButton();
         btn3 = new javax.swing.JButton();
         jTextField10 = new javax.swing.JTextField();
+        jComboBox6 = new javax.swing.JComboBox<>();
+        btn5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Sach = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
@@ -76,7 +77,7 @@ public class Tab_VPP extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("MÃ NHÀ CUNG CẤP:");
+        jLabel3.setText("NHÀ CUNG CẤP:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 140, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -149,9 +150,6 @@ public class Tab_VPP extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("MÃ SẢN PHẨM:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 40));
-
-        jTextField4.setEditable(false);
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 260, 40));
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 260, 40));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -182,7 +180,7 @@ public class Tab_VPP extends javax.swing.JPanel {
                 jComboBox5ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 260, 40));
+        jPanel1.add(jComboBox5, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 260, 40));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel14.setText("CHẤT LIỆU:");
@@ -199,12 +197,12 @@ public class Tab_VPP extends javax.swing.JPanel {
                 btn8ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 90, 120, 40));
+        jPanel1.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 60, 120, 40));
 
-        btn4.setBackground(new java.awt.Color(102, 255, 102));
+        btn4.setBackground(new java.awt.Color(255, 153, 0));
         btn4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn4.setForeground(new java.awt.Color(255, 255, 255));
-        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Refresh-icon.png"))); // NOI18N
+        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/reset.png"))); // NOI18N
         btn4.setText("LÀM MỚI");
         btn4.setBorder(null);
         btn4.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +210,7 @@ public class Tab_VPP extends javax.swing.JPanel {
                 btn4ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 140, 120, 40));
+        jPanel1.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 160, 120, 40));
 
         btn3.setBackground(new java.awt.Color(255, 102, 102));
         btn3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -225,10 +223,31 @@ public class Tab_VPP extends javax.swing.JPanel {
                 btn3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 40, 120, 40));
+        jPanel1.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 10, 120, 40));
 
         jTextField10.setEditable(false);
         jPanel1.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 260, 40));
+
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBox6, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 260, 40));
+
+        btn5.setBackground(new java.awt.Color(102, 255, 102));
+        btn5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn5.setForeground(new java.awt.Color(255, 255, 255));
+        btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Refresh-icon.png"))); // NOI18N
+        btn5.setText("LÀM MỚI");
+        btn5.setBorder(null);
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 110, 120, 40));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1260, 270));
 
@@ -322,16 +341,26 @@ public class Tab_VPP extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn3ActionPerformed
 
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox6ActionPerformed
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn2;
     private javax.swing.JButton btn3;
     private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
     private javax.swing.JButton btn8;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
+    private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -351,7 +380,6 @@ public class Tab_VPP extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
