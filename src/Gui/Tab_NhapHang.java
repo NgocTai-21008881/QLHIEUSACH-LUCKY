@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author LENOVO
@@ -313,20 +314,14 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 String maSP = dtmDSSP.getValueAt(row, 0).toString();
                 SanPham sp = sanPham_DAO.getSanPhamById(maSP);
 
-                NhaCungCap ncc = nhaCungCap_DAO.getNhaCungCap(sp.getNhaCungCap().getMaNCC());
-
-                Date date = new Date(123, 11, 12);
-                PhieuNhap pn = new PhieuNhap(jTextFieldMaPhieuNhap.getText(), date);
-
-                ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap(sp, pn, soLuong, donGiaMua);
-
-                listCTPN.add(ctpn);
                 DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
                 Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, donGiaMua, soLuong * donGiaMua};
                 dtmCTPN.addRow(rowData);
                 tongTien += soLuong * donGiaMua;
                 jTextFieldTongTien.setText(String.valueOf(tongTien));
-
+                jTextFieldDonGiaMua.setText("");
+                jTextFieldSoLuong.setText("");
+                jTable_DanhSachSanPham.clearSelection();
                 JOptionPane.showMessageDialog(null, "Thêm thành công");
             }
 
@@ -349,10 +344,11 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         String loaiSP = null;
         if (jComboBoxLoaiSP.getSelectedIndex() == 1) {
             loaiSP = "Sách";
-        } 
-        else if (jComboBoxLoaiSP.getSelectedIndex() == 2) {
+        } else if (jComboBoxLoaiSP.getSelectedIndex() == 2) {
             loaiSP = "VPP";
-        } else loaiSP = "";
+        } else {
+            loaiSP = "";
+        }
         dtm = (DefaultTableModel) jTable_DanhSachSanPham.getModel();
         ArrayList<SanPham> listSanPham = sanPham_DAO.getAllSanPham();
         for (SanPham sanPham : listSanPham) {
@@ -379,36 +375,36 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
         DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
-        ArrayList<PhieuNhap> listPN = phieuNhap_DAO.getAllPhieuNhap();
         Date date = new Date(123, 11, 11);
         PhieuNhap pn = new PhieuNhap(jTextFieldMaPhieuNhap.getText(), date);
-        int nhappn = phieuNhap_DAO.addPhieuNhap(pn);
-        if (nhappn != -1) {
-            for (ChiTietPhieuNhap ctpn : listCTPN) {
+        phieuNhap_DAO.addPhieuNhap(pn);
+        if (jTable_ChiTietPhieuNhap.getRowCount() > 0) {
+            for (int i = 0; i < jTable_ChiTietPhieuNhap.getRowCount(); i++) {
+                String maSP = dtmCTPN.getValueAt(i, 0).toString();
+                SanPham sp = sanPham_DAO.getSanPhamById(maSP);
+                int soLuong = Integer.parseInt(dtmCTPN.getValueAt(i, 3).toString());
+                double donGiaMua = Double.parseDouble(dtmCTPN.getValueAt(i, 4).toString());
+
+                ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap(sp, pn, soLuong, donGiaMua);
                 ctpn_DAO.addChiTietPhieuNhap(ctpn);
             }
             clearTableChiTietPhieuNhap();
             lamMoi();
-            jTextFieldDonGiaMua.setEnabled(false);
-            jTextFieldDonGiaMua.setEditable(false);
             PhieuNhap pnnew = new PhieuNhap();
             jTextFieldMaPhieuNhap.setText(pnnew.getMaPhieuNhap());
             JOptionPane.showMessageDialog(null, "Nhập hàng thành công");
-        }
-
+        } else
+            JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm");
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
         // TODO add your handling code here:
         int row = jTable_ChiTietPhieuNhap.getSelectedRow();
-        DefaultTableModel dtmDSSP = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
+        DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
         if (row == -1) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần nhập");
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần xoá");
         } else {
-            dtmDSSP.removeRow(row);
-            String id = dtmDSSP.getValueAt(row, 0).toString().trim();
-            ArrayList<ChiTietPhieuNhap> ctpn = ctpn_DAO.getCTPNById(id);
-            listCTPN.remove(ctpn);
+            dtmCTPN.removeRow(row);
         }
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
@@ -423,6 +419,8 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         jTextFieldSoLuong.setText("");
         jTextFieldMaSP.setText("");
         jTextFieldTenSP.setText("");
+        jTextFieldDonGiaMua.setEnabled(false);
+        jTextFieldDonGiaMua.setEditable(false);
         jComboBoxLoaiSP.setSelectedIndex(0);
         jTable_DanhSachSanPham.clearSelection();
     }
