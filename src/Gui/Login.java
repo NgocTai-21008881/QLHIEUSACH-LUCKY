@@ -6,7 +6,7 @@ package Gui;
 
 import connectDB.ConnectDB;
 import java.sql.SQLException;
-import Dao.LoginDao;
+import dao.LoginDao;
 import javax.swing.JOptionPane;
 
 /**
