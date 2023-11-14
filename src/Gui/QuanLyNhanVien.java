@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import connectDB.ConnectDB;
 import dao.HoaDonDAO;
 import dao.NhanVienDAO;
+import dao.TaiKhoanDAO;
 import entity.HoaDon;
 import entity.NhanVien;
 import entity.taiKhoan;
@@ -32,6 +33,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 	 private boolean isThemActive = false;
 	    private boolean isSuaActive = false;
 	 private NhanVienDAO NV_DAO = new NhanVienDAO();
+	 private TaiKhoanDAO TK_DAO = new TaiKhoanDAO();
 	
     /**
      * Creates new form Tab_Sach
@@ -107,8 +109,13 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         boolean gioiTinh = Combobox_GioiTinh.getSelectedItem() == "Nam" ? true : false;
         String chucVu = combobox_ChucVu.getSelectedItem().toString();
         NhanVien nhanVien = new NhanVien(maNhanVien, hoVaTen,sdt,gioitinh,chucVu,email);
-        if (NV_DAO.addNhanVien(nhanVien) != -1) {
-            loadtableNhanVien();;
+        taiKhoan tk = new taiKhoan(nhanVien.getMaNhanVien(), "1111", chucVu);
+        if (TK_DAO.addTaiKhoan(tk)!= -1) {
+            ConnectDB.getInstance().connect();
+            if (NV_DAO.addNhanVien(nhanVien) == -1) {
+                return;
+            }
+            loadtableNhanVien();
             clearInput();
             huyThaoTac();
             JOptionPane.showMessageDialog(null, "Thêm thành công");
@@ -147,7 +154,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             btn_Sua.setEnabled(false);
             jtextfield_Timkiem.setEnabled(false);
         } else if (isSuaActive) {
-        	jtextfield_MaNhanVien.setEnabled(false);
             btn_Sua.setText("Huỷ");
             btn_Them.setEnabled(false);
         }
@@ -205,7 +211,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         nhanVien.setMaNhanVien(jtextfield_MaNhanVien.getText());
         nhanVien.setGioiTinh(Combobox_GioiTinh.getSelectedItem().toString() == "Nam" ? true : false);
         nhanVien.setChucVu(combobox_ChucVu.getSelectedItem().toString());
-        if (NhanVienDAO.updateNhanVien(nhanVien) != -1) {
+        if (NV_DAO.updateNhanVien(nhanVien) != -1) {
             JOptionPane.showMessageDialog(null, "Cập nhật thành công");
             loadtableNhanVien();
             clearInput();
@@ -217,7 +223,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     }
     private void tbl_danhSachNhanVienMousePressed(java.awt.event.MouseEvent evt) {
         String id = (String) jtable_NhanVien.getValueAt(jtable_NhanVien.getSelectedRow(), 0);
-        NhanVien nhanVien = NhanVienDAO.getNhanVienByID(id);
+        NhanVien nhanVien = NV_DAO.getNhanVienByID(id);
         if (nhanVien == null) {
             System.out.println("Không tìm thấy nhân viên");
             return;

@@ -70,11 +70,17 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
             return false;
         }
       
-        /*if (!(email.length() > 0 && email.matches("[a-zA-Z0-9._%-]+(@){1}[a-zA-Z]+(.){1}[a-zA-Z]"))) {
+        if (!(email.length() > 0 && email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)$"))) {
             JOptionPane.showMessageDialog(this, "Email sai định dạng");
             txt_Email.requestFocus();
             return false;
-        }*/
+        }
+        if (!(sdt.length() > 0 && sdt.matches("^[0-9]{10,11}$"))) {
+            JOptionPane.showMessageDialog(txt_SDT,"Số điện thoại yêu cầu phải đủ 10 hoặc 11 số");
+            txt_SDT.requestFocus();
+            return false;
+        }
+        
         return true;
     }
     private void themNhaCC() throws SQLException {
@@ -105,7 +111,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
         else JOptionPane.showMessageDialog(null, "Thêm thất bại");
     }
     private void thongTinnhaCC(NhaCungCap nhaCC) {
-       txt_MaNCC.setText(nhaCC.auto_ID());
+       txt_MaNCC.setText(nhaCC.getMaNCC());
         txt_Email.setText(nhaCC.getEmail());
         txt_DiaChi.setText(nhaCC.getDiaChi());
         txt_SDT.setText(nhaCC.getSoDienThoai());
@@ -183,7 +189,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
        
     }
     private void isInputActive(boolean check) {
-       txt_MaNCC.setEnabled(check);
+       txt_MaNCC.setEnabled(!check);
        txt_Email.setEnabled(check);
         txt_DiaChi.setEnabled(check);
         txt_SDT.setEnabled(check);
@@ -485,7 +491,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
         String id = (String) jtable_NhaCungCap.getValueAt(jtable_NhaCungCap.getSelectedRow(), 0);
         NhaCungCap nhaCC = nhaCC_DAO.getNhaCungCap(id);
         if (nhaCC == null) {
-            System.out.println("Không tìm thấy nhân viên");
+            System.out.println("Không tìm thấy nhà cung cấp");
             return;
         }
         thongTinnhaCC(nhaCC);

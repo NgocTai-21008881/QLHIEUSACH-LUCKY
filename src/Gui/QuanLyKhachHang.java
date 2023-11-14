@@ -168,6 +168,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 			}
             }
         });
+      
         jPanel1.add(btn_Luu);
 
         btn_Sua.setBackground(new java.awt.Color(153, 255, 204));
@@ -196,7 +197,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         });
         jTable_KhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tbl_danhSachNhanVienMousePressed(evt);
+                tbl_danhSachKhachHangMousePressed(evt);
             }
         });
         jPanel1.add(btn_LamMoi);
@@ -450,7 +451,7 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 	
 	}
 
-	private void tbl_danhSachNhanVienMousePressed(java.awt.event.MouseEvent evt) {
+	private void tbl_danhSachKhachHangMousePressed(java.awt.event.MouseEvent evt) {
 	    String id = (String) jTable_KhachHang.getValueAt(jTable_KhachHang.getSelectedRow(), 0);
 	    KhachHang KH = KH_DAO.getKhachHangById(id);
 	    if (KH == null) {
