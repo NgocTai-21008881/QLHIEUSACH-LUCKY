@@ -5,79 +5,84 @@ import java.util.ArrayList;
 
 import dao.ChiTietHoaDonDAO;
 import dao.HoaDonDAO;
+import dao.PhieuNhapDAO;
 
 public class HoaDon {
-	private String maHD;
-	private Date ngayLapHD;
-	private NhanVien nhanVien;
-	private KhachHang khachHang;
 
-	public HoaDon() {
-		super();
-	}
-	
-	public HoaDon(HoaDon hd) {
-		this.ngayLapHD = hd.ngayLapHD;
-		this.nhanVien = hd.nhanVien;
-		this.khachHang = hd.khachHang;
-	}
+    private String maHD;
+    private Date ngayLapHD;
+    private NhanVien nhanVien;
+    private KhachHang khachHang;
 
-	public HoaDon(Date ngayLapHD, NhanVien nhanVien, KhachHang khachHang) {
-		super();
-		this.ngayLapHD = ngayLapHD;
-		this.nhanVien = nhanVien;
-		this.khachHang = khachHang;
-	}
+    private String auto_IDPHoaDon() {
+        //auto gen id hóa đơn dạng HDXXXXXX
+        HoaDonDAO phieuNhap_DAO = new HoaDonDAO();
+        String idPrefix = "HD";
+        int length = phieuNhap_DAO.getAllHoaDon().size();
+        String finalId = idPrefix + String.format("%05d", length + 1);
+        return finalId;
 
-	public HoaDon(String maHD, Date ngayLapHD, NhanVien nhanVien, KhachHang khachHang) {
-		super();
-		this.maHD = maHD;
-		this.ngayLapHD = ngayLapHD;
-		this.nhanVien = nhanVien;
-		this.khachHang = khachHang;
-	}
+    }
 
-	public String getMaHD() {
-		return maHD;
-	}
+    public HoaDon() {
+        this.maHD = auto_IDPHoaDon();
+    }
 
-	public void setMaHD(String maHD) {
-		this.maHD = maHD;
-	}
+    public HoaDon(HoaDon hd) {
+        this.ngayLapHD = hd.ngayLapHD;
+        this.nhanVien = hd.nhanVien;
+        this.khachHang = hd.khachHang;
+    }
 
-	public Date getNgayLapHD() {
-		return ngayLapHD;
-	}
+    public HoaDon(String maHD, Date ngayLapHD, NhanVien nhanVien, KhachHang khachHang) {
+        super();
+        this.maHD = maHD;
+        this.ngayLapHD = ngayLapHD;
+        this.nhanVien = nhanVien;
+        this.khachHang = khachHang;
+    }
 
-	public void setNgayLapHD(Date ngayLapHD) {
-		this.ngayLapHD = ngayLapHD;
-	}
+    public String getMaHD() {
+        return maHD;
+    }
 
-	public NhanVien getNhanVien() {
-		return nhanVien;
-	}
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
+    }
 
-	public void setNhanVien(NhanVien nhanVien) {
-		this.nhanVien = nhanVien;
-	}
+    public Date getNgayLapHD() {
+        return ngayLapHD;
+    }
 
-	public KhachHang getKhachHang() {
-		return khachHang;
-	}
+    public void setNgayLapHD(Date ngayLapHD) {
+        this.ngayLapHD = ngayLapHD;
+    }
 
-	public void setKhachHang(KhachHang khachHang) {
-		this.khachHang = khachHang;
-	}
-	
-	public double tongTien(){
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
+    }
+
+    public KhachHang getKhachHang() {
+        return khachHang;
+    }
+
+    public void setKhachHang(KhachHang khachHang) {
+        this.khachHang = khachHang;
+    }
+
+    public double tongTien() {
         double tongTien = 0;
         ChiTietHoaDonDAO cthd_DAO = new ChiTietHoaDonDAO();
-        ArrayList<ChiTietHoaDon>listChiTietHoaDon = cthd_DAO.getAllCTHDByHoaDon(this);
-        
-        for(ChiTietHoaDon cthd : listChiTietHoaDon){
+        ArrayList<ChiTietHoaDon> listChiTietHoaDon = cthd_DAO.getAllCTHDByHoaDon(this);
+
+        for (ChiTietHoaDon cthd : listChiTietHoaDon) {
             tongTien += cthd.thanhTien();
         }
-        
+
         return tongTien;
     }
 }
