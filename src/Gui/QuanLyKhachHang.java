@@ -376,7 +376,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 	}
 
 	private void isInputActive(boolean check) {
-	txt_TimKiem.setEnabled(!check);
 	  txt_SDT.setEnabled(check);
 	    txt_Email.setEnabled(check);
 	   txt_TenKH.setEnabled(check);
@@ -396,11 +395,9 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 	    	txt_MaKH.setText(KH.auto_ID());
 	        btn_Them.setText("Huỷ");
 	        btn_Sua.setEnabled(false);
-	       
 	    } else if (isSuaActive) {
 	        btn_Sua.setText("Huỷ");
 	        btn_Them.setEnabled(false);
-	        
 	    }
 	    btn_Luu.setEnabled(true);
 	    isInputActive(true);
@@ -516,8 +513,10 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
 	private void btn_luuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException  {
 	    if (isThemActive) {
 	        themKH();
+	        clearInput();
 	    } else if (isSuaActive) {
 	        capNhatKhachHang();
+	        clearInput();
 	    }
 	}
 }

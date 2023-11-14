@@ -129,7 +129,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     }
 
     private void clearInput() {
-   
         jtextfield_Email.setText("");
         jtextfield_SoDienThoai.setText("");
         jtextfield_TenNhanVien.setText("");
@@ -153,7 +152,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         	jtextfield_MaNhanVien.setText(nhanVien.auto_ID());
             btn_Them.setText("Huỷ");
             btn_Sua.setEnabled(false);
-            jtextfield_Timkiem.setEnabled(false);
         } else if (isSuaActive) {
             btn_Sua.setText("Huỷ");
             btn_Them.setEnabled(false);
@@ -265,8 +263,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btn_Sua.setEnabled(true);
         btn_Luu.setEnabled(false);
         jtextfield_MaNhanVien.setText("");
- 
-        isInputActive(false);
+        isInputActive(true);
         jtable_NhanVien.clearSelection();
  
     }

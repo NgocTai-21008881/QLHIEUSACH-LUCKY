@@ -205,12 +205,9 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
         	txt_MaNCC.setEnabled(false);
             btn_Them.setText("Huỷ");
             btn_Sua.setEnabled(false);
-            
-            txt_TimKiem.setEnabled(false);
         } else if (isSuaActive) {
             btn_Sua.setText("Huỷ");
             btn_Them.setEnabled(false);
-           
         }
         btn_Luu.setEnabled(true);
         isInputActive(true);
