@@ -1,5 +1,8 @@
 package entity;
 
+import dao.KhachHangDAO;
+import dao.NhanVienDAO;
+
 public class NhanVien {
 	private String maNhanVien;
 	private String tenNhanVien;
@@ -11,7 +14,13 @@ public class NhanVien {
 	public NhanVien() {
 		super();
 	}
-
+	public String auto_ID(){
+	       NhanVienDAO NV_DAO = new NhanVienDAO();
+	        String idPrefix = "NV";
+	        int length = NV_DAO.getAllNhanVien().size();
+	        String finalId = idPrefix + String.format("%03d", length + 1);
+	        return finalId;
+	    }
 	public NhanVien(String tenNhanVien, boolean gioiTinh, String chucVu, String soDienThoai, String email) {
 		super();
 		this.tenNhanVien = tenNhanVien;
@@ -20,7 +29,8 @@ public class NhanVien {
 		this.soDienThoai = soDienThoai;
 		this.email = email;
 	}
-
+	
+	
 	public NhanVien(String maNhanVien, String tenNhanVien, boolean gioiTinh, String chucVu, String soDienThoai,
 			String email) {
 		super();
@@ -31,7 +41,18 @@ public class NhanVien {
 		this.soDienThoai = soDienThoai;
 		this.email = email;
 	}
-
+	public NhanVien(String maNhanVien, String tenNhanVien,String soDienThoai, boolean gioiTinh, String chucVu,
+			String email) {
+		super();
+		this.maNhanVien = maNhanVien;
+		this.tenNhanVien = tenNhanVien;
+		this.gioiTinh = gioiTinh;
+		this.chucVu = chucVu;
+		this.soDienThoai = soDienThoai;
+		this.email = email;
+	}
+	
+	
 	public String getMaNhanVien() {
 		return maNhanVien;
 	}
