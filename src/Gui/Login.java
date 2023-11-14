@@ -6,6 +6,7 @@ package Gui;
 
 import connectDB.ConnectDB;
 import java.sql.SQLException;
+import dao.TaiKhoanDAO;
 import dao.LoginDao;
 import javax.swing.JOptionPane;
 
@@ -14,15 +15,18 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class Login extends javax.swing.JFrame {
+
     /**
      * Creates new form Login
      */
     private ConnectDB connectDB;
     private LoginDao LoginDao;
+    private TaiKhoanDAO TaiKhoanDAO;
 
     public Login() {
         initComponents();
         LoginDao = new LoginDao();
+        TaiKhoanDAO = new TaiKhoanDAO();
         connectDB = new ConnectDB();
         try {
             connectDB.connect();
@@ -188,23 +192,27 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Hãy nhập đầy đủ thông tin!!!", "Thông báo",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (LoginDao.checkLogin(jTextField1.getText(),
-                    String.valueOf(jPasswordField1.getPassword())) == true) {
-                if (jTextField1.getText().contains("NV001")) {
+            // If both username and password are provided
+            // Check if the login is successful using LoginDao.checkLogin method
+            if (LoginDao.checkLogin(jTextField1.getText(), String.valueOf(jPasswordField1.getPassword()))) {
+                // If login is successful, check the role of the user
+                if (TaiKhoanDAO.cvTaiKhoan(jTextField1.getText())==true) {
+                    // If the user is an admin, show the admin interface
                     JOptionPane.showMessageDialog(null, "Bạn Login thành công!");
                     TrangChu_QL tc_ql = new TrangChu_QL();
                     tc_ql.setVisible(true);
                     tc_ql.setLocationRelativeTo(null);
-                    dispose();
+                    dispose(); // Close the current login window
                 } else {
+                    // If the user is not an admin, show the regular user interface
                     JOptionPane.showMessageDialog(null, "Bạn Login thành công!");
                     TrangChu_NV TrangChu_NV = new TrangChu_NV();
                     TrangChu_NV.setVisible(true);
                     TrangChu_NV.setLocationRelativeTo(null);
-                    dispose();
+                    dispose(); // Close the current login window
                 }
-
             } else {
+                // If login fails, show an error message and reset the username and password fields
                 JOptionPane.showMessageDialog(null, "Tên đăng nhập hoặc mật khẩu sai!", "Cảnh báo",
                         JOptionPane.ERROR_MESSAGE);
                 jTextField1.setText("NV001");

@@ -29,6 +29,10 @@ public class NhanVien {
 		this.soDienThoai = soDienThoai;
 		this.email = email;
 	}
+
+    public NhanVien(String email) {
+        this.email = email;
+    }
 	
 	
 	public NhanVien(String maNhanVien, String tenNhanVien, boolean gioiTinh, String chucVu, String soDienThoai,

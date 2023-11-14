@@ -4,12 +4,29 @@
  */
 package Gui;
 
+import dao.TaiKhoanDAO;
+import dao.LoginDao;
+import connectDB.ConnectDB;
+import dao.NhanVienDAO;
+import entity.taiKhoan;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Random;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.util.Properties;
+import java.util.Random;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -24,8 +41,84 @@ public class QuenMatKhau extends javax.swing.JFrame {
     /**
      * Creates new form QuenMatKhau
      */
+    private static String ma;
+    private String enteredUsername;
+    private LoginDao LoginDao;
+    private NhanVienDAO nhanVienDAO;
+    private TaiKhoanDAO taiKhoanDao;
+    private ConnectDB connectDB;
+    private JTable table;
+    private DefaultTableModel tableModel;
+    
     public QuenMatKhau() {
         initComponents();
+        LoginDao = new LoginDao();
+        nhanVienDAO = new NhanVienDAO();
+        taiKhoanDao = new TaiKhoanDAO();
+        connectDB = new ConnectDB();
+        try {
+            connectDB.connect();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //table = new JTable();
+        //tableModel = (DefaultTableModel) jTable_mahc.getModel();
+        jButton2.setVisible(false);
+        jLabel3.setVisible(false);
+        jLabel4.setVisible(false);
+        mkmoi.setVisible(false);
+        xnmk.setVisible(false);
+    }
+    
+    public static String layMaNgauNhien() {
+        int length = 6;
+        String uppercasechars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+        String number = "0123456789";
+        String validChars = uppercasechars + lowercaseChars + number;
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(validChars.length());
+            sb.append(validChars.charAt(randomIndex));
+        }
+        return sb.toString();
+    }
+    
+    public static void giuiMa(String mailden) {
+        final String from = "nguyenngoctai201202@gmail.com";
+        final String password = "konzerfkavltbqpv";
+        final String mail = mailden;
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.stmp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            @Override
+            protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                return new javax.mail.PasswordAuthentication(from, password);
+            }
+        });
+        
+        MimeMessage msg = new MimeMessage(session);
+        try {
+            
+            msg.setFrom(from);
+            msg.addRecipients(Message.RecipientType.TO, InternetAddress.parse(mail, false));
+            ma = layMaNgauNhien();
+            String noidung = "Mã OTP của bạn là: " + ma;
+            msg.setText(noidung);
+            Transport transport = session.getTransport("smtp");
+            transport.connect("smtp.gmail.com", from, password);
+            transport.sendMessage(msg, msg.getAllRecipients());
+            transport.close();
+            System.err.println("thanh cong");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -40,14 +133,19 @@ public class QuenMatKhau extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txt_otp = new javax.swing.JTextField();
+        txt_gmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btn_layma = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        xnmk = new javax.swing.JTextField();
+        mkmoi = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 51));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Mã OTP:");
@@ -55,21 +153,55 @@ public class QuenMatKhau extends javax.swing.JFrame {
 
         jLabel2.setText("Nhập Email:");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, 30));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 280, 30));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 280, 30));
+
+        txt_otp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_otpActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_otp, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 280, 30));
+
+        txt_gmail.setText("tranminhtiengocong@gmail.com");
+        txt_gmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_gmailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txt_gmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 280, 30));
 
         jButton1.setBackground(new java.awt.Color(102, 255, 255));
         jButton1.setText("Xác nhận");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, -1, 30));
 
-        jButton2.setBackground(new java.awt.Color(153, 255, 153));
-        jButton2.setText("Gửi OTP");
+        btn_layma.setBackground(new java.awt.Color(153, 255, 153));
+        btn_layma.setText("Gửi OTP");
+        btn_layma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_laymaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_layma, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 80, 30));
+
+        jLabel3.setText("Mật khẩu mới:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 110, 30));
+
+        jLabel4.setText("Mật khẩu mới:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 110, 30));
+        jPanel1.add(xnmk, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 280, 30));
+        jPanel1.add(mkmoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 280, 30));
+
+        jButton2.setText("Lưu");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 80, 30));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, -1, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,99 +213,83 @@ public class QuenMatKhau extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    String recipient = "ngoctai21008881@gmail.com"; // Địa chỉ email người nhận
-    String subject = "Mã OTP để reset mật khẩu";
-    String otp = generateOTP(); // Gọi hàm để tạo mã OTP
-    String message = "Mã OTP của bạn là: " + otp;
-
-    sendEmail(recipient, subject, message);
-    }//GEN-LAST:event_jButton2ActionPerformed
-     private static void sendEmail(String recipient, String subject, String message) {
-        final String username = "ngoctai21008881@gmail.com"; // Thay bằng địa chỉ email của bạn
-        final String password = "Tai01695764631"; // Thay bằng mật khẩu email của bạn
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-
-        try {
-            Message emailMessage = new MimeMessage(session);
-            emailMessage.setFrom(new InternetAddress(username));
-            emailMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-            emailMessage.setSubject(subject);
-            emailMessage.setText(message);
-
-            Transport.send(emailMessage);
-
-            System.out.println("Email đã được gửi thành công!");
-        } catch (MessagingException ex) {
-            ex.printStackTrace();
+    private void btn_laymaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laymaActionPerformed
+        String gmail = txt_gmail.getText();
+        nhanVienDAO = new NhanVienDAO();
+        if (nhanVienDAO.dieuKienQuenMatkhau(gmail) == false) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đúng tài khoảng và gmail!!!", "Cảnh báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng kiểm tra gmail của bạn và nhập mã!!!");
+            giuiMa(gmail);
+            System.out.println("Thành công");
         }
-    }
+    }//GEN-LAST:event_btn_laymaActionPerformed
 
-    private static String generateOTP() {
-        // Tạo mã OTP ngẫu nhiên gồm 6 chữ số
-        int otpValue = 100000 + (int) (Math.random() * 900000);
-        return String.valueOf(otpValue);
-    }
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new QuenMatKhau().setVisible(true);
-//            }
-//        });
-//    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String otp = txt_otp.getText();
+        
+        if (!otp.equals(ma)) {
+            System.out.println("otp da nhap sai");
+            JOptionPane.showMessageDialog(null, "Mã OTP không đúng!!!", "Cảnh báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            System.out.println("otp nhap da dung");
+            JOptionPane.showMessageDialog(null, "Vui lòng thay đổi mật khẩu mới!!!", "Thông báo",
+                    JOptionPane.INFORMATION_MESSAGE);
+            //String taiKhoan = txt_taikhoan.getText();
+            jButton2.setVisible(true);
+            jLabel3.setVisible(true);
+            jLabel4.setVisible(true);
+            mkmoi.setVisible(true);
+            xnmk.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txt_gmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_gmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_gmailActionPerformed
+
+    private void txt_otpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_otpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_otpActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String matKhau = mkmoi.getText();
+        String matKhauNhapLai = xnmk.getText();
+        taiKhoan tk = taiKhoanDao.timTaiKhoanByEmail(txt_gmail.getText());
+        if (tk != null) {
+            if (matKhau.equals(matKhauNhapLai)) {
+                taiKhoanDao.doiMatKhauTaiKhoan(tk, matKhau);
+                JOptionPane.showMessageDialog(this, "Đặt mật khẩu thành công");
+            } else {
+                                JOptionPane.showMessageDialog(this, "Đặt mật không khẩu thành công");
+
+            }
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_layma;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField mkmoi;
+    private javax.swing.JTextField txt_gmail;
+    private javax.swing.JTextField txt_otp;
+    private javax.swing.JTextField xnmk;
     // End of variables declaration//GEN-END:variables
 }

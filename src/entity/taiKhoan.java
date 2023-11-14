@@ -19,9 +19,16 @@ public class taiKhoan {
         this.phanQuyen = phanQuyen;
     }
 
+    public taiKhoan(String tenDangNhap) {
+        this.tenDangNhap = tenDangNhap;
+    }
+
     public taiKhoan(String tenDangNhap, String matKhau) {
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;
+    }
+
+    public taiKhoan() {
     }
 
     public String getTenDangNhap() {

@@ -44,7 +44,29 @@ public class NhanVienDAO {
         }
     return listNhanVien;
     }
-    
+        public boolean dieuKienQuenMatkhau(String gmail) {
+        Connection con = ConnectDB.getInstance().getConnection();
+        PreparedStatement stmt = null;
+        String sql = "Select * from nhanvien where email = ?";
+        NhanVien NhanVien = null;
+
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, gmail);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                NhanVien = new NhanVien(
+                        rs.getString(1));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close(stmt);
+
+        }
+        return NhanVien != null && NhanVien.getEmail()!= null;
+    }
     public NhanVien getNhanVienByID(String id){
         ConnectDB.getInstance();
         Connection conn = ConnectDB.getConnection();
@@ -225,5 +247,15 @@ public class NhanVienDAO {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+    
+    public void close(PreparedStatement stmt) {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
