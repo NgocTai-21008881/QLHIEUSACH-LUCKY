@@ -205,7 +205,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         nhanVien.setMaNhanVien(jtextfield_MaNhanVien.getText());
         nhanVien.setGioiTinh(Combobox_GioiTinh.getSelectedItem().toString() == "Nam" ? true : false);
         nhanVien.setChucVu(combobox_ChucVu.getSelectedItem().toString());
-        if (NV_DAO.updateNhanVien(nhanVien) != -1) {
+        if (NhanVienDAO.updateNhanVien(nhanVien) != -1) {
             JOptionPane.showMessageDialog(null, "Cập nhật thành công");
             loadtableNhanVien();
             clearInput();
@@ -217,7 +217,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     }
     private void tbl_danhSachNhanVienMousePressed(java.awt.event.MouseEvent evt) {
         String id = (String) jtable_NhanVien.getValueAt(jtable_NhanVien.getSelectedRow(), 0);
-        NhanVien nhanVien = NV_DAO.getNhanVienByID(id);
+        NhanVien nhanVien = NhanVienDAO.getNhanVienByID(id);
         if (nhanVien == null) {
             System.out.println("Không tìm thấy nhân viên");
             return;
