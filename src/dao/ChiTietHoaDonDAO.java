@@ -73,4 +73,39 @@ public class ChiTietHoaDonDAO {
         }
         return null;
     }
+    
+    public int addChiTietHoaDon(ChiTietHoaDon cthd){
+        ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+
+        try {
+            String sql  ="Insert into ChiTietHoaDon values(?,?,?)";
+            PreparedStatement stmt = con.prepareCall(sql);
+            stmt.setString(1, cthd.getSanPham().getMaSP());
+            stmt.setString(2, cthd.getHoaDon().getMaHD());
+            stmt.setInt(3, cthd.getSoLuong());
+            
+            return stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ChiTietHoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public int capNhatSoLuong(SanPham sanPham){
+        ConnectDB.getInstance();
+        Connection conn = ConnectDB.getConnection();
+
+        try {
+            String sql  ="update SanPham set soLuongTK = ? where maSP = ?";
+            PreparedStatement stmt = conn.prepareCall(sql);
+            stmt.setInt(1, sanPham.getSoLuongTK());
+            stmt.setString(2, sanPham.getMaSP());
+            
+            return stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
 }

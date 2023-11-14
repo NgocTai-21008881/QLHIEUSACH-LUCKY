@@ -85,7 +85,7 @@ public class ChiTietPhieuNhapDAO {
         Connection con = ConnectDB.getConnection();
 
         try {
-            String sql  ="Insert into ChiTietPhieuNhap values(?,?,?,?)";
+            String sql  ="Insert into ChiTietPhieuNhap values (?,?,?,?)";
             PreparedStatement stmt = con.prepareCall(sql);
             stmt.setString(1, ctpn.getSanPham().getMaSP());
             stmt.setInt(2, ctpn.getSoLuong());
@@ -95,6 +95,23 @@ public class ChiTietPhieuNhapDAO {
             return stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ChiTietPhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public int capNhatSoLuong(SanPham sanPham){
+        ConnectDB.getInstance();
+        Connection conn = ConnectDB.getConnection();
+
+        try {
+            String sql  ="update SanPham set soLuongTK = ? where maSP = ?";
+            PreparedStatement stmt = conn.prepareCall(sql);
+            stmt.setInt(1, sanPham.getSoLuongTK());
+            stmt.setString(2, sanPham.getMaSP());
+            
+            return stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
