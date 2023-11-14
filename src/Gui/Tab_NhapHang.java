@@ -4,6 +4,16 @@
  */
 package Gui;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import dao.ChiTietPhieuNhapDAO;
 import dao.NhaCungCapDAO;
 import dao.PhieuNhapDAO;
@@ -12,8 +22,11 @@ import entity.ChiTietPhieuNhap;
 import entity.NhaCungCap;
 import entity.PhieuNhap;
 import entity.SanPham;
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -22,6 +35,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,7 +49,6 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     SanPhamDAO sanPham_DAO = new SanPhamDAO();
     NhaCungCapDAO nhaCungCap_DAO = new NhaCungCapDAO();
     DefaultTableModel dtm = null;
-    ArrayList<ChiTietPhieuNhap> listCTPN = new ArrayList<>();
     double tongTien = 0;
 
     /**
@@ -64,7 +77,6 @@ public class Tab_NhapHang extends javax.swing.JPanel {
             Object[] rowData = {sanPham.getMaSP(), sanPham.getTenSP(), sanPham.getLoaiSP(), sanPham.getSoLuongTK(), sanPham.getDonGiaBan(), sanPham.getNhaCungCap().getTenNCC()};
             dtm.addRow(rowData);
         }
-
     }
 
     //clear table sản phẩm
@@ -317,7 +329,11 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
                 Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, donGiaMua, soLuong * donGiaMua};
                 dtmCTPN.addRow(rowData);
-                tongTien += soLuong * donGiaMua;
+                double tien = 0;
+                for (int i = 0; i < dtmCTPN.getRowCount(); i++) {
+                    tien += Double.parseDouble(dtmCTPN.getValueAt(i, 5).toString());
+                }
+                tongTien = tien;
                 jTextFieldTongTien.setText(String.valueOf(tongTien));
                 jTextFieldDonGiaMua.setText("");
                 jTextFieldSoLuong.setText("");
@@ -375,26 +391,31 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
         DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
-        Date date = new Date(123, 11, 11);
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
         PhieuNhap pn = new PhieuNhap(jTextFieldMaPhieuNhap.getText(), date);
         phieuNhap_DAO.addPhieuNhap(pn);
-        if (jTable_ChiTietPhieuNhap.getRowCount() > 0) {
+        if (kiemTraHopLeNhapHang()) {
             for (int i = 0; i < jTable_ChiTietPhieuNhap.getRowCount(); i++) {
                 String maSP = dtmCTPN.getValueAt(i, 0).toString();
                 SanPham sp = sanPham_DAO.getSanPhamById(maSP);
                 int soLuong = Integer.parseInt(dtmCTPN.getValueAt(i, 3).toString());
                 double donGiaMua = Double.parseDouble(dtmCTPN.getValueAt(i, 4).toString());
-
+                sp.setSoLuongTK(soLuong + sp.getSoLuongTK());
                 ChiTietPhieuNhap ctpn = new ChiTietPhieuNhap(sp, pn, soLuong, donGiaMua);
                 ctpn_DAO.addChiTietPhieuNhap(ctpn);
+                sanPham_DAO.capNhatSoLuong(sp);
             }
+            ArrayList<ChiTietPhieuNhap> listCTPN = ctpn_DAO.getCTPNById(pn.getMaPhieuNhap());
+            xuatPhieuNhap(pn, listCTPN);
+            openPhieuNhap(pn.getMaPhieuNhap());
             clearTableChiTietPhieuNhap();
             lamMoi();
             PhieuNhap pnnew = new PhieuNhap();
             jTextFieldMaPhieuNhap.setText(pnnew.getMaPhieuNhap());
-            JOptionPane.showMessageDialog(null, "Nhập hàng thành công");
-        } else
-            JOptionPane.showMessageDialog(null, "Vui lòng thêm sản phẩm");
+            tongTien = 0;
+            jTextFieldTongTien.setText("");
+        } 
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
@@ -406,12 +427,19 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         } else {
             dtmCTPN.removeRow(row);
         }
+        double tien = 0;
+        for (int i = 0; i < jTable_ChiTietPhieuNhap.getRowCount(); i++) {
+            tien += Double.parseDouble(jTable_ChiTietPhieuNhap.getValueAt(i, 5).toString());
+        }
+        tongTien = tien;
+        jTextFieldTongTien.setText(String.valueOf(tongTien));
+
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
     private void btnXoaAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaAllActionPerformed
         // TODO add your handling code here:
-        listCTPN.removeAll(listCTPN);
         clearTableChiTietPhieuNhap();
+        jTextFieldTongTien.setText("");
     }//GEN-LAST:event_btnXoaAllActionPerformed
 
     private void lamMoi() {
@@ -465,6 +493,145 @@ public class Tab_NhapHang extends javax.swing.JPanel {
             return false;
         }
         return true;
+    }
+
+    private boolean kiemTraHopLeNhapHang() {
+        if (jTable_ChiTietPhieuNhap.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Chưa có thông tin sản phẩm nhập");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void xuatPhieuNhap(PhieuNhap pn, ArrayList<ChiTietPhieuNhap> listCTPN) {
+        try {
+            File file = new File("");
+            String path = file.getAbsolutePath();
+            String pathFull = path + "/src/PhieuNhap/" + pn.getMaPhieuNhap() + ".pdf";
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(pathFull));
+            document.open();
+
+            Font font = FontFactory.getFont("src/Font/vuArial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Paragraph paragraph = new Paragraph("Phiếu nhập hàng", font);
+            paragraph.setAlignment(Element.ALIGN_CENTER);
+            document.add(paragraph);
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+
+            // Bảng phiếu nhập
+            PdfPTable tablePhieuNhap = new PdfPTable(1);
+            tablePhieuNhap.setWidthPercentage(100);
+            tablePhieuNhap.setSpacingBefore(10f);
+            tablePhieuNhap.setSpacingAfter(10f);
+
+            float[] columnWidths = {1f};
+            tablePhieuNhap.setWidths(columnWidths);
+
+            PdfPCell cellMaHD = new PdfPCell(new Paragraph("Mã phiếu nhập : " + pn.getMaPhieuNhap(), font));
+            cellMaHD.setBorderColor(BaseColor.WHITE);
+            tablePhieuNhap.addCell(cellMaHD);
+
+            PdfPCell cellNgayLapHD = new PdfPCell(new Paragraph("Ngầy nhập : " + pn.getNgayNhap(), font));
+            cellNgayLapHD.setBorderColor(BaseColor.WHITE);
+            tablePhieuNhap.addCell(cellNgayLapHD);
+
+            PdfPCell cellTongTien = new PdfPCell(new Paragraph("Tồng tiền : " + String.valueOf(tongTien), font));
+            cellTongTien.setBorderColor(BaseColor.WHITE);
+            tablePhieuNhap.addCell(cellTongTien);
+
+            PdfPCell cellTitleCTPN = new PdfPCell(new Paragraph("Chi tiết phiếu nhập", font));
+            cellTitleCTPN.setBorderColor(BaseColor.WHITE);
+            tablePhieuNhap.addCell(cellTitleCTPN);
+
+            document.add(tablePhieuNhap);
+            // Bảng chi tiết phiếu nhập
+            PdfPTable tableCTHD = new PdfPTable(6);
+            tableCTHD.setWidthPercentage(100);
+            tableCTHD.setSpacingBefore(10f);
+            tableCTHD.setSpacingAfter(10f);
+            float[] columnWidths1 = {1f, 1f, 1f, 1f, 1f, 1f};
+            tableCTHD.setWidths(columnWidths1);
+
+            PdfPCell cellMaSP = new PdfPCell(new Paragraph("Mã sản phẩm", font));
+            cellMaSP.setBorderColor(BaseColor.WHITE);
+            tableCTHD.addCell(cellMaSP);
+
+            PdfPCell cellTenSP = new PdfPCell(new Paragraph("Tên sản phẩm", font));
+            cellTenSP.setBorderColor(BaseColor.WHITE);
+            tableCTHD.addCell(cellTenSP);
+
+            PdfPCell cellLoaiSP = new PdfPCell(new Paragraph("Loại sản phẩm", font));
+            cellLoaiSP.setBorderColor(BaseColor.WHITE);
+            tableCTHD.addCell(cellLoaiSP);
+
+            PdfPCell cellSoLuong = new PdfPCell(new Paragraph("Số lượng", font));
+            cellSoLuong.setBorderColor(BaseColor.WHITE);
+            tableCTHD.addCell(cellSoLuong);
+
+            PdfPCell cellDonGia = new PdfPCell(new Paragraph("Đơn giá", font));
+            cellDonGia.setBorderColor(BaseColor.WHITE);
+            tableCTHD.addCell(cellDonGia);
+
+            PdfPCell cellThanhTien = new PdfPCell(new Paragraph("Thành tiền", font));
+            cellThanhTien.setBorderColor(BaseColor.WHITE);
+            tableCTHD.addCell(cellThanhTien);
+            for (ChiTietPhieuNhap ctpn : listCTPN) {
+                PdfPCell cell1 = new PdfPCell(new Paragraph(ctpn.getSanPham().getMaSP(), font));
+                cell1.setBorderColor(BaseColor.WHITE);
+                cell1.setHorizontalAlignment(5);
+                cell1.setVerticalAlignment(5);
+                tableCTHD.addCell(cell1);
+
+                PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getTenSP()), font));
+                cell2.setBorderColor(BaseColor.WHITE);
+                cell2.setHorizontalAlignment(5);
+                cell2.setVerticalAlignment(5);
+                tableCTHD.addCell(cell2);
+
+                PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getLoaiSP()), font));
+                cell3.setBorderColor(BaseColor.WHITE);
+                cell3.setHorizontalAlignment(5);
+                cell3.setVerticalAlignment(5);
+                tableCTHD.addCell(cell3);
+
+                PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSoLuong()), font));
+                cell4.setBorderColor(BaseColor.WHITE);
+                cell4.setHorizontalAlignment(5);
+                cell4.setVerticalAlignment(5);
+                tableCTHD.addCell(cell4);
+
+                PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getDonGiaBan()), font));
+                cell5.setBorderColor(BaseColor.WHITE);
+                cell5.setHorizontalAlignment(5);
+                cell5.setVerticalAlignment(5);
+                tableCTHD.addCell(cell5);
+
+                PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(ctpn.thanhTien()), font));
+                cell6.setBorderColor(BaseColor.WHITE);
+                cell6.setHorizontalAlignment(5);
+                cell6.setVerticalAlignment(5);
+                tableCTHD.addCell(cell6);
+            }
+            document.add(tableCTHD);
+            JOptionPane.showMessageDialog(null, "Nhập hàng thành công");
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void openPhieuNhap(String maPhieuNhap) {
+        File file = new File("");
+        String path = file.getAbsolutePath();
+        File URL = new File(path + "/src/PhieuNhap/" + maPhieuNhap + ".pdf");
+        try {
+            Desktop.getDesktop().open(URL);
+        } catch (Exception e) {
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

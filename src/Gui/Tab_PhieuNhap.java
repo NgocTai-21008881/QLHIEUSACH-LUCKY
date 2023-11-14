@@ -7,7 +7,10 @@ package Gui;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -259,7 +262,7 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
         ArrayList<PhieuNhap> listPhieuNhap = phieuNhap_DAO.getPhieuNhapByDate(ngayBatDau, ngayKetThuc);
         DefaultTableModel dtml = (DefaultTableModel) jTable_DanhSachPhieuNhap.getModel();
         for (PhieuNhap phieuNhap : listPhieuNhap) {
-            Object[] rowdata = {phieuNhap.getMaPhieuNhap(), phieuNhap.getNgayNhap(),phieuNhap.tongTien()};
+            Object[] rowdata = {phieuNhap.getMaPhieuNhap(), phieuNhap.getNgayNhap(), phieuNhap.tongTien()};
             dtml.addRow(rowdata);
         }
     }//GEN-LAST:event_btnTimKiemActionPerformed
@@ -313,7 +316,7 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
                     PdfPCell cellTongTien = new PdfPCell(new Paragraph("Tồng tiền : " + dtm.getValueAt(row, 2)));
                     cellTongTien.setBorderColor(BaseColor.WHITE);
                     tablePhieuNhap.addCell(cellTongTien);
-                    
+
                     PdfPCell cellTitleCTPN = new PdfPCell(new Paragraph("Chi tiết phiếu nhập"));
                     cellTitleCTPN.setBorderColor(BaseColor.WHITE);
                     tablePhieuNhap.addCell(cellTitleCTPN);
@@ -353,14 +356,20 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
                     for (ChiTietPhieuNhap ctpn : listCTPN) {
                         PdfPCell cell1 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getMaSP())));
                         cell1.setBorderColor(BaseColor.WHITE);
+                        cell1.setHorizontalAlignment(5);
+                        cell1.setVerticalAlignment(5);
                         tableCTHD.addCell(cell1);
 
                         PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getTenSP())));
                         cell2.setBorderColor(BaseColor.WHITE);
+                        cell2.setHorizontalAlignment(5);
+                        cell2.setVerticalAlignment(5);
                         tableCTHD.addCell(cell2);
 
                         PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getLoaiSP())));
                         cell3.setBorderColor(BaseColor.WHITE);
+                        cell3.setHorizontalAlignment(5);
+                        cell3.setVerticalAlignment(5);
                         tableCTHD.addCell(cell3);
 
                         PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSoLuong())));
@@ -371,10 +380,14 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
 
                         PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getDonGiaBan())));
                         cell5.setBorderColor(BaseColor.WHITE);
+                        cell5.setHorizontalAlignment(5);
+                        cell5.setVerticalAlignment(5);
                         tableCTHD.addCell(cell5);
 
                         PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(ctpn.thanhTien())));
                         cell6.setBorderColor(BaseColor.WHITE);
+                        cell6.setHorizontalAlignment(5);
+                        cell6.setVerticalAlignment(5);
                         tableCTHD.addCell(cell6);
                     }
                     document.add(tableCTHD);
@@ -383,7 +396,7 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
                 }
 
                 // Bảng chi tiết hoá đơn
-            } 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

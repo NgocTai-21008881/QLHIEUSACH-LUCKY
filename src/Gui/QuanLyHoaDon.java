@@ -330,7 +330,7 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
         String to = formatter.format(jDateChooserTo.getDate());
         Date ngayBatDau = Date.valueOf(from);
         Date ngayKetThuc = Date.valueOf(to);
-        
+
         String key = jTextFieldTimKiem.getText().trim();
         hoaDon_DAO = new HoaDonDAO();
         ArrayList<HoaDon> listHoaDon = hoaDon_DAO.getHoaDonByDate(ngayBatDau, ngayKetThuc);
@@ -454,11 +454,11 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                     PdfPCell cellTenKH = new PdfPCell(new Paragraph("Tên khách hàng : " + dtm.getValueAt(row, 3)));
                     cellTenKH.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellTenKH);
-                    
+
                     PdfPCell cellTitleCTHD = new PdfPCell(new Paragraph("Chi tiết hoá đơn : "));
                     cellTitleCTHD.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellTitleCTHD);
-                    
+
                     PdfPCell cellR = new PdfPCell(new Paragraph(""));
                     cellR.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellR);
@@ -498,14 +498,20 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                     for (ChiTietHoaDon cthd : listCTHD) {
                         PdfPCell cell1 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getMaSP())));
                         cell1.setBorderColor(BaseColor.WHITE);
+                        cell1.setHorizontalAlignment(5);
+                        cell1.setVerticalAlignment(5);
                         tableCTHD.addCell(cell1);
 
                         PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getTenSP())));
                         cell2.setBorderColor(BaseColor.WHITE);
+                        cell2.setHorizontalAlignment(5);
+                        cell2.setVerticalAlignment(5);
                         tableCTHD.addCell(cell2);
 
                         PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getLoaiSP())));
                         cell3.setBorderColor(BaseColor.WHITE);
+                        cell3.setHorizontalAlignment(5);
+                        cell3.setVerticalAlignment(5);
                         tableCTHD.addCell(cell3);
 
                         PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSoLuong())));
@@ -516,10 +522,14 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
 
                         PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getDonGiaBan())));
                         cell5.setBorderColor(BaseColor.WHITE);
+                        cell5.setHorizontalAlignment(5);
+                        cell5.setVerticalAlignment(5);
                         tableCTHD.addCell(cell5);
 
                         PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(cthd.thanhTien())));
                         cell6.setBorderColor(BaseColor.WHITE);
+                        cell6.setHorizontalAlignment(5);
+                        cell6.setVerticalAlignment(5);
                         tableCTHD.addCell(cell6);
                     }
                     document.add(tableCTHD);
