@@ -4,24 +4,274 @@
  */
 package Gui;
 
+import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
+import connectDB.ConnectDB;
+import dao.HoaDonDAO;
+import dao.NhanVienDAO;
+import entity.HoaDon;
+import entity.NhanVien;
+import entity.taiKhoan;
 /**
  *
  * @author LENOVO
  */
 public class QuanLyNhanVien extends javax.swing.JPanel {
-
+	 private boolean isThemActive = false;
+	    private boolean isSuaActive = false;
+	 private NhanVienDAO NV_DAO = new NhanVienDAO();
+	
     /**
      * Creates new form Tab_Sach
+     * @throws SQLException 
      */
-    public QuanLyNhanVien() {
+    public QuanLyNhanVien()  {
         initComponents();
+        loadtableNhanVien();
+        
     }
+    // clear table
+    public void clearTableNhanVien() {
+         DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
+        dtm.setRowCount(0);
+    }
+    // load table
+    public void loadtableNhanVien()
+    {
+    	 clearTableNhanVien();
+         NhanVienDAO nvdao = new NhanVienDAO();
+       DefaultTableModel  dtm = (DefaultTableModel) jtable_NhanVien.getModel();
+         ArrayList<NhanVien> listNhanVien = NV_DAO.getAllNhanVien();
+         for (NhanVien nhanvien : listNhanVien) {
+        	 String gioitinh = new String();
+        	 if (nhanvien.isGioiTinh() == true )
+        		 gioitinh = "Nam";
+        	 else gioitinh = "Nữ";
+             
+             Object[] rowData = {nhanvien.getMaNhanVien(), nhanvien.getTenNhanVien(),nhanvien.getSoDienThoai(),gioitinh,nhanvien.getChucVu(),nhanvien.getEmail()};
+             dtm.addRow(rowData);
+    }}
+         // valid data
+    private boolean validateData() {
+        String sdt = jtextfield_SoDienThoai.getText().trim();
+        String email = jtextfield_Email.getText().trim();
+        String HovaTen = jtextfield_TenNhanVien.getText().trim();
+        String manv  = jtextfield_MaNhanVien.getText().trim();
+        
+        if (jtextfield_Email.getText().equals("") || jtextfield_MaNhanVien.getText().equals("") || jtextfield_SoDienThoai.getText().equals("")
+                || jtextfield_TenNhanVien.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
+            return false;
+        }
+        if (!(sdt.length() > 0 && sdt.matches("[0-9]{10}"))) {
+            JOptionPane.showMessageDialog(jtextfield_SoDienThoai,"Số điện thoại yêu cầu phải đủ 10 số");
+            jtextfield_SoDienThoai.requestFocus();
+            return false;
+        }
+        if (!(email.length() > 0 && email.matches("[a-zA-Z0-9._%-]+(@){1}[a-zA-Z]+(.){1}[a-zA-Z]{2,4}"))) {
+            JOptionPane.showMessageDialog(this, "Email sai định dạng");
+            jtextfield_Email.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    private void themNhanVien() throws SQLException {
+        if (!validateData()) {
+            return;
+        }
+        String maNhanVien = jtextfield_MaNhanVien.getText();
+        String hoVaTen = jtextfield_TenNhanVien.getText();
+        String email = jtextfield_Email.getText();
+        String sdt = jtextfield_SoDienThoai.getText();
+        boolean gioitinh = true;
+        if (NV_DAO.getNhanVienByGmail(email) != null) {
+            JOptionPane.showMessageDialog(null, "Email đã tồn tại trong hệ thống. Vui lòng sử dụng email khác");
+            return;
+        }
+        if (NV_DAO.getNhanVienBySdt(sdt) != null) {
+            JOptionPane.showMessageDialog(null, "Số điện thoại đã tồn tại trong hệ thống. Vui lòng sử dụng sdt khác");
+            return;
+        }
+        boolean gioiTinh = Combobox_GioiTinh.getSelectedItem() == "Nam" ? true : false;
+        String chucVu = combobox_ChucVu.getSelectedItem().toString();
+        NhanVien nhanVien = new NhanVien(maNhanVien, hoVaTen,sdt,gioitinh,chucVu,email);
+        if (NV_DAO.addNhanVien(nhanVien) != -1) {
+            loadtableNhanVien();;
+            clearInput();
+            huyThaoTac();
+            JOptionPane.showMessageDialog(null, "Thêm thành công");
+            return;
+        }
+        else JOptionPane.showMessageDialog(null, "Thêm thất bại");
+    }
+    public void clearTable() {
+        DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
+        dtm.setRowCount(0);
+    }
+
+    private void clearInput() {
+        jtextfield_Email.setText("");
+        jtextfield_SoDienThoai.setText("");
+        jtextfield_TenNhanVien.setText("");
+        combobox_ChucVu.setSelectedIndex(0);
+        Combobox_GioiTinh.setSelectedIndex(0);
+    }
+    private void isInputActive(boolean check) {
+       jtextfield_MaNhanVien.setEnabled(!check);
+        jtextfield_SoDienThoai.setEnabled(check);
+        jtextfield_Email.setEnabled(check);
+        jtextfield_TenNhanVien.setEnabled(check);
+        Combobox_GioiTinh.setEnabled(check);
+        combobox_ChucVu.setEnabled(check);
+    }
+    private void isThemNhanVienClicked(boolean check) {
+        isThemActive = check;
+        isSuaActive = !check;
+        if (isThemActive) 
+        {
+            NhanVien nhanVien = new NhanVien();
+        	jtextfield_MaNhanVien.setText(nhanVien.auto_ID());
+            btn_Them.setText("Huỷ");
+            btn_Sua.setEnabled(false);
+            jtextfield_Timkiem.setEnabled(false);
+        } else if (isSuaActive) {
+        	jtextfield_MaNhanVien.setEnabled(false);
+            btn_Sua.setText("Huỷ");
+            btn_Them.setEnabled(false);
+        }
+        btn_Luu.setEnabled(true);
+        isInputActive(true);
+    }
+    
+    private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {
+        if (btn_Them.getText().equals("THÊM")) {
+            isThemActive = true;
+            isThemNhanVienClicked(isThemActive);
+            clearInput();
+        } else if (btn_Them.getText().equals("Huỷ")) {
+            huyThaoTac();
+        }
+    }
+    private void btn_timNhanVienActionPerformed(java.awt.event.ActionEvent evt) {
+       TimKiem();
+        
+    }
+
+    private void btn_capNhatActionPerformed(java.awt.event.ActionEvent evt) {
+        if (jtable_NhanVien.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn dữ liệu để cập nhật");
+            return;
+        }
+
+        if (btn_Sua.getText().equals("SỬA")) {
+            isThemActive = false;
+            isThemNhanVienClicked(isThemActive);
+        } else if (btn_Sua.getText().equals("Huỷ")) {
+            huyThaoTac();
+        }
+    }
+    private void btn_luuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException  {
+        if (isThemActive) {
+            themNhanVien();
+        } else if (isSuaActive) {
+            capNhatNhanVien();
+        }
+    }
+    private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+        clearInput();
+    }
+    
+    private void capNhatNhanVien() {
+        if (!validateData()) {
+            return;
+        }
+        NhanVien nhanVien = NV_DAO.getNhanVienByID((String) jtable_NhanVien.getValueAt(jtable_NhanVien.getSelectedRow(), 0));
+        nhanVien.setEmail(jtextfield_Email.getText());
+        nhanVien.setTenNhanVien(jtextfield_TenNhanVien.getText());
+        nhanVien.setSoDienThoai(jtextfield_SoDienThoai.getText());
+        nhanVien.setMaNhanVien(jtextfield_MaNhanVien.getText());
+        nhanVien.setGioiTinh(Combobox_GioiTinh.getSelectedItem().toString() == "Nam" ? true : false);
+        nhanVien.setChucVu(combobox_ChucVu.getSelectedItem().toString());
+        if (NhanVienDAO.updateNhanVien(nhanVien) != -1) {
+            JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+            loadtableNhanVien();
+            clearInput();
+            huyThaoTac();
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+       
+    }
+    private void tbl_danhSachNhanVienMousePressed(java.awt.event.MouseEvent evt) {
+        String id = (String) jtable_NhanVien.getValueAt(jtable_NhanVien.getSelectedRow(), 0);
+        NhanVien nhanVien = NhanVienDAO.getNhanVienByID(id);
+        if (nhanVien == null) {
+            System.out.println("Không tìm thấy nhân viên");
+            return;
+        }
+        thongTinNhanVien(nhanVien);
+    }
+    public void TimKiem() {
+       jtable_NhanVien.clearSelection();
+        clearTable();
+        DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
+        String maNV = "";
+        if (jtextfield_Timkiem.getText().length() > 0) {
+            maNV = jtextfield_Timkiem.getText();
+        }
+        ArrayList<NhanVien> listNhanVien = NV_DAO.getAllNhanVien();
+        for (NhanVien nv : listNhanVien) {
+        	String gioitinh = new String();
+        	if (nv.isGioiTinh() == true)
+        	{
+        		gioitinh = "Nam";
+        	}
+        	else gioitinh = "Nữ";
+        	
+            if (nv.getMaNhanVien().toLowerCase().contains(maNV.toLowerCase())) {
+                Object[] rowData = {nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getSoDienThoai(), gioitinh, nv.getChucVu(), nv.getEmail()};
+                dtm.addRow(rowData);
+            }
+
+        }
+    }
+    private void huyThaoTac() {
+        clearInput();
+        isSuaActive = false;
+        isThemActive = false;
+        btn_Them.setText("THÊM");
+        btn_Sua.setText("SỬA");
+        btn_Them.setEnabled(true);
+        btn_Sua.setEnabled(true);
+        btn_Luu.setEnabled(false);
+        jtextfield_MaNhanVien.setText("");
+ 
+        isInputActive(false);
+        jtable_NhanVien.clearSelection();
+ 
+    }
+    private void thongTinNhanVien(NhanVien nhanVien) {
+       jtextfield_MaNhanVien.setText(nhanVien.getMaNhanVien());
+       jtextfield_TenNhanVien.setText(nhanVien.getTenNhanVien());
+       jtextfield_SoDienThoai.setText(nhanVien.getSoDienThoai());
+       Combobox_GioiTinh.setSelectedItem(nhanVien.isGioiTinh() == true ? "Nam" : "Nữ");
+        combobox_ChucVu.setSelectedItem(nhanVien.getChucVu());
+        jtextfield_Email.setText(nhanVien.getEmail());
+    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,24 +288,24 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        btn1 = new javax.swing.JButton();
+        jtextfield_Timkiem = new javax.swing.JTextField();
+        Combobox_GioiTinh = new javax.swing.JComboBox<>();
+        jtextfield_SoDienThoai = new javax.swing.JTextField();
+        jtextfield_Email = new javax.swing.JTextField();
+        btn_timKiem = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        Button_ChonAnh = new javax.swing.JButton();
         jlabel_img = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        btn3 = new javax.swing.JButton();
-        btn6 = new javax.swing.JButton();
-        btn8 = new javax.swing.JButton();
-        btn4 = new javax.swing.JButton();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField5 = new javax.swing.JTextField();
+        jtextfield_MaNhanVien = new javax.swing.JTextField();
+        btn_Them = new javax.swing.JButton();
+        btn_Luu = new javax.swing.JButton();
+        btn_Sua = new javax.swing.JButton();
+        btn_LamMoi = new javax.swing.JButton();
+        combobox_ChucVu = new javax.swing.JComboBox<>();
+        jtextfield_TenNhanVien = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_Sach = new javax.swing.JTable();
+        jtable_NhanVien = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -86,49 +336,49 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         jLabel7.setText("CHỨC VỤ:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 100, 40));
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jtextfield_Timkiem.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        jtextfield_Timkiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 230, 40));
+        jPanel1.add(jtextfield_Timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 230, 40));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        Combobox_GioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam","Nữ" }));
+        Combobox_GioiTinh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+               Combobox_GioiTinh.actionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 260, 40));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 230, 40));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 260, 40));
+        jPanel1.add(Combobox_GioiTinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 260, 40));
+        jPanel1.add(jtextfield_SoDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 230, 40));
+        jPanel1.add(jtextfield_Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 260, 40));
 
-        btn1.setBackground(new java.awt.Color(255, 153, 0));
-        btn1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btn1.setForeground(new java.awt.Color(255, 255, 255));
-        btn1.setText("TÌM KIẾM");
-        btn1.setBorder(null);
-        btn1.addActionListener(new java.awt.event.ActionListener() {
+        btn_timKiem.setBackground(new java.awt.Color(255, 153, 0));
+        btn_timKiem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_timKiem.setForeground(new java.awt.Color(255, 255, 255));
+        btn_timKiem.setText("TÌM KIẾM");
+        btn_timKiem.setBorder(null);
+        btn_timKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
+                btn_timNhanVienActionPerformed(evt);
             }
         });
-        jPanel1.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 110, 40));
+        jPanel1.add(btn_timKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 110, 40));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 153, 0));
         jLabel10.setText("Tìm kiếm:");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 70, 40));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/btnFile.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Button_ChonAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/btnFile.png"))); // NOI18N
+        Button_ChonAnh.setBorder(null);
+        Button_ChonAnh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+             btn_timNhanVienActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, 200, 40));
+        jPanel1.add(Button_ChonAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, 200, 40));
 
         jlabel_img.setBackground(new java.awt.Color(204, 255, 255));
         jlabel_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -138,74 +388,84 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("MÃ NHÂN VIÊN:");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 40));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 230, 40));
+        jPanel1.add(jtextfield_MaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 230, 40));
 
-        btn3.setBackground(new java.awt.Color(255, 102, 102));
-        btn3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn3.setForeground(new java.awt.Color(255, 255, 255));
-        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Add-icon.png"))); // NOI18N
-        btn3.setText("THÊM");
-        btn3.setBorder(null);
-        btn3.addActionListener(new java.awt.event.ActionListener() {
+        btn_Them.setBackground(new java.awt.Color(255, 102, 102));
+        btn_Them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_Them.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Them.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Add-icon.png"))); // NOI18N
+        btn_Them.setText("THÊM");
+        btn_Them.setBorder(null);
+        btn_Them.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3ActionPerformed(evt);
+              btn_themActionPerformed(evt);
             }
         });
-        jPanel1.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 10, 120, 40));
-
-        btn6.setBackground(new java.awt.Color(255, 51, 102));
-        btn6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn6.setForeground(new java.awt.Color(255, 255, 255));
-        btn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_delete_30px_1.png"))); // NOI18N
-        btn6.setText("XÓA");
-        btn6.setBorder(null);
-        btn6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn6ActionPerformed(evt);
+        jtable_NhanVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbl_danhSachNhanVienMousePressed(evt);
             }
         });
-        jPanel1.add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 60, 120, 40));
+        jPanel1.add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 10, 120, 40));
 
-        btn8.setBackground(new java.awt.Color(153, 255, 204));
-        btn8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn8.setForeground(new java.awt.Color(255, 255, 255));
-        btn8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_maintenance_30px.png"))); // NOI18N
-        btn8.setText("SỬA");
-        btn8.setBorder(null);
-        btn8.addActionListener(new java.awt.event.ActionListener() {
+        btn_Luu.setBackground(new java.awt.Color(255, 51, 102));
+        btn_Luu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_Luu.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Luu.setIcon(new ImageIcon(QuanLyNhanVien.class.getResource("/Img/icons8_downloads_30px.png"))); // NOI18N
+        btn_Luu.setText("LƯU");
+        btn_Luu.setBorder(null);
+        btn_Luu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn8ActionPerformed(evt);
+               try {
+				btn_luuActionPerformed(evt);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             }
         });
-        jPanel1.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 110, 120, 40));
+        jPanel1.add(btn_Luu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 60, 120, 40));
 
-        btn4.setBackground(new java.awt.Color(102, 255, 102));
-        btn4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btn4.setForeground(new java.awt.Color(255, 255, 255));
-        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Refresh-icon.png"))); // NOI18N
-        btn4.setText("LÀM MỚI");
-        btn4.setBorder(null);
-        btn4.addActionListener(new java.awt.event.ActionListener() {
+        btn_Sua.setBackground(new java.awt.Color(153, 255, 204));
+        btn_Sua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_Sua.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Sua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_maintenance_30px.png"))); // NOI18N
+        btn_Sua.setText("SỬA");
+        btn_Sua.setBorder(null);
+        btn_Sua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn4ActionPerformed(evt);
+              btn_capNhatActionPerformed(evt);
             }
         });
-        jPanel1.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 160, 120, 40));
+        jPanel1.add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 110, 120, 40));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        btn_LamMoi.setBackground(new java.awt.Color(102, 255, 102));
+        btn_LamMoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_LamMoi.setForeground(new java.awt.Color(255, 255, 255));
+        btn_LamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Refresh-icon.png"))); // NOI18N
+        btn_LamMoi.setText("LÀM MỚI");
+        btn_LamMoi.setBorder(null);
+        btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+               btn_LamMoiActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 160, 120, 40));
+
+        combobox_ChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên","Quản lý" }));
+        combobox_ChucVu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 260, 40));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 230, 40));
+        jPanel1.add(combobox_ChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 260, 40));
+        jPanel1.add(jtextfield_TenNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 230, 40));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1260, 220));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable_Sach.setModel(new javax.swing.table.DefaultTableModel(
+        jtable_NhanVien.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -216,7 +476,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                 "MÃ NHÂN VIÊN", "TÊN NHÂN VIÊN", "SỐ ĐIỆN THOẠI", "GIỚI TÍNH", "CHỨC VỤ", "EMAIL"
             }
         ));
-        jScrollPane1.setViewportView(jTable_Sach);
+        jScrollPane1.setViewportView(jtable_NhanVien);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 1260, 380));
 
@@ -280,14 +540,14 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn1;
-    private javax.swing.JButton btn3;
-    private javax.swing.JButton btn4;
-    private javax.swing.JButton btn6;
-    private javax.swing.JButton btn8;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JButton btn_timKiem;
+    private javax.swing.JButton btn_Them;
+    private javax.swing.JButton btn_LamMoi;
+    private javax.swing.JButton btn_Luu;
+    private javax.swing.JButton btn_Sua;
+    private javax.swing.JButton Button_ChonAnh;
+    private javax.swing.JComboBox<String> Combobox_GioiTinh;
+    private javax.swing.JComboBox<String> combobox_ChucVu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -298,12 +558,12 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_Sach;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTable jtable_NhanVien;
+    private javax.swing.JTextField jtextfield_Timkiem;
+    private javax.swing.JTextField jtextfield_SoDienThoai;
+    private javax.swing.JTextField jtextfield_MaNhanVien;
+    private javax.swing.JTextField jtextfield_TenNhanVien;
+    private javax.swing.JTextField jtextfield_Email;
     private javax.swing.JLabel jlabel_img;
     // End of variables declaration//GEN-END:variables
 }
