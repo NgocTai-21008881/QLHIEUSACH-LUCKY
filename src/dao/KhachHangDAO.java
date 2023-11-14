@@ -142,7 +142,7 @@ public class KhachHangDAO {
         ConnectDB.getInstance();
         Connection conn = ConnectDB.getConnection();    
         try {
-            String sql = "insert into khachHang(maKhachHang, hoVaTen, email, sdt, gioiTinh) values (?, ?, ?, ?, ?)";
+            String sql = "insert into KhachHang(maKhachHang, tenKhachHang, email, sodienthoai, gioiTinh) values (?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareCall(sql);
             stmt.setString(1, khachHang.getMaKhachHang());
             stmt.setString(2, khachHang.getTenKhachHang());

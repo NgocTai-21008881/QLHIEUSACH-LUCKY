@@ -109,11 +109,13 @@ public class NhaCungCapDAO {
         ConnectDB.getInstance();
         Connection conn = ConnectDB.getConnection();    
         try {
-            String sql = "insert into NhaCungCap(maNCC, tenNCC, diaChi) values (?, ?, ?)";
+            String sql = "insert into NhaCungCap(maNCC, tenNCC, diaChi,soDienThoai,email) values (?, ?, ?,?,?)";
             PreparedStatement stmt = conn.prepareCall(sql);
             stmt.setString(1, nhaCungCap.getMaNCC());
             stmt.setString(2, nhaCungCap.getTenNCC());
             stmt.setString(3, nhaCungCap.getDiaChi());
+            stmt.setString(4, nhaCungCap.getSoDienThoai());
+            stmt.setString(5, nhaCungCap.getEmail());
             return stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NhaCungCapDAO.class.getName()).log(Level.SEVERE, null, ex);
