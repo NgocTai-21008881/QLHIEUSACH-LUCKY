@@ -2,6 +2,8 @@ package dao;
 
 import connectDB.ConnectDB;
 import entity.NhaCungCap;
+import entity.NhanVien;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +30,9 @@ public class NhaCungCapDAO {
                 String maNhaCungCap = rs.getString(1);
                 String tenNhaCungCap =  rs.getString(2);
                 String diaChi = rs.getString(3);
-                NhaCungCap nhaCungCap = new NhaCungCap(maNhaCungCap, tenNhaCungCap, diaChi);
+                String SoDienThoai = rs.getString(4);
+                String email = rs.getString(5);
+                NhaCungCap nhaCungCap = new NhaCungCap(maNhaCungCap, tenNhaCungCap, diaChi,SoDienThoai,email);
                 listNhaCungCap.add(nhaCungCap);
             }
         } catch (SQLException ex) {
@@ -51,6 +55,8 @@ public class NhaCungCapDAO {
                 nhaCungCap.setMaNCC(rs.getString(1));
                 nhaCungCap.setTenNCC(rs.getString(2));
                 nhaCungCap.setDiaChi(rs.getString(3)); 
+                nhaCungCap.setSoDienThoai(rs.getString(4));
+                nhaCungCap.setEmail(rs.getString(5));
                 return nhaCungCap;
             }
         } catch (SQLException ex) {
@@ -84,14 +90,13 @@ public class NhaCungCapDAO {
     public int updateNhaCungCap(NhaCungCap nhaCungCap){
         ConnectDB.getInstance();
         Connection conn = ConnectDB.getConnection();
-        
         try {
-            String sql = "update NhaCungCap set tenNCC = ?,"
-                    + "                          diaChi = ?"
-                    + " where maNCC = ?";
+            String sql = "update NhaCungCap set tenNCC = ?,diaChi = ?,soDienThoai = ?,email = ? where maNCC = ?";
             PreparedStatement stmt = conn.prepareCall(sql);
             stmt.setString(1, nhaCungCap.getTenNCC());
             stmt.setString(2, nhaCungCap.getDiaChi());
+            stmt.setString(3, nhaCungCap.getSoDienThoai());
+            stmt.setString(4, nhaCungCap.getEmail());
             stmt.setString(5, nhaCungCap.getMaNCC());
             return stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -137,4 +142,50 @@ public class NhaCungCapDAO {
         }
         return null;
     }
+        public static NhaCungCap getNhaCungCapByGmail(String gmail){
+            ConnectDB.getInstance();
+            Connection conn = ConnectDB.getConnection();
+            try {
+               
+                String sql = "select * from NhaCungCap where email = ?";
+                PreparedStatement stmt = conn.prepareCall(sql);
+                stmt.setString(1, gmail);
+                ResultSet rs = stmt.executeQuery();
+                while(rs.next()){
+                    String maNCC = rs.getString(1);
+                    String tenNCC =rs.getString(2);
+                    String diachi = rs.getString(3);
+                    String sdt = rs.getString(4);
+                    String email = rs.getString(5);
+                  NhaCungCap nhaCC = new NhaCungCap(maNCC, tenNCC, diachi, sdt, email);
+                    return nhaCC;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return null;
+        }
+        public static NhaCungCap getNhaCungCapBySdt(String sdt) {
+    		ConnectDB.getInstance();
+    		Connection conn = ConnectDB.getConnection();
+
+    		try {
+    			String sql = "select * from NhaCungCap where soDienThoai = ?";
+    			PreparedStatement stmt = conn.prepareCall(sql);
+    			stmt.setString(1, sdt);
+    			ResultSet rs = stmt.executeQuery();
+    			while (rs.next()) {
+    				NhaCungCap nhaCC = new NhaCungCap();
+    				nhaCC.setMaNCC(rs.getString(1));
+    				nhaCC.setTenNCC(rs.getString(2));
+    				nhaCC.setDiaChi(rs.getString(3));
+    				nhaCC.setSoDienThoai(rs.getString(4));
+    				nhaCC.setEmail(rs.getString(5));
+    				return nhaCC;
+    			}
+    		} catch (SQLException ex) {
+    			Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+    		}
+    		return null;
+    	}
 }
