@@ -22,6 +22,7 @@ public class Login extends javax.swing.JFrame {
     private ConnectDB connectDB;
     private LoginDao LoginDao;
     private TaiKhoanDAO TaiKhoanDAO;
+    public static String tenTaiKhoan = null;
 
     public Login() {
         initComponents();
@@ -209,6 +210,7 @@ public class Login extends javax.swing.JFrame {
                     TrangChu_NV TrangChu_NV = new TrangChu_NV();
                     TrangChu_NV.setVisible(true);
                     TrangChu_NV.setLocationRelativeTo(null);
+                    tenTaiKhoan = jTextField1.getText().toString().toUpperCase();
                     dispose(); // Close the current login window
                 }
             } else {
