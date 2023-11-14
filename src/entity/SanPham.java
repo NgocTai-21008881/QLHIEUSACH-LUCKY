@@ -1,85 +1,93 @@
 package entity;
 
 public class SanPham {
-	private String maSP;
-	private String tenSP;
-	private NhaCungCap nhaCungCap;
-	private int soLuongTK;
-	private String loaiSP;
-	private double donGiaBan;
-	
-	
 
-	public SanPham() {
-		super();
-	}
+    private String maSP;
+    private String tenSP;
+    private NhaCungCap nhaCungCap;
+    private int soLuongTK;
+    private String loaiSP;
+    private double donGiaBan;
+    private String img;
 
-	public SanPham(String tenSP, NhaCungCap nhaCungCap, int soLuongTK, String loaiSP, double donGiaBan) {
-		super();
-		this.tenSP = tenSP;
-		this.nhaCungCap = nhaCungCap;
-		this.soLuongTK = soLuongTK;
-		this.loaiSP = loaiSP;
-		this.donGiaBan = donGiaBan;
-	}
-	
-	public SanPham(String maSP, String tenSP, NhaCungCap nhaCungCap, int soLuongTK, String loaiSP, double donGiaBan) {
-		super();
-		this.maSP = maSP;
-		this.tenSP = tenSP;
-		this.nhaCungCap = nhaCungCap;
-		this.soLuongTK = soLuongTK;
-		this.loaiSP = loaiSP;
-		this.donGiaBan = donGiaBan;
-	}
+    public SanPham() {
+        super();
+    }
 
-	public String getMaSP() {
-		return maSP;
-	}
+    public SanPham(String maSP, String tenSP, NhaCungCap nhaCungCap, int soLuongTK, String loaiSP, double donGiaBan) {
+        super();
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.nhaCungCap = nhaCungCap;
+        this.soLuongTK = soLuongTK;
+        this.loaiSP = loaiSP;
+        this.donGiaBan = donGiaBan;
+    }
 
-	public void setMaSP(String maSP) {
-		this.maSP = maSP;
-	}
+    public SanPham(String maSP, String tenSP, NhaCungCap nhaCungCap, int soLuongTK, String loaiSP, double donGiaBan, String img) {
+        super();
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.nhaCungCap = nhaCungCap;
+        this.soLuongTK = soLuongTK;
+        this.loaiSP = loaiSP;
+        this.donGiaBan = donGiaBan;
+        this.img = img;
+    }
 
-	public String getTenSP() {
-		return tenSP;
-	}
+    public String getMaSP() {
+        return maSP;
+    }
 
-	public void setTenSP(String tenSP) {
-		this.tenSP = tenSP;
-	}
+    public void setMaSP(String maSP) {
+        this.maSP = maSP;
+    }
 
-	public NhaCungCap getNhaCungCap() {
-		return nhaCungCap;
-	}
+    public String getTenSP() {
+        return tenSP;
+    }
 
-	public void setNhaCungCap(NhaCungCap nhaCungCap) {
-		this.nhaCungCap = nhaCungCap;
-	}
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
+    }
 
-	public int getSoLuongTK() {
-		return soLuongTK;
-	}
+    public NhaCungCap getNhaCungCap() {
+        return nhaCungCap;
+    }
 
-	public void setSoLuongTK(int soLuongTK) {
-		this.soLuongTK = soLuongTK;
-	}
+    public void setNhaCungCap(NhaCungCap nhaCungCap) {
+        this.nhaCungCap = nhaCungCap;
+    }
 
-	public String getLoaiSP() {
-		return loaiSP;
-	}
+    public int getSoLuongTK() {
+        return soLuongTK;
+    }
 
-	public void setLoaiSP(String loaiSP) {
-		this.loaiSP = loaiSP;
-	}
+    public void setSoLuongTK(int soLuongTK) {
+        this.soLuongTK = soLuongTK;
+    }
 
-	public double getDonGiaBan() {
-		return donGiaBan;
-	}
+    public String getLoaiSP() {
+        return loaiSP;
+    }
 
-	public void setDonGiaBan(double donGiaBan) {
-		this.donGiaBan = donGiaBan;
-	}
-	
-	
+    public void setLoaiSP(String loaiSP) {
+        this.loaiSP = loaiSP;
+    }
+
+    public double getDonGiaBan() {
+        return donGiaBan;
+    }
+
+    public void setDonGiaBan(double donGiaBan) {
+        this.donGiaBan = donGiaBan;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 }
