@@ -57,33 +57,29 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel6.setBounds(10, 60, 140, 40);
         txt_TimKiem = new javax.swing.JTextField();
-        txt_TimKiem.setBounds(550, 111, 410, 40);
+        txt_TimKiem.setBounds(550, 87, 459, 40);
         txt_SDT = new javax.swing.JTextField();
         txt_SDT.setBounds(160, 110, 230, 40);
         txt_Email = new javax.swing.JTextField();
-        txt_Email.setBounds(721, 10, 239, 40);
+        txt_Email.setBounds(721, 10, 286, 40);
         btn_TimKiem = new javax.swing.JButton();
-        btn_TimKiem.setBounds(970, 110, 120, 40);
+        btn_TimKiem.setBounds(1044, 84, 120, 40);
         jLabel10 = new javax.swing.JLabel();
-        jLabel10.setBounds(440, 110, 70, 40);
+        jLabel10.setBounds(439, 86, 70, 40);
         jLabel9 = new javax.swing.JLabel();
         jLabel9.setBounds(10, 10, 140, 40);
         txt_MaKH = new javax.swing.JTextField();
         txt_MaKH.setBounds(160, 10, 230, 40);
         btn_Them = new javax.swing.JButton();
-        btn_Them.setBounds(1100, 10, 120, 40);
+        btn_Them.setBounds(687, 156, 120, 40);
         btn_Luu = new javax.swing.JButton();
-        btn_Luu.setBounds(970, 10, 120, 40);
+        btn_Luu.setBounds(510, 156, 120, 40);
         btn_Sua = new javax.swing.JButton();
-        btn_Sua.setBounds(970, 60, 120, 40);
+        btn_Sua.setBounds(865, 156, 120, 40);
         btn_LamMoi = new javax.swing.JButton();
-        btn_LamMoi.setBounds(1100, 60, 120, 40);
+        btn_LamMoi.setBounds(1044, 156, 120, 40);
         txt_TenKH = new javax.swing.JTextField();
         txt_TenKH.setBounds(160, 60, 230, 40);
-        txt_DiaChi = new javax.swing.JTextField();
-        txt_DiaChi.setBounds(550, 60, 410, 40);
-        jLabel11 = new javax.swing.JLabel();
-        jLabel11.setBounds(440, 60, 70, 40);
         jLabel3 = new javax.swing.JLabel();
         jLabel3.setBounds(440, 10, 80, 40);
         combobox_giotinh = new javax.swing.JComboBox<>();
@@ -192,7 +188,8 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         btn_LamMoi.setBorder(null);
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn4ActionPerformed(evt);
+            	
+               btn_LamMoiActionPerformed(evt);
             }
         });
         jTable_KhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -202,11 +199,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
         });
         jPanel1.add(btn_LamMoi);
         jPanel1.add(txt_TenKH);
-        jPanel1.add(txt_DiaChi);
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setText("ĐỊA CHỈ:");
-        jPanel1.add(jLabel11);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("GIỚI TÍNH:");
@@ -279,7 +271,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> combobox_giotinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -293,7 +284,6 @@ public class QuanLyKhachHang extends javax.swing.JPanel {
     private javax.swing.JTextField txt_MaKH;
     private javax.swing.JTextField txt_TenKH;
     private javax.swing.JTextField txt_Email;
-    private javax.swing.JTextField txt_DiaChi;
     // End of variables declaration//GEN-END:variables
 	public void clearTableKhachHang() {
 	         DefaultTableModel dtm = (DefaultTableModel) jTable_KhachHang.getModel();

@@ -129,6 +129,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     }
 
     private void clearInput() {
+   
         jtextfield_Email.setText("");
         jtextfield_SoDienThoai.setText("");
         jtextfield_TenNhanVien.setText("");
@@ -290,26 +291,43 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel3.setBounds(539, 10, 80, 40);
         jLabel4 = new javax.swing.JLabel();
+        jLabel4.setBounds(10, 110, 140, 40);
         jLabel5 = new javax.swing.JLabel();
+        jLabel5.setBounds(539, 110, 140, 40);
         jLabel6 = new javax.swing.JLabel();
+        jLabel6.setBounds(10, 60, 140, 40);
         jLabel7 = new javax.swing.JLabel();
+        jLabel7.setBounds(539, 59, 100, 40);
         jtextfield_Timkiem = new javax.swing.JTextField();
+        jtextfield_Timkiem.setBounds(160, 160, 305, 40);
         Combobox_GioiTinh = new javax.swing.JComboBox<>();
+        Combobox_GioiTinh.setBounds(648, 12, 346, 40);
         jtextfield_SoDienThoai = new javax.swing.JTextField();
+        jtextfield_SoDienThoai.setBounds(160, 110, 230, 40);
         jtextfield_Email = new javax.swing.JTextField();
+        jtextfield_Email.setBounds(648, 112, 346, 40);
         btn_timKiem = new javax.swing.JButton();
+        btn_timKiem.setBounds(485, 161, 122, 40);
         jLabel10 = new javax.swing.JLabel();
-        Button_ChonAnh = new javax.swing.JButton();
-        jlabel_img = new javax.swing.JLabel();
+        jLabel10.setBounds(80, 160, 70, 40);
         jLabel9 = new javax.swing.JLabel();
+        jLabel9.setBounds(10, 10, 140, 40);
         jtextfield_MaNhanVien = new javax.swing.JTextField();
+        jtextfield_MaNhanVien.setBounds(160, 10, 230, 40);
         btn_Them = new javax.swing.JButton();
+        btn_Them.setBounds(1046, 10, 147, 40);
         btn_Luu = new javax.swing.JButton();
+        btn_Luu.setBounds(1046, 60, 147, 40);
         btn_Sua = new javax.swing.JButton();
+        btn_Sua.setBounds(1046, 110, 147, 40);
         btn_LamMoi = new javax.swing.JButton();
+        btn_LamMoi.setBounds(635, 163, 115, 40);
         combobox_ChucVu = new javax.swing.JComboBox<>();
+        combobox_ChucVu.setBounds(649, 60, 345, 40);
         jtextfield_TenNhanVien = new javax.swing.JTextField();
+        jtextfield_TenNhanVien.setBounds(160, 60, 230, 40);
         jScrollPane1 = new javax.swing.JScrollPane();
         jtable_NhanVien = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -320,27 +338,27 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setLayout(null);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("GIỚI TÍNH:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 80, 40));
+        jPanel1.add(jLabel3);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("SỐ ĐIỆN THOẠI:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 140, 40));
+        jPanel1.add(jLabel4);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("EMAIL:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 110, 140, 40));
+        jPanel1.add(jLabel5);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("TÊN NHÂN VIÊN:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 140, 40));
+        jPanel1.add(jLabel6);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("CHỨC VỤ:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 100, 40));
+        jPanel1.add(jLabel7);
 
         jtextfield_Timkiem.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jtextfield_Timkiem.addActionListener(new java.awt.event.ActionListener() {
@@ -348,7 +366,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                 jTextField2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jtextfield_Timkiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 230, 40));
+        jPanel1.add(jtextfield_Timkiem);
 
         Combobox_GioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam","Nữ" }));
         Combobox_GioiTinh.addActionListener(new java.awt.event.ActionListener() {
@@ -356,9 +374,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                Combobox_GioiTinh.actionPerformed(evt);
             }
         });
-        jPanel1.add(Combobox_GioiTinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 260, 40));
-        jPanel1.add(jtextfield_SoDienThoai, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 230, 40));
-        jPanel1.add(jtextfield_Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 260, 40));
+        jPanel1.add(Combobox_GioiTinh);
+        jPanel1.add(jtextfield_SoDienThoai);
+        jPanel1.add(jtextfield_Email);
 
         btn_timKiem.setBackground(new java.awt.Color(255, 153, 0));
         btn_timKiem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -370,31 +388,17 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                 btn_timNhanVienActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_timKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 110, 40));
+        jPanel1.add(btn_timKiem);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 153, 0));
         jLabel10.setText("Tìm kiếm:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 70, 40));
-
-        Button_ChonAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/btnFile.png"))); // NOI18N
-        Button_ChonAnh.setBorder(null);
-        Button_ChonAnh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-             btn_timNhanVienActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Button_ChonAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, 200, 40));
-
-        jlabel_img.setBackground(new java.awt.Color(204, 255, 255));
-        jlabel_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlabel_img.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 153, 0), null));
-        jPanel1.add(jlabel_img, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 240, 190));
+        jPanel1.add(jLabel10);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("MÃ NHÂN VIÊN:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 40));
-        jPanel1.add(jtextfield_MaNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 230, 40));
+        jPanel1.add(jLabel9);
+        jPanel1.add(jtextfield_MaNhanVien);
 
         btn_Them.setBackground(new java.awt.Color(255, 102, 102));
         btn_Them.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -412,7 +416,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                 tbl_danhSachNhanVienMousePressed(evt);
             }
         });
-        jPanel1.add(btn_Them, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 10, 120, 40));
+        jPanel1.add(btn_Them);
 
         btn_Luu.setBackground(new java.awt.Color(255, 51, 102));
         btn_Luu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -430,7 +434,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
 			}
             }
         });
-        jPanel1.add(btn_Luu, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 60, 120, 40));
+        jPanel1.add(btn_Luu);
 
         btn_Sua.setBackground(new java.awt.Color(153, 255, 204));
         btn_Sua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -443,7 +447,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
               btn_capNhatActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Sua, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 110, 120, 40));
+        jPanel1.add(btn_Sua);
 
         btn_LamMoi.setBackground(new java.awt.Color(102, 255, 102));
         btn_LamMoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -453,10 +457,11 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btn_LamMoi.setBorder(null);
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+           
                btn_LamMoiActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_LamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 160, 120, 40));
+        jPanel1.add(btn_LamMoi);
 
         combobox_ChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên","Quản lý" }));
         combobox_ChucVu.addActionListener(new java.awt.event.ActionListener() {
@@ -464,8 +469,8 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
                 jComboBox3ActionPerformed(evt);
             }
         });
-        jPanel1.add(combobox_ChucVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 260, 40));
-        jPanel1.add(jtextfield_TenNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 230, 40));
+        jPanel1.add(combobox_ChucVu);
+        jPanel1.add(jtextfield_TenNhanVien);
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1260, 220));
 
@@ -514,24 +519,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int returnValue = fileChooser.showOpenDialog(this);
-        if(returnValue==JFileChooser.APPROVE_OPTION)
-        {
-            File file = fileChooser.getSelectedFile();
-            String pathFile = file.getAbsolutePath();
-            BufferedImage b;
-            try {
-                b = ImageIO.read(file);
-                jlabel_img.setIcon(new ImageIcon(b));
-            } catch (Exception e) {
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+   
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn8ActionPerformed
@@ -551,7 +539,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private javax.swing.JButton btn_LamMoi;
     private javax.swing.JButton btn_Luu;
     private javax.swing.JButton btn_Sua;
-    private javax.swing.JButton Button_ChonAnh;
     private javax.swing.JComboBox<String> Combobox_GioiTinh;
     private javax.swing.JComboBox<String> combobox_ChucVu;
     private javax.swing.JLabel jLabel1;
@@ -570,6 +557,5 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private javax.swing.JTextField jtextfield_MaNhanVien;
     private javax.swing.JTextField jtextfield_TenNhanVien;
     private javax.swing.JTextField jtextfield_Email;
-    private javax.swing.JLabel jlabel_img;
     // End of variables declaration//GEN-END:variables
 }

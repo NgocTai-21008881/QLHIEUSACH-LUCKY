@@ -375,6 +375,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
         btn_LamMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                try {
+            	  
 				btn_LamMoiActionPerformed(evt);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
