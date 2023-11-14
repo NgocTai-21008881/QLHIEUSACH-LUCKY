@@ -79,7 +79,7 @@ public class SachDao  {
 	                NhaXuatBan nhaXuatBan=nhaXuatBanDao.getNhaXuatBan(nhaXB);
 	                String tacGia=rs.getString(10);
 	                String hinhAnh =rs.getString(15);
-	                sach=new Sach(maSP, tenSP, nhaCungCap, soLuong, donGiaBan, nhaXB, nhaXuatBan, theLoai, tacGia);
+	                 sach = new Sach(maSP, tenSP, nhaCungCap, soLuong, donGiaBan, hinhAnh, nhaXuatBan, theLoai, tacGia);
 	            
 	               
 			}
