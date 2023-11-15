@@ -556,6 +556,7 @@ public class Tab_Sach extends javax.swing.JPanel implements ActionListener,Mouse
     	listsach = sach_dao.getAllSach();
     	for(Sach s : listsach) {
     		if(removeAccent(s.getTenSP()).equals(sach.getTenSP())) {
+    			JOptionPane.showMessageDialog(this,"TRÙNG SẢN PHẨM");
     			return s;
     		}
     	}

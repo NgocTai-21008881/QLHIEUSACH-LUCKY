@@ -175,8 +175,6 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         btnThanhToan = new javax.swing.JButton();
         jLabelSoLuong = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
-        jLabelTenSP = new javax.swing.JLabel();
-        jTextFieldTenSP = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_DSSPBan = new javax.swing.JTable();
         btnTimKiem = new javax.swing.JButton();
@@ -243,17 +241,17 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelNgayLap.setText("NGÀY LẬP:");
-        add(jLabelNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 90, 40));
+        add(jLabelNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 90, 40));
 
         jLabelMaHD.setText("MÃ HÓA ĐƠN:");
         add(jLabelMaHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 90, 40));
 
         jDateChooserNgayLap.setEnabled(false);
         jDateChooserNgayLap.setFocusable(false);
-        add(jDateChooserNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 170, 40));
+        add(jDateChooserNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 170, 40));
 
         jLabelMaNV.setText("MÃ NHÂN VIÊN:");
-        add(jLabelMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 90, 40));
+        add(jLabelMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 90, 40));
 
         jTextFieldMaNV.setEnabled(false);
         add(jTextFieldMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 170, 40));
@@ -285,7 +283,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 btnThemActionPerformed(evt);
             }
         });
-        add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 300, 100, 40));
+        add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 100, 40));
 
         btnXoaSP.setBackground(new java.awt.Color(255, 51, 102));
         btnXoaSP.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -311,7 +309,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 btnLamMoiActionPerformed(evt);
             }
         });
-        add(btnLamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 110, 40));
+        add(btnLamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, 110, 40));
         add(jTextFieldSoDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 170, 40));
 
         jTextFieldTenNV.setEnabled(false);
@@ -325,11 +323,11 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         add(jLabelTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 120, 40));
 
         jTextFieldMaHD.setEnabled(false);
-        add(jTextFieldMaHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 170, 40));
+        add(jTextFieldMaHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 170, 30));
 
         jLabelEmail.setText("EMAIL :");
         add(jLabelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, 90, 40));
-        add(jTextFieldSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, 170, 40));
+        add(jTextFieldSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 140, 40));
 
         jButtonVPP.setText("Văn phòng phẩm");
         jButtonVPP.addActionListener(new java.awt.event.ActionListener() {
@@ -376,7 +374,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jLabelTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelTimKiem.setForeground(new java.awt.Color(255, 153, 0));
         jLabelTimKiem.setText("Tìm kiếm:");
-        add(jLabelTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 70, 40));
+        add(jLabelTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, 70, 40));
 
         jTextFieldTimKiem.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         jTextFieldTimKiem.addActionListener(new java.awt.event.ActionListener() {
@@ -384,7 +382,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 jTextFieldTimKiemActionPerformed(evt);
             }
         });
-        add(jTextFieldTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 310, 170, 30));
+        add(jTextFieldTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 300, 250, 40));
 
         btnThanhToan.setBackground(new java.awt.Color(255, 153, 0));
         btnThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -399,16 +397,10 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         add(btnThanhToan, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 590, 190, 40));
 
         jLabelSoLuong.setText("SỐ LƯỢNG:");
-        add(jLabelSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 90, 40));
+        add(jLabelSoLuong, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 300, 90, 40));
 
         jTextFieldEmail.setEnabled(false);
         add(jTextFieldEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 170, 40));
-
-        jLabelTenSP.setText("TÊN SẢN PHẨM:");
-        add(jLabelTenSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 90, 40));
-
-        jTextFieldTenSP.setEnabled(false);
-        add(jTextFieldTenSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 170, 40));
 
         jTable_DSSPBan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -438,7 +430,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 btnTimKiemActionPerformed(evt);
             }
         });
-        add(btnTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, 110, 40));
+        add(btnTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(1150, 300, 110, 40));
 
         jLabelTongTien.setText("TỔNG TIỀN:");
         add(jLabelTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 590, 100, 40));
@@ -484,7 +476,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jlabel_img.setBackground(new java.awt.Color(204, 255, 255));
         jlabel_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlabel_img.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 153, 0), null));
-        add(jlabel_img, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 40, 320, 300));
+        add(jlabel_img, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 40, 320, 250));
 
         jLabelTienKD.setBackground(new java.awt.Color(204, 255, 51));
         jLabelTienKD.setText("TIỀN KHÁCH ĐƯA:");
@@ -506,7 +498,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jTextFieldTraLai.setEnabled(false);
         add(jTextFieldTraLai, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 590, 210, 40));
     }// </editor-fold>//GEN-END:initComponents
-
+    private int tongsoLuong = 0;
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         if (kiemTraHopLe()) {
@@ -514,8 +506,27 @@ public class QuanLyBanHang extends javax.swing.JPanel {
             int row = jTable_DSSPHienCo.getSelectedRow();
             SanPham sp = sanPham_DAO.getSanPhamById(jTable_DSSPHienCo.getValueAt(row, 0).toString());
             DefaultTableModel dtmBan = (DefaultTableModel) jTable_DSSPBan.getModel();
-            Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), sp.getNhaCungCap().getTenNCC(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
-            dtmBan.addRow(rowData);
+            int tang = 0;
+            int check = 0;
+            for (int i = 0; i < dtmBan.getRowCount(); i++) {
+                if (sp.getMaSP().equals(jTable_DSSPBan.getValueAt(i, 0).toString())) {
+                    int slhc = Integer.parseInt(jTable_DSSPBan.getValueAt(i, 4).toString());
+                    tongsoLuong = slhc + soLuong;
+                    check = i;
+                    tang = 1;
+                    break;
+                }
+            }
+            if (tang == 0) {
+                Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), sp.getNhaCungCap().getTenNCC(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
+                dtmBan.addRow(rowData);
+            }
+            else {
+                dtmBan.setValueAt(tongsoLuong, check, 4);
+                dtmBan.setValueAt(tongsoLuong * sp.getDonGiaBan(), check, 6);
+                tang = 0;
+            }
+
             double tien = 0;
             for (int i = 0; i < dtmBan.getRowCount(); i++) {
                 tien += Double.parseDouble(dtmBan.getValueAt(i, 6).toString());
@@ -612,12 +623,11 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         // TODO add your handling code here:
         int row = jTable_DSSPHienCo.getSelectedRow();
         DefaultTableModel dtm = (DefaultTableModel) jTable_DSSPHienCo.getModel();
-        jTextFieldTenSP.setText(dtm.getValueAt(row, 1).toString());
         SanPham sanPham = sanPham_DAO.getSanPhamByIdWithImg(dtm.getValueAt(row, 0).toString());
         File file = new File("");
         String path = file.getAbsolutePath();
 
-        jlabel_img.setIcon(ResizeImage(path + "/src/Img/SanPham/" + sanPham.getImg()));
+        jlabel_img.setIcon(ResizeImage(path + "/src/Img/SanPham/" + sanPham.getHinhAnh()));
     }//GEN-LAST:event_jTable_DSSPHienCoMousePressed
 
     private void btnTimSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimSDTActionPerformed
@@ -701,7 +711,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Chưa có thông tin sản phẩm bán");
             return false;
         }
-        
+
         if (jTextFieldKhachDua.getText().toString().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tiền khách đưa");
             return false;
@@ -727,7 +737,6 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private void lamMoi() {
         jTextFieldSoDT.setText("");
         jTextFieldSoLuong.setText("");
-        jTextFieldTenSP.setText("");
         jTextFieldMaKH.setText("");
         jTextFieldTenKH.setText("");
         jTextFieldEmail.setText("");
@@ -861,10 +870,35 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 tableCTHD.addCell(cell6);
             }
             document.add(tableCTHD);
+
+            // Bảng tính tiền
+            PdfPTable tableTien = new PdfPTable(2);
+            tableTien.setWidthPercentage(100);
+            tableTien.setSpacingBefore(10f);
+            tableTien.setSpacingAfter(10f);
+
+            tableTien.setWidths(columnWidths);
+
+            PdfPCell cellTongTien = new PdfPCell(new Paragraph("Tổng tiền : " + jTextFieldTongTien.getText().toString(), font));
+            cellTongTien.setBorderColor(BaseColor.WHITE);
+            tableTien.addCell(cellTongTien);
+
+            PdfPCell cellKhachDua = new PdfPCell(new Paragraph("Khách đưa : " + jTextFieldKhachDua.getText().toString(), font));
+            cellKhachDua.setBorderColor(BaseColor.WHITE);
+            tableTien.addCell(cellKhachDua);
+
+            PdfPCell cellTienTra = new PdfPCell(new Paragraph("Tiền Trả : " + jTextFieldTraLai.getText().toString(), font));
+            cellTienTra.setBorderColor(BaseColor.WHITE);
+            tableTien.addCell(cellTienTra);
+
+            PdfPCell cellTrong = new PdfPCell(new Paragraph(""));
+            cellTrong.setBorderColor(BaseColor.WHITE);
+            tableTien.addCell(cellTrong);
+
+            document.add(tableTien);
+
             JOptionPane.showMessageDialog(null, "Thanh toán thành công");
             document.close();
-
-            // Bảng chi tiết hoá đơn
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -902,7 +936,6 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelSoLuong;
     private javax.swing.JLabel jLabelTenKH;
     private javax.swing.JLabel jLabelTenNV;
-    private javax.swing.JLabel jLabelTenSP;
     private javax.swing.JLabel jLabelTienKD;
     private javax.swing.JLabel jLabelTienTL;
     private javax.swing.JLabel jLabelTimKiem;
@@ -945,7 +978,6 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldSoLuong;
     private javax.swing.JTextField jTextFieldTenKH;
     private javax.swing.JTextField jTextFieldTenNV;
-    private javax.swing.JTextField jTextFieldTenSP;
     private javax.swing.JTextField jTextFieldTimKiem;
     private javax.swing.JTextField jTextFieldTongTien;
     private javax.swing.JTextField jTextFieldTraLai;

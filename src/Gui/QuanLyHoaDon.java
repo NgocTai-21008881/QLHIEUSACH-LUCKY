@@ -7,7 +7,9 @@ package Gui;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -411,7 +413,7 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
             } else {
                 dtm = (DefaultTableModel) jTable_DanhSachHoaDon.getModel();
                 String id = dtm.getValueAt(row, 0).toString();
-
+                HoaDon hd = hoaDon_DAO.getHoaDonById(id);
                 ArrayList<ChiTietHoaDon> listCTHD = getListChiTietHoaDonByHoaDon(id);
                 JFileChooser pdfFileChooser = new JFileChooser();
                 pdfFileChooser.setDialogTitle("Save as");
@@ -423,7 +425,8 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                     PdfWriter.getInstance(document, new FileOutputStream(pdfFileChooser.getSelectedFile() + ".pdf"));
                     document.open();
 
-                    Paragraph paragraph = new Paragraph("Hoá đơn bán hàng");
+                    com.itextpdf.text.Font font = FontFactory.getFont("src/Font/vuArial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    Paragraph paragraph = new Paragraph("Hoá đơn bán hàng", font);
                     paragraph.setAlignment(Element.ALIGN_CENTER);
                     document.add(paragraph);
                     document.add(new Paragraph(" "));
@@ -439,23 +442,23 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                     float[] columnWidths = {1f, 1f};
                     tableHoaDon.setWidths(columnWidths);
 
-                    PdfPCell cellMaHD = new PdfPCell(new Paragraph("Mã hoá đơn : " + dtm.getValueAt(row, 0)));
+                    PdfPCell cellMaHD = new PdfPCell(new Paragraph("Mã hoá đơn : " + hd.getMaHD(), font));
                     cellMaHD.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellMaHD);
 
-                    PdfPCell cellNgayLapHD = new PdfPCell(new Paragraph("Ngầy lập hoá đơn : " + dtm.getValueAt(row, 1)));
+                    PdfPCell cellNgayLapHD = new PdfPCell(new Paragraph("Ngầy lập hoá đơn : " + hd.getNgayLapHD(), font));
                     cellNgayLapHD.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellNgayLapHD);
 
-                    PdfPCell cellTenNV = new PdfPCell(new Paragraph("Tên nhân viên : " + dtm.getValueAt(row, 2)));
+                    PdfPCell cellTenNV = new PdfPCell(new Paragraph("Tên nhân viên : " + hd.getNhanVien().getTenNhanVien(), font));
                     cellTenNV.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellTenNV);
 
-                    PdfPCell cellTenKH = new PdfPCell(new Paragraph("Tên khách hàng : " + dtm.getValueAt(row, 3)));
+                    PdfPCell cellTenKH = new PdfPCell(new Paragraph("Tên khách hàng : " + hd.getKhachHang().getTenKhachHang(), font));
                     cellTenKH.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellTenKH);
 
-                    PdfPCell cellTitleCTHD = new PdfPCell(new Paragraph("Chi tiết hoá đơn : "));
+                    PdfPCell cellTitleCTHD = new PdfPCell(new Paragraph("Chi tiết hoá đơn : ", font));
                     cellTitleCTHD.setBorderColor(BaseColor.WHITE);
                     tableHoaDon.addCell(cellTitleCTHD);
 
@@ -472,68 +475,87 @@ public class QuanLyHoaDon extends javax.swing.JPanel {
                     float[] columnWidths1 = {1f, 1f, 1f, 1f, 1f, 1f};
                     tableCTHD.setWidths(columnWidths1);
 
-                    PdfPCell cellMaSP = new PdfPCell(new Paragraph("Mã sản phẩm"));
+                    PdfPCell cellMaSP = new PdfPCell(new Paragraph("Mã sản phẩm", font));
                     cellMaSP.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellMaSP);
 
-                    PdfPCell cellTenSP = new PdfPCell(new Paragraph("Tên sản phẩm"));
+                    PdfPCell cellTenSP = new PdfPCell(new Paragraph("Tên sản phẩm", font));
                     cellTenSP.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellTenSP);
 
-                    PdfPCell cellLoaiSP = new PdfPCell(new Paragraph("Loại sản phẩm"));
+                    PdfPCell cellLoaiSP = new PdfPCell(new Paragraph("Loại sản phẩm", font));
                     cellLoaiSP.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellLoaiSP);
 
-                    PdfPCell cellSoLuong = new PdfPCell(new Paragraph("Số lượng"));
+                    PdfPCell cellSoLuong = new PdfPCell(new Paragraph("Số lượng", font));
                     cellSoLuong.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellSoLuong);
 
-                    PdfPCell cellDonGia = new PdfPCell(new Paragraph("Đơn giá"));
+                    PdfPCell cellDonGia = new PdfPCell(new Paragraph("Đơn giá", font));
                     cellDonGia.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellDonGia);
 
-                    PdfPCell cellThanhTien = new PdfPCell(new Paragraph("Thành tiền"));
+                    PdfPCell cellThanhTien = new PdfPCell(new Paragraph("Thành tiền", font));
                     cellThanhTien.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellThanhTien);
                     for (ChiTietHoaDon cthd : listCTHD) {
-                        PdfPCell cell1 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getMaSP())));
+                        PdfPCell cell1 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getMaSP()), font));
                         cell1.setBorderColor(BaseColor.WHITE);
                         cell1.setHorizontalAlignment(5);
                         cell1.setVerticalAlignment(5);
                         tableCTHD.addCell(cell1);
 
-                        PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getTenSP())));
+                        PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getTenSP()), font));
                         cell2.setBorderColor(BaseColor.WHITE);
                         cell2.setHorizontalAlignment(5);
                         cell2.setVerticalAlignment(5);
                         tableCTHD.addCell(cell2);
 
-                        PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getLoaiSP())));
+                        PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getLoaiSP()), font));
                         cell3.setBorderColor(BaseColor.WHITE);
                         cell3.setHorizontalAlignment(5);
                         cell3.setVerticalAlignment(5);
                         tableCTHD.addCell(cell3);
 
-                        PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSoLuong())));
+                        PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSoLuong()), font));
                         cell4.setBorderColor(BaseColor.WHITE);
                         cell4.setHorizontalAlignment(5);
                         cell4.setVerticalAlignment(5);
                         tableCTHD.addCell(cell4);
 
-                        PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getDonGiaBan())));
+                        PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getDonGiaBan()), font));
                         cell5.setBorderColor(BaseColor.WHITE);
                         cell5.setHorizontalAlignment(5);
                         cell5.setVerticalAlignment(5);
                         tableCTHD.addCell(cell5);
 
-                        PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(cthd.thanhTien())));
+                        PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(cthd.thanhTien()), font));
                         cell6.setBorderColor(BaseColor.WHITE);
                         cell6.setHorizontalAlignment(5);
                         cell6.setVerticalAlignment(5);
                         tableCTHD.addCell(cell6);
                     }
                     document.add(tableCTHD);
-                    JOptionPane.showMessageDialog(null, "Xuất chi tiết hoá đơn thành công");
+
+                    // Bảng tính tiền
+                    PdfPTable tableTien = new PdfPTable(2);
+                    tableTien.setWidthPercentage(100);
+                    tableTien.setSpacingBefore(10f);
+                    tableTien.setSpacingAfter(10f);
+
+                    tableTien.setWidths(columnWidths);
+
+                    PdfPCell cellTongTien = new PdfPCell(new Paragraph("Tổng tiền : " + dtm.getValueAt(row, 4), font));
+                    cellTongTien.setBorderColor(BaseColor.WHITE);
+                    tableTien.addCell(cellTongTien);
+
+                    PdfPCell cellTrong = new PdfPCell(new Paragraph(""));
+                    cellTrong.setBorderColor(BaseColor.WHITE);
+                    tableTien.addCell(cellTrong);
+
+                    document.add(tableTien);
+
+                    JOptionPane.showMessageDialog(null, "Xuất hoá đơn thành công");
                     document.close();
                 }
 

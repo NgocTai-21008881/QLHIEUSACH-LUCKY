@@ -277,7 +277,7 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
             } else {
                 dtm = (DefaultTableModel) jTable_DanhSachPhieuNhap.getModel();
                 String id = dtm.getValueAt(row, 0).toString();
-
+                PhieuNhap pn = phieuNhap_DAO.getPhieuNhapById(id);
                 ArrayList<ChiTietPhieuNhap> listCTPN = getListChiTietPhieuNhapByPhieuNhap(id);
                 JFileChooser pdfFileChooser = new JFileChooser();
                 pdfFileChooser.setDialogTitle("Save as");
@@ -289,7 +289,8 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
                     PdfWriter.getInstance(document, new FileOutputStream(pdfFileChooser.getSelectedFile() + ".pdf"));
                     document.open();
 
-                    Paragraph paragraph = new Paragraph("Phiếu nhập hàng hàng");
+                    Font font = FontFactory.getFont("src/Font/vuArial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    Paragraph paragraph = new Paragraph("Phiếu nhập hàng", font);
                     paragraph.setAlignment(Element.ALIGN_CENTER);
                     document.add(paragraph);
                     document.add(new Paragraph(" "));
@@ -305,19 +306,19 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
                     float[] columnWidths = {1f};
                     tablePhieuNhap.setWidths(columnWidths);
 
-                    PdfPCell cellMaHD = new PdfPCell(new Paragraph("Mã phiếu nhập : " + dtm.getValueAt(row, 0)));
+                    PdfPCell cellMaHD = new PdfPCell(new Paragraph("Mã phiếu nhập : " + pn.getMaPhieuNhap(), font));
                     cellMaHD.setBorderColor(BaseColor.WHITE);
                     tablePhieuNhap.addCell(cellMaHD);
 
-                    PdfPCell cellNgayLapHD = new PdfPCell(new Paragraph("Ngầy nhập : " + dtm.getValueAt(row, 1)));
+                    PdfPCell cellNgayLapHD = new PdfPCell(new Paragraph("Ngầy nhập : " + pn.getNgayNhap(), font));
                     cellNgayLapHD.setBorderColor(BaseColor.WHITE);
                     tablePhieuNhap.addCell(cellNgayLapHD);
 
-                    PdfPCell cellTongTien = new PdfPCell(new Paragraph("Tồng tiền : " + dtm.getValueAt(row, 2)));
+                    PdfPCell cellTongTien = new PdfPCell(new Paragraph("Tồng tiền : " + dtm.getValueAt(row, 2), font));
                     cellTongTien.setBorderColor(BaseColor.WHITE);
                     tablePhieuNhap.addCell(cellTongTien);
 
-                    PdfPCell cellTitleCTPN = new PdfPCell(new Paragraph("Chi tiết phiếu nhập"));
+                    PdfPCell cellTitleCTPN = new PdfPCell(new Paragraph("Chi tiết phiếu nhập", font));
                     cellTitleCTPN.setBorderColor(BaseColor.WHITE);
                     tablePhieuNhap.addCell(cellTitleCTPN);
 
@@ -330,68 +331,68 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
                     float[] columnWidths1 = {1f, 1f, 1f, 1f, 1f, 1f};
                     tableCTHD.setWidths(columnWidths1);
 
-                    PdfPCell cellMaSP = new PdfPCell(new Paragraph("Mã sản phẩm"));
+                    PdfPCell cellMaSP = new PdfPCell(new Paragraph("Mã sản phẩm", font));
                     cellMaSP.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellMaSP);
 
-                    PdfPCell cellTenSP = new PdfPCell(new Paragraph("Tên sản phẩm"));
+                    PdfPCell cellTenSP = new PdfPCell(new Paragraph("Tên sản phẩm", font));
                     cellTenSP.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellTenSP);
 
-                    PdfPCell cellLoaiSP = new PdfPCell(new Paragraph("Loại sản phẩm"));
+                    PdfPCell cellLoaiSP = new PdfPCell(new Paragraph("Loại sản phẩm", font));
                     cellLoaiSP.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellLoaiSP);
 
-                    PdfPCell cellSoLuong = new PdfPCell(new Paragraph("Số lượng"));
+                    PdfPCell cellSoLuong = new PdfPCell(new Paragraph("Số lượng", font));
                     cellSoLuong.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellSoLuong);
 
-                    PdfPCell cellDonGia = new PdfPCell(new Paragraph("Đơn giá"));
+                    PdfPCell cellDonGia = new PdfPCell(new Paragraph("Đơn giá", font));
                     cellDonGia.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellDonGia);
 
-                    PdfPCell cellThanhTien = new PdfPCell(new Paragraph("Thành tiền"));
+                    PdfPCell cellThanhTien = new PdfPCell(new Paragraph("Thành tiền", font));
                     cellThanhTien.setBorderColor(BaseColor.WHITE);
                     tableCTHD.addCell(cellThanhTien);
                     for (ChiTietPhieuNhap ctpn : listCTPN) {
-                        PdfPCell cell1 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getMaSP())));
+                        PdfPCell cell1 = new PdfPCell(new Paragraph(ctpn.getSanPham().getMaSP(), font));
                         cell1.setBorderColor(BaseColor.WHITE);
                         cell1.setHorizontalAlignment(5);
                         cell1.setVerticalAlignment(5);
                         tableCTHD.addCell(cell1);
 
-                        PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getTenSP())));
+                        PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getTenSP()), font));
                         cell2.setBorderColor(BaseColor.WHITE);
                         cell2.setHorizontalAlignment(5);
                         cell2.setVerticalAlignment(5);
                         tableCTHD.addCell(cell2);
 
-                        PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getLoaiSP())));
+                        PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getLoaiSP()), font));
                         cell3.setBorderColor(BaseColor.WHITE);
                         cell3.setHorizontalAlignment(5);
                         cell3.setVerticalAlignment(5);
                         tableCTHD.addCell(cell3);
 
-                        PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSoLuong())));
+                        PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSoLuong()), font));
                         cell4.setBorderColor(BaseColor.WHITE);
                         cell4.setHorizontalAlignment(5);
                         cell4.setVerticalAlignment(5);
                         tableCTHD.addCell(cell4);
 
-                        PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getDonGiaBan())));
+                        PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(ctpn.getSanPham().getDonGiaBan()), font));
                         cell5.setBorderColor(BaseColor.WHITE);
                         cell5.setHorizontalAlignment(5);
                         cell5.setVerticalAlignment(5);
                         tableCTHD.addCell(cell5);
 
-                        PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(ctpn.thanhTien())));
+                        PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(ctpn.thanhTien()), font));
                         cell6.setBorderColor(BaseColor.WHITE);
                         cell6.setHorizontalAlignment(5);
                         cell6.setVerticalAlignment(5);
                         tableCTHD.addCell(cell6);
                     }
                     document.add(tableCTHD);
-                    JOptionPane.showMessageDialog(null, "Xuất chi tiết phiếu nhập thành công");
+                    JOptionPane.showMessageDialog(null, "Nhập hàng thành công");
                     document.close();
                 }
 

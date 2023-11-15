@@ -25,60 +25,68 @@ import dao.TaiKhoanDAO;
 import entity.HoaDon;
 import entity.NhanVien;
 import entity.taiKhoan;
+
 /**
  *
  * @author LENOVO
  */
 public class QuanLyNhanVien extends javax.swing.JPanel {
-	 private boolean isThemActive = false;
-	    private boolean isSuaActive = false;
-	 private NhanVienDAO NV_DAO = new NhanVienDAO();
-	 private TaiKhoanDAO TK_DAO = new TaiKhoanDAO();
-	
+
+    private boolean isThemActive = false;
+    private boolean isSuaActive = false;
+    private NhanVienDAO NV_DAO = new NhanVienDAO();
+    private TaiKhoanDAO TK_DAO = new TaiKhoanDAO();
+
     /**
      * Creates new form Tab_Sach
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
-    public QuanLyNhanVien()  {
+    public QuanLyNhanVien() {
         initComponents();
         loadtableNhanVien();
-        
+
     }
+
     // clear table
     public void clearTableNhanVien() {
-         DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
         dtm.setRowCount(0);
     }
+
     // load table
-    public void loadtableNhanVien()
-    {
-    	 clearTableNhanVien();
-         NhanVienDAO nvdao = new NhanVienDAO();
-       DefaultTableModel  dtm = (DefaultTableModel) jtable_NhanVien.getModel();
-         ArrayList<NhanVien> listNhanVien = NV_DAO.getAllNhanVien();
-         for (NhanVien nhanvien : listNhanVien) {
-        	 String gioitinh = new String();
-        	 if (nhanvien.isGioiTinh() == true )
-        		 gioitinh = "Nam";
-        	 else gioitinh = "Nữ";
-             
-             Object[] rowData = {nhanvien.getMaNhanVien(), nhanvien.getTenNhanVien(),nhanvien.getSoDienThoai(),gioitinh,nhanvien.getChucVu(),nhanvien.getEmail()};
-             dtm.addRow(rowData);
-    }}
-         // valid data
+    public void loadtableNhanVien() {
+        clearTableNhanVien();
+        NhanVienDAO nvdao = new NhanVienDAO();
+        DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
+        ArrayList<NhanVien> listNhanVien = NV_DAO.getAllNhanVien();
+        for (NhanVien nhanvien : listNhanVien) {
+            String gioitinh = new String();
+            if (nhanvien.isGioiTinh() == true) {
+                gioitinh = "Nam";
+            } else {
+                gioitinh = "Nữ";
+            }
+
+            Object[] rowData = {nhanvien.getMaNhanVien(), nhanvien.getTenNhanVien(), nhanvien.getSoDienThoai(), gioitinh, nhanvien.getChucVu(), nhanvien.getEmail()};
+            dtm.addRow(rowData);
+        }
+    }
+    // valid data
+
     private boolean validateData() {
         String sdt = jtextfield_SoDienThoai.getText().trim();
         String email = jtextfield_Email.getText().trim();
         String HovaTen = jtextfield_TenNhanVien.getText().trim();
-        String manv  = jtextfield_MaNhanVien.getText().trim();
-        
+        String manv = jtextfield_MaNhanVien.getText().trim();
+
         if (jtextfield_Email.getText().equals("") || jtextfield_MaNhanVien.getText().equals("") || jtextfield_SoDienThoai.getText().equals("")
                 || jtextfield_TenNhanVien.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
             return false;
         }
         if (!(sdt.length() > 0 && sdt.matches("[0-9]{10}"))) {
-            JOptionPane.showMessageDialog(jtextfield_SoDienThoai,"Số điện thoại yêu cầu phải đủ 10 số");
+            JOptionPane.showMessageDialog(jtextfield_SoDienThoai, "Số điện thoại yêu cầu phải đủ 10 số");
             jtextfield_SoDienThoai.requestFocus();
             return false;
         }
@@ -89,6 +97,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         }
         return true;
     }
+
     private void themNhanVien() throws SQLException {
         if (!validateData()) {
             return;
@@ -108,9 +117,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         }
         boolean gioiTinh = Combobox_GioiTinh.getSelectedItem() == "Nam" ? true : false;
         String chucVu = combobox_ChucVu.getSelectedItem().toString();
-        NhanVien nhanVien = new NhanVien(maNhanVien, hoVaTen,sdt,gioitinh,chucVu,email);
+        NhanVien nhanVien = new NhanVien(maNhanVien, hoVaTen, sdt, gioitinh, chucVu, email);
         taiKhoan tk = new taiKhoan(nhanVien.getMaNhanVien(), "1111", chucVu);
-        if (TK_DAO.addTaiKhoan(tk)!= -1) {
+        if (TK_DAO.addTaiKhoan(tk) != -1) {
             ConnectDB.getInstance().connect();
             if (NV_DAO.addNhanVien(nhanVien) == -1) {
                 return;
@@ -120,38 +129,43 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             huyThaoTac();
             JOptionPane.showMessageDialog(null, "Thêm thành công");
             return;
+        } else {
+            JOptionPane.showMessageDialog(null, "Thêm thất bại");
         }
-        else JOptionPane.showMessageDialog(null, "Thêm thất bại");
     }
+
     public void clearTable() {
         DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
         dtm.setRowCount(0);
     }
 
     private void clearInput() {
+
         jtextfield_Email.setText("");
         jtextfield_SoDienThoai.setText("");
         jtextfield_TenNhanVien.setText("");
         combobox_ChucVu.setSelectedIndex(0);
         Combobox_GioiTinh.setSelectedIndex(0);
     }
+
     private void isInputActive(boolean check) {
-       jtextfield_MaNhanVien.setEnabled(!check);
+        jtextfield_MaNhanVien.setEnabled(!check);
         jtextfield_SoDienThoai.setEnabled(check);
         jtextfield_Email.setEnabled(check);
         jtextfield_TenNhanVien.setEnabled(check);
         Combobox_GioiTinh.setEnabled(check);
         combobox_ChucVu.setEnabled(check);
     }
+
     private void isThemNhanVienClicked(boolean check) {
         isThemActive = check;
         isSuaActive = !check;
-        if (isThemActive) 
-        {
+        if (isThemActive) {
             NhanVien nhanVien = new NhanVien();
-        	jtextfield_MaNhanVien.setText(nhanVien.auto_ID());
+            jtextfield_MaNhanVien.setText(nhanVien.auto_ID());
             btn_Them.setText("Huỷ");
             btn_Sua.setEnabled(false);
+            jtextfield_Timkiem.setEnabled(false);
         } else if (isSuaActive) {
             btn_Sua.setText("Huỷ");
             btn_Them.setEnabled(false);
@@ -159,7 +173,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btn_Luu.setEnabled(true);
         isInputActive(true);
     }
-    
+
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {
         if (btn_Them.getText().equals("THÊM")) {
             isThemActive = true;
@@ -169,9 +183,10 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             huyThaoTac();
         }
     }
+
     private void btn_timNhanVienActionPerformed(java.awt.event.ActionEvent evt) {
-       TimKiem();
-        
+        TimKiem();
+
     }
 
     private void btn_capNhatActionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,18 +202,20 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             huyThaoTac();
         }
     }
-    private void btn_luuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException  {
+
+    private void btn_luuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         if (isThemActive) {
             themNhanVien();
         } else if (isSuaActive) {
             capNhatNhanVien();
         }
     }
+
     private void btn_LamMoiActionPerformed(java.awt.event.ActionEvent evt) {
-    	
+
         clearInput();
     }
-    
+
     private void capNhatNhanVien() {
         if (!validateData()) {
             return;
@@ -218,8 +235,9 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             return;
         }
         JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
-       
+
     }
+
     private void tbl_danhSachNhanVienMousePressed(java.awt.event.MouseEvent evt) {
         String id = (String) jtable_NhanVien.getValueAt(jtable_NhanVien.getSelectedRow(), 0);
         NhanVien nhanVien = NV_DAO.getNhanVienByID(id);
@@ -229,30 +247,35 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         }
         thongTinNhanVien(nhanVien);
     }
+
     public void TimKiem() {
-       jtable_NhanVien.clearSelection();
+        jtable_NhanVien.clearSelection();
         clearTable();
         DefaultTableModel dtm = (DefaultTableModel) jtable_NhanVien.getModel();
-        String maNV = "";
+        String timKiem = "";
         if (jtextfield_Timkiem.getText().length() > 0) {
-            maNV = jtextfield_Timkiem.getText();
+            timKiem = jtextfield_Timkiem.getText();
         }
         ArrayList<NhanVien> listNhanVien = NV_DAO.getAllNhanVien();
         for (NhanVien nv : listNhanVien) {
-        	String gioitinh = new String();
-        	if (nv.isGioiTinh() == true)
-        	{
-        		gioitinh = "Nam";
-        	}
-        	else gioitinh = "Nữ";
-        	
-            if (nv.getMaNhanVien().toLowerCase().contains(maNV.toLowerCase())) {
+            String gioitinh = new String();
+            if (nv.isGioiTinh() == true) {
+                gioitinh = "Nam";
+            } else {
+                gioitinh = "Nữ";
+            }
+
+            if (nv.getMaNhanVien().toLowerCase().contains(timKiem.toLowerCase())
+                    || nv.getTenNhanVien().toLowerCase().contains(timKiem.toLowerCase())
+                    || nv.getSoDienThoai().toLowerCase().contains(timKiem.toLowerCase())
+                    || nv.getEmail().toLowerCase().contains(timKiem.toLowerCase())) {
                 Object[] rowData = {nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getSoDienThoai(), gioitinh, nv.getChucVu(), nv.getEmail()};
                 dtm.addRow(rowData);
             }
 
         }
     }
+
     private void huyThaoTac() {
         clearInput();
         isSuaActive = false;
@@ -263,19 +286,20 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         btn_Sua.setEnabled(true);
         btn_Luu.setEnabled(false);
         jtextfield_MaNhanVien.setText("");
-        isInputActive(true);
+
+        isInputActive(false);
         jtable_NhanVien.clearSelection();
- 
+
     }
+
     private void thongTinNhanVien(NhanVien nhanVien) {
-       jtextfield_MaNhanVien.setText(nhanVien.getMaNhanVien());
-       jtextfield_TenNhanVien.setText(nhanVien.getTenNhanVien());
-       jtextfield_SoDienThoai.setText(nhanVien.getSoDienThoai());
-       Combobox_GioiTinh.setSelectedItem(nhanVien.isGioiTinh() == true ? "Nam" : "Nữ");
+        jtextfield_MaNhanVien.setText(nhanVien.getMaNhanVien());
+        jtextfield_TenNhanVien.setText(nhanVien.getTenNhanVien());
+        jtextfield_SoDienThoai.setText(nhanVien.getSoDienThoai());
+        Combobox_GioiTinh.setSelectedItem(nhanVien.isGioiTinh() == true ? "Nam" : "Nữ");
         combobox_ChucVu.setSelectedItem(nhanVien.getChucVu());
         jtextfield_Email.setText(nhanVien.getEmail());
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -516,7 +540,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-   
+
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn8ActionPerformed
