@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import dao.ChiTietHoaDonDAO;
 import dao.HoaDonDAO;
-import dao.PhieuNhapDAO;
 
 public class HoaDon {
 
@@ -32,6 +31,13 @@ public class HoaDon {
         this.ngayLapHD = hd.ngayLapHD;
         this.nhanVien = hd.nhanVien;
         this.khachHang = hd.khachHang;
+    }
+
+    public HoaDon(Date ngayLapHD, NhanVien nhanVien, KhachHang khachHang) {
+        super();
+        this.ngayLapHD = ngayLapHD;
+        this.nhanVien = nhanVien;
+        this.khachHang = khachHang;
     }
 
     public HoaDon(String maHD, Date ngayLapHD, NhanVien nhanVien, KhachHang khachHang) {

@@ -141,7 +141,7 @@ public class SachDao  {
 		try {
 			ConnectDB.getInstance();
 			Connection con=ConnectDB.getConnection();
-			String sql="insert into SanPham(maSP,tenSP,maTheLoai,hinhAnh,maNCC,maNhaXuatBan,tacGia,soLuongTK,donGiaBan) values(?,?,?,?,?,?,?,?,?)";
+			String sql="insert into SanPham(maSP,tenSP,maTheLoai,hinhAnh,maNCC,maNhaXuatBan,tacGia,soLuongTK,donGiaBan, loaiSP) values(?,?,?,?,?,?,?,?,?,?)";
 			 PreparedStatement sta = con.prepareStatement(sql);
 			sta.setString(1,s.getMaSP());
 			sta.setString(2,s.getTenSP());
@@ -152,6 +152,7 @@ public class SachDao  {
 			sta.setString(7,s.getTacGia());
 			sta.setInt(8,s.getSoLuongTK());
 			sta.setDouble(9,s.getDonGiaBan());
+                        sta.setString(10, "Sách");
 			return sta.executeUpdate();
 		} catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);

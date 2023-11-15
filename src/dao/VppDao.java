@@ -122,7 +122,7 @@ public class VppDao {
 		try {
 			ConnectDB.getInstance();
 			Connection con=ConnectDB.getConnection();
-			String sql ="insert into SanPham(maSP,tenSP,maNCC,hinhAnh,xuatXu,mauSac,chatLieu,soLuongTK,donGiaBan) values(?,?,?,?,?,?,?,?,?)";
+			String sql ="insert into SanPham(maSP,tenSP,maNCC,hinhAnh,xuatXu,mauSac,chatLieu,soLuongTK,donGiaBan,loaiSP) values(?,?,?,?,?,?,?,?,?,?)";
 			 PreparedStatement sta = con.prepareStatement(sql);
 			 sta.setString(1,vpp.getMaSP());
 			 sta.setString(2,vpp.getTenSP());
@@ -133,6 +133,7 @@ public class VppDao {
 			 sta.setString(7,vpp.getChatLieu());
 			 sta.setInt(8,vpp.getSoLuongTK());
 			 sta.setDouble(9, vpp.getDonGiaBan());
+                         			 sta.setString(10, "VPP");
 			 return sta.executeUpdate();
 		} catch (SQLException ex) {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);

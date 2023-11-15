@@ -113,9 +113,9 @@ public class SanPhamDAO {
                 int soLuong = rs.getInt(4);
                 String loaiSP = rs.getString(5);
                 double donGiaBan = rs.getDouble(6);
-                String hinhAnh = rs.getString(16);
+                String hinhAnh = rs.getString(15);
 
-                SanPham sanPham = new SanPham(maSP, tenSP, nhaCungCap, soLuong, loaiSP, donGiaBan, hinhAnh);
+                SanPham sanPham = new SanPham(maSP, tenSP, nhaCungCap, soLuong, donGiaBan, hinhAnh);
                 return sanPham;
             }
 
