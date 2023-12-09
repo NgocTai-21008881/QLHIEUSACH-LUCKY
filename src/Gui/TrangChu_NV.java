@@ -4,6 +4,14 @@
  */
 package Gui;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author LENOVO
@@ -20,6 +28,7 @@ public class TrangChu_NV extends javax.swing.JFrame {
         trangNen.setLayout(this.getLayout());
         trangNen.add(tn);
         trangNen.revalidate();
+        setupKeyboardShortcuts_TrangChuQL();
     }
     public void phanQuyenNhanVien(){
         
@@ -100,7 +109,7 @@ public class TrangChu_NV extends javax.swing.JFrame {
         jLabel10.setText("F2");
         jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 30));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 250, 50));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 250, 50));
 
         jPanel10.setBackground(new java.awt.Color(204, 204, 204));
         jPanel10.setForeground(new java.awt.Color(204, 204, 204));
@@ -121,7 +130,7 @@ public class TrangChu_NV extends javax.swing.JFrame {
         jLabel14.setText("F3");
         jPanel10.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 30));
 
-        jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 250, 50));
+        jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 250, 50));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -173,7 +182,7 @@ public class TrangChu_NV extends javax.swing.JFrame {
         jLabel12.setText("F5");
         jPanel8.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 30));
 
-        jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, -1, 50));
+        jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, -1, 50));
 
         jPanel13.setBackground(new java.awt.Color(204, 204, 204));
         jPanel13.setForeground(new java.awt.Color(204, 204, 204));
@@ -194,7 +203,7 @@ public class TrangChu_NV extends javax.swing.JFrame {
         jLabel21.setText("F4");
         jPanel13.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 30));
 
-        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 250, 50));
+        jPanel1.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 250, 50));
 
         jPanel11.setBackground(new java.awt.Color(204, 204, 204));
         jPanel11.setForeground(new java.awt.Color(204, 204, 204));
@@ -212,10 +221,10 @@ public class TrangChu_NV extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("F8");
+        jLabel15.setText("F6");
         jPanel11.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, 30, 30));
 
-        jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 470, 250, 50));
+        jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 570, 250, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 700));
 
@@ -296,6 +305,102 @@ public class TrangChu_NV extends javax.swing.JFrame {
         trangNen.revalidate();
     }//GEN-LAST:event_jPanel11MouseClicked
 
+     private void setupKeyboardShortcuts_TrangChuQL() {
+
+        // F1 shortcut
+        setupShortcut("F1", "performShortcutF1", () -> handleF1Shortcut());
+
+        // F2 shortcut
+        setupShortcut("F2", "performShortcutF2", () -> handleF2Shortcut());
+
+        // F3 shortcut
+        setupShortcut("F3", "performShortcutF3", () -> handleF3Shortcut());
+
+        // F4 shortcut
+        setupShortcut("F4", "performShortcutF4", () -> handleF4Shortcut());
+
+        // F5 shortcut
+        setupShortcut("F5", "performShortcutF5", () -> handleF5Shortcut());
+
+        // F6 shortcut
+        setupShortcut("F6", "performShortcutF6", () -> handleF6Shortcut());
+    }
+
+    private void setupShortcut(String keyStroke, String actionName, Runnable action) {
+        KeyStroke ks = KeyStroke.getKeyStroke(keyStroke);
+        InputMap inputMap = trangNen.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = trangNen.getActionMap();
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
+
+        inputMap.put(ks, actionName);
+        actionMap.put(actionName, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                action.run();
+            }
+        });
+    }
+
+    private void handleF1Shortcut() {
+        // TODO: Add handling code for F1 shortcut
+        trangNen.removeAll();
+        setLocationRelativeTo(null);
+        setupTrangChuComponents();
+        trangNen.revalidate();
+        trangNen.repaint();
+    }
+
+    private void setupTrangChuComponents() {
+        TrangNen tn = new TrangNen();
+        trangNen.setLayout(this.getLayout());
+        trangNen.add(tn);
+        trangNen.revalidate();
+    }
+
+
+    private void handleF2Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLySanPham QuanLySanPham = new QuanLySanPham();
+        trangNen.add(QuanLySanPham);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF3Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyBanHang QuanLyBanHang = new QuanLyBanHang();
+        trangNen.add(QuanLyBanHang);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF4Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyHoaDon QuanLyHoaDon = new QuanLyHoaDon();
+        trangNen.add(QuanLyHoaDon);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF5Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyKhachHang QuanLyKhachHang = new QuanLyKhachHang();
+        trangNen.add(QuanLyKhachHang);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF6Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyThongKe QuanLyThongKe = new QuanLyThongKe();
+        trangNen.add(QuanLyThongKe);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
     /**
      * @param args the command line arguments
      */

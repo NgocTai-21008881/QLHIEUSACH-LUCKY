@@ -4,6 +4,15 @@
  */
 package Gui;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author LENOVO
@@ -20,9 +29,11 @@ public class TrangChu_QL extends javax.swing.JFrame {
         trangNen.setLayout(this.getLayout());
         trangNen.add(tn);
         trangNen.revalidate();
+        setupKeyboardShortcuts_TrangChuQL();
     }
-    public void phanQuyenNhanVien(){
-        
+
+    public void phanQuyenNhanVien() {
+
     }
 
     /**
@@ -429,6 +440,125 @@ public class TrangChu_QL extends javax.swing.JFrame {
         trangNen.revalidate();
     }//GEN-LAST:event_jPanel7MouseClicked
 
+    private void setupKeyboardShortcuts_TrangChuQL() {
+
+        // F1 shortcut
+        setupShortcut("F1", "performShortcutF1", () -> handleF1Shortcut());
+
+        // F2 shortcut
+        setupShortcut("F2", "performShortcutF2", () -> handleF2Shortcut());
+
+        // F3 shortcut
+        setupShortcut("F3", "performShortcutF3", () -> handleF3Shortcut());
+
+        // F4 shortcut
+        setupShortcut("F4", "performShortcutF4", () -> handleF4Shortcut());
+
+        // F5 shortcut
+        setupShortcut("F5", "performShortcutF5", () -> handleF5Shortcut());
+
+        // F6 shortcut
+        setupShortcut("F6", "performShortcutF6", () -> handleF6Shortcut());
+
+        // F7 shortcut
+        setupShortcut("F7", "performShortcutF7", () -> handleF7Shortcut());
+
+        // F8 shortcut
+        setupShortcut("F8", "performShortcutF8", () -> handleF8Shortcut());
+    }
+
+    private void setupShortcut(String keyStroke, String actionName, Runnable action) {
+        KeyStroke ks = KeyStroke.getKeyStroke(keyStroke);
+        InputMap inputMap = trangNen.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = trangNen.getActionMap();
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
+
+        inputMap.put(ks, actionName);
+        actionMap.put(actionName, new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                action.run();
+            }
+        });
+    }
+
+    private void handleF1Shortcut() {
+        // TODO: Add handling code for F1 shortcut
+        trangNen.removeAll();
+        setLocationRelativeTo(null);
+        setupTrangChuComponents();
+        trangNen.revalidate();
+        trangNen.repaint();
+    }
+
+    private void setupTrangChuComponents() {
+        TrangNen tn = new TrangNen();
+        trangNen.setLayout(this.getLayout());
+        trangNen.add(tn);
+        trangNen.revalidate();
+    }
+
+    private void handleF2Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyNhanVien QuanLyNhanVien = new QuanLyNhanVien();
+        trangNen.add(QuanLyNhanVien);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF3Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLySanPham QuanLySanPham = new QuanLySanPham();
+        trangNen.add(QuanLySanPham);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF4Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyPhieuNhap QuanLyPhieuNhap = new QuanLyPhieuNhap();
+        trangNen.add(QuanLyPhieuNhap);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF5Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyHoaDon QuanLyHoaDon = new QuanLyHoaDon();
+        trangNen.add(QuanLyHoaDon);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF6Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyKhachHang QuanLyKhachHang = new QuanLyKhachHang();
+        trangNen.add(QuanLyKhachHang);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF7Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyNhaCungCap QuanLyNhaCungCap = new QuanLyNhaCungCap();
+        trangNen.add(QuanLyNhaCungCap);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
+
+    private void handleF8Shortcut() {
+        // TODO: Add handling code for F2 shortcut
+        trangNen.removeAll();
+        QuanLyThongKe QuanLyThongKe = new QuanLyThongKe();
+        trangNen.add(QuanLyThongKe);
+        setLocationRelativeTo(null);
+        trangNen.revalidate();
+    }
     /**
      * @param args the command line arguments
      */
