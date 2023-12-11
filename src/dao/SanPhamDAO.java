@@ -124,4 +124,60 @@ public class SanPhamDAO {
         }
         return null;
     }
+    
+    public ArrayList<SanPham>topNSanPhamBanChay(){
+        ArrayList<SanPham>listSanPham = new ArrayList<>();
+        ConnectDB.getInstance();
+        Connection conn = ConnectDB.getConnection();
+        SanPhamDAO sp_DAO = new SanPhamDAO();
+        String sql = "SELECT TOP 10     SanPham.maSP, sum(ChiTietHoaDon.soLuong) as tongSoLuong \n" +
+                        "FROM        ChiTietHoaDon INNER JOIN\n" +
+                        "                  HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon INNER JOIN\n" +
+                        "                  sanPham ON ChiTietHoaDon.maSP = sanPham.maSP\n" +
+                        "\n" +
+                        "group by sanPham.maSP, sanPham.tenSP\n" +
+                        "order by tongSoLuong desc";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                SanPham sp = sp_DAO.getSanPhamById(rs.getString(1));
+                sp.setSoLuongTK(rs.getInt(2));
+                listSanPham.add(sp);
+                
+            }
+            return listSanPham;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public ArrayList<SanPham>topNSanPhamBanCham(){
+        ArrayList<SanPham>listSanPham = new ArrayList<>();
+        ConnectDB.getInstance();
+        Connection conn = ConnectDB.getConnection();
+        SanPhamDAO sp_DAO = new SanPhamDAO();
+        String sql = "SELECT TOP 10     SanPham.maSP, sum(ChiTietHoaDon.soLuong) as tongSoLuong \n" +
+                        "FROM        ChiTietHoaDon INNER JOIN\n" +
+                        "                  HoaDon ON ChiTietHoaDon.maHoaDon = HoaDon.maHoaDon INNER JOIN\n" +
+                        "                  sanPham ON ChiTietHoaDon.maSP = sanPham.maSP\n" +
+                        "\n" +
+                        "group by sanPham.maSP, sanPham.tenSP\n" +
+                        "order by tongSoLuong asc";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                SanPham sp = sp_DAO.getSanPhamById(rs.getString(1));
+                sp.setSoLuongTK(rs.getInt(2));
+                listSanPham.add(sp);
+                
+            }
+            return listSanPham;
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

@@ -70,6 +70,66 @@ public class HoaDonDAO {
         }
         return listHoaDon;
     }
+    
+    public ArrayList<HoaDon> getAllHoaDon(String tenKhachHang, String tenNhanVien) {
+        ArrayList<HoaDon> listHoaDon = new ArrayList<>();
+        ConnectDB.getInstance();
+        Connection conn = ConnectDB.getConnection();
+        try {
+            String sql = "SELECT         HoaDon.*\n"
+                    + "FROM            HoaDon INNER JOIN\n"
+                    + "                         KhachHang ON HoaDon.maKhachHang = KhachHang.maKhachHang INNER JOIN\n"
+                    + "                         NhanVien ON HoaDon.maNhanVien = NhanVien.maNhanVien\n"
+                    + "where NhanVien.tenNhanVien like ? and KhachHang.tenKhachHang like ? and maHoaDon like 'HD%'";
+            PreparedStatement stmt = conn.prepareCall(sql);
+            stmt.setString(1, "%" + tenNhanVien + "%");
+            stmt.setString(2, "%" + tenKhachHang + "%");
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String maHoaDon = rs.getString(1);
+                Date ngayLap = rs.getDate(2);
+                NhanVien nhanVien = nhanVien_DAO.getNhanVienByID(rs.getString(3));
+                KhachHang khachHang = khachHang_DAO.getKhachHangById(rs.getString(4));
+                HoaDon hoaDon = new HoaDon(maHoaDon, ngayLap, nhanVien, khachHang);
+                listHoaDon.add(hoaDon);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listHoaDon;
+    }
+    
+    public ArrayList<HoaDon> getAllHoaDon(String tenKhachHang, String tenNhanVien, Date tuNgay, Date denNgay) {
+        ArrayList<HoaDon> listHoaDon = new ArrayList<>();
+        ConnectDB.getInstance();
+        Connection conn = ConnectDB.getConnection();
+        try {
+            String sql = "SELECT         HoaDon.*\n"
+                    + "FROM            HoaDon INNER JOIN\n"
+                    + "                         KhachHang ON HoaDon.maKhachHang = KhachHang.maKhachHang INNER JOIN\n"
+                    + "                         NhanVien ON HoaDon.maNhanVien = NhanVien.maNhanVien\n"
+                    + "where NhanVien.tenNhanVien like ? and KhachHang.tenKhachHang like ? and maHoaDon like 'HD%' and ngayLapHD between ? and ?";
+            PreparedStatement stmt = conn.prepareCall(sql);
+            stmt.setString(1, "%" + tenNhanVien + "%");
+            stmt.setString(2, "%" + tenKhachHang + "%");
+            stmt.setDate(3, tuNgay);
+            stmt.setDate(4, denNgay);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String maHoaDon = rs.getString(1);
+                Date ngayLap = rs.getDate(2);
+                NhanVien nhanVien = nhanVien_DAO.getNhanVienByID(rs.getString(3));
+                KhachHang khachHang = khachHang_DAO.getKhachHangById(rs.getString(4));
+                HoaDon hoaDon = new HoaDon(maHoaDon, ngayLap, nhanVien, khachHang);
+                listHoaDon.add(hoaDon);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listHoaDon;
+    }
 
     public ArrayList<HoaDon> getHoaDonByDate(Date ngayBatDau, Date ngayKetThuc) {
         ArrayList<HoaDon> listHoaDon = new ArrayList<>();
@@ -95,7 +155,6 @@ public class HoaDonDAO {
                 NhanVien nhanVien = nhanVien_DAO.getNhanVienByID(rs.getString(3));
                 KhachHang khachHang = khachHang_DAO.getKhachHangById(rs.getString(4));
                 HoaDon hoaDon = new HoaDon(maHoaDon, ngayLap, nhanVien, khachHang);
-                System.out.println(hoaDon);
                 listHoaDon.add(hoaDon);
             }
         } catch (SQLException ex) {
