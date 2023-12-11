@@ -214,7 +214,6 @@
               </Properties>
               <Events>
                 <EventHandler event="menuSelected" listener="javax.swing.event.MenuListener" parameters="javax.swing.event.MenuEvent" handler="jMenu17MenuSelected"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu17ActionPerformed"/>
               </Events>
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu15">

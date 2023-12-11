@@ -192,10 +192,22 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
 
         jLabelFrom.setText("TỪ NGÀY:");
         jPanelThongTinTimKiem.add(jLabelFrom, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 70, 40));
+
+        jDateChooserFrom.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserFromPropertyChange(evt);
+            }
+        });
         jPanelThongTinTimKiem.add(jDateChooserFrom, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 260, 40));
 
         jLabelTo.setText("ĐẾN NGÀY:");
         jPanelThongTinTimKiem.add(jLabelTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 70, 40));
+
+        jDateChooserTo.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserToPropertyChange(evt);
+            }
+        });
         jPanelThongTinTimKiem.add(jDateChooserTo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 30, 260, 40));
 
         btnTimKiem.setBackground(new java.awt.Color(255, 153, 0));
@@ -466,7 +478,50 @@ public class Tab_PhieuNhap extends javax.swing.JPanel {
         loadTblPhieuNhap();
     }//GEN-LAST:event_jButtonAllActionPerformed
 
+    private void jDateChooserFromPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserFromPropertyChange
+        // TODO add your handling code here:
+        if (!isTuNgayValid())
+            return;
+    }//GEN-LAST:event_jDateChooserFromPropertyChange
 
+    private void jDateChooserToPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserToPropertyChange
+        // TODO add your handling code here:
+        if (!isDenNgayValid())
+            return;
+    }//GEN-LAST:event_jDateChooserToPropertyChange
+
+    private boolean isTuNgayValid() {
+        long milis = System.currentTimeMillis();
+        Date currentDate = new Date(milis);
+        if (jDateChooserFrom.getDate().getTime() - currentDate.getTime() > 0) {
+            JOptionPane.showMessageDialog(null, "Ngày phải bé hơn hoặc bằng ngày hiện tại");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isDenNgayValid() {
+        long milis = System.currentTimeMillis();
+        Date currentDate = new Date(milis);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String from = formatter.format(jDateChooserFrom.getDate());
+        String to = formatter.format(jDateChooserTo.getDate());
+        Date tuNgay = Date.valueOf(from);
+        Date denNgay = Date.valueOf(to);
+
+        if (denNgay.getTime() - currentDate.getTime() > 0) {
+            JOptionPane.showMessageDialog(null, "Ngày phải bé hơn hoặc bằng ngày hiện tại");
+            return false;
+        }
+
+        if (tuNgay.getTime() - denNgay.getTime() > 0) {
+            JOptionPane.showMessageDialog(null, "Đến ngày phải có giá trị nhỏ hơn từ ngày");
+
+            return false;
+        }
+        return true;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXuatChiTietPhieuNhap;

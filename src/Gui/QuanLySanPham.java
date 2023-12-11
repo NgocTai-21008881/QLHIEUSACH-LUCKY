@@ -131,11 +131,6 @@ public class QuanLySanPham extends javax.swing.JPanel {
                 jMenu17MenuSelected(evt);
             }
         });
-        jMenu17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu17ActionPerformed(evt);
-            }
-        });
         jMenuBar7.add(jMenu17);
 
         jMenu15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/pen24.png"))); // NOI18N
@@ -156,11 +151,6 @@ public class QuanLySanPham extends javax.swing.JPanel {
         add(jInternalFrame1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 650));
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void jMenu17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu17ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jMenu17ActionPerformed
 
     private void jMenu17MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu17MenuSelected
         // TODO add your handling code here:

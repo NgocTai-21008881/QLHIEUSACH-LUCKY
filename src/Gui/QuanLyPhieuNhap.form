@@ -67,9 +67,6 @@
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="jMenu17">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Img/book.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Phi&#x1ebf;u nh&#x1ead;p"/>
               </Properties>
               <Events>
@@ -78,9 +75,6 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu15">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Img/pen24.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Nh&#x1ead;p h&#xe0;ng"/>
               </Properties>
               <Events>

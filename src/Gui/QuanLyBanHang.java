@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -146,9 +147,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         popupMenu1 = new java.awt.PopupMenu();
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jLabelNgayLap = new javax.swing.JLabel();
         jLabelMaHD = new javax.swing.JLabel();
-        jDateChooserNgayLap = new com.toedter.calendar.JDateChooser();
         jLabelMaNV = new javax.swing.JLabel();
         jTextFieldMaNV = new javax.swing.JTextField();
         jLabelTenNV = new javax.swing.JLabel();
@@ -189,6 +188,10 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jTextFieldKhachDua = new javax.swing.JTextField();
         jLabelTienTL = new javax.swing.JLabel();
         jTextFieldTraLai = new javax.swing.JTextField();
+        jTextFieldSoLuongBan = new javax.swing.JTextField();
+        jButtonTang = new javax.swing.JButton();
+        jButtonGiam = new javax.swing.JButton();
+        btnXacNhan = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -240,24 +243,17 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1040, 550));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelNgayLap.setText("NGÀY LẬP:");
-        add(jLabelNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 90, 40));
-
         jLabelMaHD.setText("MÃ HÓA ĐƠN:");
         add(jLabelMaHD, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 90, 40));
 
-        jDateChooserNgayLap.setEnabled(false);
-        jDateChooserNgayLap.setFocusable(false);
-        add(jDateChooserNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 170, 40));
-
         jLabelMaNV.setText("MÃ NHÂN VIÊN:");
-        add(jLabelMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 90, 40));
+        add(jLabelMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 90, 40));
 
         jTextFieldMaNV.setEnabled(false);
-        add(jTextFieldMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 150, 170, 40));
+        add(jTextFieldMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 170, 40));
 
         jLabelTenNV.setText("TÊN NHÂN VIÊN:");
-        add(jLabelTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 90, 40));
+        add(jLabelTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 90, 40));
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 10, 290));
@@ -296,7 +292,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 btnXoaSPActionPerformed(evt);
             }
         });
-        add(btnXoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 120, 40));
+        add(btnXoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 120, 40));
 
         btnLamMoi.setBackground(new java.awt.Color(102, 255, 102));
         btnLamMoi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -313,7 +309,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         add(jTextFieldSoDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, 170, 40));
 
         jTextFieldTenNV.setEnabled(false);
-        add(jTextFieldTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 170, 40));
+        add(jTextFieldTenNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 170, 40));
 
         jTextFieldTenKH.setEnabled(false);
         add(jTextFieldTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 170, 40));
@@ -411,6 +407,11 @@ public class QuanLyBanHang extends javax.swing.JPanel {
             }
         ));
         jTable_DSSPBan.setRowHeight(30);
+        jTable_DSSPBan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable_DSSPBanMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable_DSSPBan);
         if (jTable_DSSPBan.getColumnModel().getColumnCount() > 0) {
             jTable_DSSPBan.getColumnModel().getColumn(0).setPreferredWidth(1);
@@ -471,7 +472,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 btnXoaAllActionPerformed(evt);
             }
         });
-        add(btnXoaAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, 140, 40));
+        add(btnXoaAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 540, 140, 40));
 
         jlabel_img.setBackground(new java.awt.Color(204, 255, 255));
         jlabel_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -497,8 +498,38 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jTextFieldTraLai.setBorder(null);
         jTextFieldTraLai.setEnabled(false);
         add(jTextFieldTraLai, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 590, 210, 40));
+        add(jTextFieldSoLuongBan, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 540, 170, 40));
+
+        jButtonTang.setText("+");
+        jButtonTang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTangActionPerformed(evt);
+            }
+        });
+        add(jButtonTang, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, 50, 40));
+
+        jButtonGiam.setText("-");
+        jButtonGiam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGiamActionPerformed(evt);
+            }
+        });
+        add(jButtonGiam, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, 50, 40));
+
+        btnXacNhan.setBackground(new java.awt.Color(255, 102, 102));
+        btnXacNhan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnXacNhan.setForeground(new java.awt.Color(255, 255, 255));
+        btnXacNhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Add-icon.png"))); // NOI18N
+        btnXacNhan.setText("XÁC NHẬN");
+        btnXacNhan.setBorder(null);
+        btnXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXacNhanActionPerformed(evt);
+            }
+        });
+        add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 540, 130, 40));
     }// </editor-fold>//GEN-END:initComponents
-    private int tongsoLuong = 0;
+    private int tongsoluong = 0;
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         if (kiemTraHopLe()) {
@@ -508,33 +539,33 @@ public class QuanLyBanHang extends javax.swing.JPanel {
             DefaultTableModel dtmBan = (DefaultTableModel) jTable_DSSPBan.getModel();
             int tang = 0;
             int check = 0;
+            int checkSL = 0;
             for (int i = 0; i < dtmBan.getRowCount(); i++) {
                 if (sp.getMaSP().equals(jTable_DSSPBan.getValueAt(i, 0).toString())) {
-                    int slhc = Integer.parseInt(jTable_DSSPBan.getValueAt(i, 4).toString());
-                    tongsoLuong = slhc + soLuong;
-                    check = i;
-                    tang = 1;
-                    break;
+                    int slhc = Integer.parseInt(dtmBan.getValueAt(i, 4).toString());
+                    tongsoluong = slhc + soLuong;
+                    if (tongsoluong > sp.getSoLuongTK()) {
+                        JOptionPane.showMessageDialog(null, "Số lượng bán phải nhỏ hơn số lượng hiện có trong kho ở sản phẩm " + sp.getMaSP());
+                        checkSL = 1;
+                    } else {
+                        check = i;
+                        tang = 1;
+                        break;
+                    }
+
                 }
             }
-            if (tang == 0) {
-                Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), sp.getNhaCungCap().getTenNCC(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
-                dtmBan.addRow(rowData);
+            if (checkSL == 0) {
+                if (tang == 0) {
+                    Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), sp.getNhaCungCap().getTenNCC(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
+                    dtmBan.addRow(rowData);
+                } else {
+                    dtmBan.setValueAt(tongsoluong, check, 4);
+                    dtmBan.setValueAt(tongsoluong * sp.getDonGiaBan(), check, 6);
+                    tang = 0;
+                }
             }
-            else {
-                dtmBan.setValueAt(tongsoLuong, check, 4);
-                dtmBan.setValueAt(tongsoLuong * sp.getDonGiaBan(), check, 6);
-                tang = 0;
-            }
-
-            double tien = 0;
-            for (int i = 0; i < dtmBan.getRowCount(); i++) {
-                tien += Double.parseDouble(dtmBan.getValueAt(i, 6).toString());
-            }
-            tongTien = tien;
-            jTextFieldTongTien.setText(NumberFormat.getInstance().format(tongTien));
-            jTextFieldSoLuong.setText("");
-            jTable_DSSPHienCo.clearSelection();
+            tinhTongTien();
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -547,12 +578,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         } else {
             dtmBan.removeRow(row);
         }
-        double tien = 0;
-        for (int i = 0; i < dtmBan.getRowCount(); i++) {
-            tien += Double.parseDouble(dtmBan.getValueAt(i, 5).toString());
-        }
-        tongTien = tien;
-        jTextFieldTongTien.setText(NumberFormat.getInstance().format(tongTien));
+        tinhTongTien();
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -570,8 +596,10 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         if (kiemTraHopLeThanhToan()) {
             DefaultTableModel dtmDSSPBan = (DefaultTableModel) jTable_DSSPBan.getModel();
             String maHD = jTextFieldMaHD.getText().toString();
+            long milis = System.currentTimeMillis();
+            Date now = new Date(milis);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            String day = formatter.format(jDateChooserNgayLap.getDate());
+            String day = formatter.format(now);
             Date ngayLap = Date.valueOf(day);
             NhanVien nv = nhanVien_DAO.getNhanVienByID(jTextFieldMaNV.getText().toString());
             KhachHang kh = khachHang_DAO.getKhachHangBySdt(jTextFieldSoDT.getText().toString());
@@ -670,6 +698,89 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jTextFieldTraLai.setText(NumberFormat.getInstance().format(tienThua));
     }//GEN-LAST:event_jTextFieldKhachDuaKeyReleased
 
+    private void jButtonGiamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGiamActionPerformed
+        // TODO add your handling code here:
+        try {
+            int row = jTable_DSSPBan.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+            }
+            int giam = Integer.parseInt(jTextFieldSoLuongBan.getText()) - 1;
+            jTextFieldSoLuongBan.setText(String.valueOf(giam));
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_jButtonGiamActionPerformed
+
+    private void jButtonTangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTangActionPerformed
+        // TODO add your handling code here:
+        try {
+            int row = jTable_DSSPBan.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+            }
+            int tang = Integer.parseInt(jTextFieldSoLuongBan.getText()) + 1;
+            jTextFieldSoLuongBan.setText(String.valueOf(tang));
+        } catch (Exception e) {
+        }
+
+    }//GEN-LAST:event_jButtonTangActionPerformed
+
+    private void jTable_DSSPBanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_DSSPBanMousePressed
+        // TODO add your handling code here:
+        int row = jTable_DSSPBan.getSelectedRow();
+        DefaultTableModel dtmBan = (DefaultTableModel) jTable_DSSPBan.getModel();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+        }
+        jTextFieldSoLuongBan.setText(dtmBan.getValueAt(row, 4).toString());
+    }//GEN-LAST:event_jTable_DSSPBanMousePressed
+
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+        // TODO add your handling code here:
+        try {
+            int check = 0;
+            int row = jTable_DSSPBan.getSelectedRow();
+            DefaultTableModel dtmBan = (DefaultTableModel) jTable_DSSPBan.getModel();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+            } else {
+                ArrayList<SanPham> listSanPham = sanPham_DAO.getAllSanPham();
+                int soLuong = Integer.parseInt(jTextFieldSoLuongBan.getText());
+                if (soLuong < 1) {
+                    int option = JOptionPane.showConfirmDialog(null, "Số lượng mua nhỏ hơn 1 nên sản phẩm sẽ bị xoá. Bạn chắc chứ?");
+                    if (option == JOptionPane.YES_OPTION) {
+                        dtmBan.removeRow(row);
+                        JOptionPane.showMessageDialog(null, "Xoá thành công");
+                    }
+                    else check = 1;
+                } 
+                else {
+                    for (SanPham sanPham : listSanPham) {
+                        if (dtmBan.getValueAt(row, 0).equals(sanPham.getMaSP())) {
+                            if (soLuong > sanPham.getSoLuongTK()) {
+                                JOptionPane.showMessageDialog(null, "Số lượng phải nhỏ hơn số lượng tồn kho");
+                                check = 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (check == 0) {
+                    JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                    dtmBan.setValueAt(soLuong, row, 4);
+                    double donGia = Double.parseDouble(dtmBan.getValueAt(row, 5).toString());
+                    int sl = Integer.parseInt(dtmBan.getValueAt(row, 4).toString());
+                    double thanhTien = sl * donGia;
+                    dtmBan.setValueAt(thanhTien, row, 6);
+                    tinhTongTien();
+                }
+            }
+        } catch (Exception e) {
+            
+        }
+    }//GEN-LAST:event_btnXacNhanActionPerformed
+
     private boolean kiemTraHopLe() {
         int row = jTable_DSSPHienCo.getSelectedRow();
         DefaultTableModel dtm = (DefaultTableModel) jTable_DSSPHienCo.getModel();
@@ -723,6 +834,20 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         }
 
         return true;
+    }
+
+    private void tinhTongTien() {
+        DefaultTableModel dtmBan = (DefaultTableModel) jTable_DSSPBan.getModel();
+        double tien = 0;
+        for (int i = 0; i < dtmBan.getRowCount(); i++) {
+            tien += Double.parseDouble(dtmBan.getValueAt(i, 6).toString());
+        }
+        tongTien = tien;
+        jTextFieldTongTien.setText(NumberFormat.getInstance().format(tongTien));
+        jTextFieldSoLuong.setText("");
+        jTextFieldSoLuongBan.setText("");
+        jTable_DSSPHienCo.clearSelection();
+        jTable_DSSPBan.clearSelection();
     }
 
     public ImageIcon ResizeImage(String imgPath) {
@@ -810,61 +935,61 @@ public class QuanLyBanHang extends javax.swing.JPanel {
             tableCTHD.setWidths(columnWidths1);
 
             PdfPCell cellMaSP = new PdfPCell(new Paragraph("Mã sản phẩm", font));
-            cellMaSP.setBorderColor(BaseColor.WHITE);
+            cellMaSP.setBorderColor(BaseColor.BLACK);
             tableCTHD.addCell(cellMaSP);
 
             PdfPCell cellTenSP = new PdfPCell(new Paragraph("Tên sản phẩm", font));
-            cellTenSP.setBorderColor(BaseColor.WHITE);
+            cellTenSP.setBorderColor(BaseColor.BLACK);
             tableCTHD.addCell(cellTenSP);
 
             PdfPCell cellLoaiSP = new PdfPCell(new Paragraph("Loại sản phẩm", font));
-            cellLoaiSP.setBorderColor(BaseColor.WHITE);
+            cellLoaiSP.setBorderColor(BaseColor.BLACK);
             tableCTHD.addCell(cellLoaiSP);
 
             PdfPCell cellSoLuong = new PdfPCell(new Paragraph("Số lượng", font));
-            cellSoLuong.setBorderColor(BaseColor.WHITE);
+            cellSoLuong.setBorderColor(BaseColor.BLACK);
             tableCTHD.addCell(cellSoLuong);
 
             PdfPCell cellDonGia = new PdfPCell(new Paragraph("Đơn giá", font));
-            cellDonGia.setBorderColor(BaseColor.WHITE);
+            cellDonGia.setBorderColor(BaseColor.BLACK);
             tableCTHD.addCell(cellDonGia);
 
             PdfPCell cellThanhTien = new PdfPCell(new Paragraph("Thành tiền", font));
-            cellThanhTien.setBorderColor(BaseColor.WHITE);
+            cellThanhTien.setBorderColor(BaseColor.BLACK);
             tableCTHD.addCell(cellThanhTien);
             for (ChiTietHoaDon cthd : listCTHD) {
                 PdfPCell cell1 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getMaSP()), font));
-                cell1.setBorderColor(BaseColor.WHITE);
+                cell1.setBorderColor(BaseColor.BLACK);
                 cell1.setHorizontalAlignment(5);
                 cell1.setVerticalAlignment(5);
                 tableCTHD.addCell(cell1);
 
                 PdfPCell cell2 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getTenSP()), font));
-                cell2.setBorderColor(BaseColor.WHITE);
+                cell2.setBorderColor(BaseColor.BLACK);
                 cell2.setHorizontalAlignment(5);
                 cell2.setVerticalAlignment(5);
                 tableCTHD.addCell(cell2);
 
                 PdfPCell cell3 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getLoaiSP()), font));
-                cell3.setBorderColor(BaseColor.WHITE);
+                cell3.setBorderColor(BaseColor.BLACK);
                 cell3.setHorizontalAlignment(5);
                 cell3.setVerticalAlignment(5);
                 tableCTHD.addCell(cell3);
 
                 PdfPCell cell4 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSoLuong()), font));
-                cell4.setBorderColor(BaseColor.WHITE);
+                cell4.setBorderColor(BaseColor.BLACK);
                 cell4.setHorizontalAlignment(5);
                 cell4.setVerticalAlignment(5);
                 tableCTHD.addCell(cell4);
 
                 PdfPCell cell5 = new PdfPCell(new Paragraph(String.valueOf(cthd.getSanPham().getDonGiaBan()), font));
-                cell5.setBorderColor(BaseColor.WHITE);
+                cell5.setBorderColor(BaseColor.BLACK);
                 cell5.setHorizontalAlignment(5);
                 cell5.setVerticalAlignment(5);
                 tableCTHD.addCell(cell5);
 
                 PdfPCell cell6 = new PdfPCell(new Paragraph(String.valueOf(cthd.thanhTien()), font));
-                cell6.setBorderColor(BaseColor.WHITE);
+                cell6.setBorderColor(BaseColor.BLACK);
                 cell6.setHorizontalAlignment(5);
                 cell6.setVerticalAlignment(5);
                 tableCTHD.addCell(cell6);
@@ -921,17 +1046,18 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnTimSDT;
+    private javax.swing.JButton btnXacNhan;
     private javax.swing.JButton btnXoaAll;
     private javax.swing.JButton btnXoaSP;
+    private javax.swing.JButton jButtonGiam;
     private javax.swing.JButton jButtonSach;
+    private javax.swing.JButton jButtonTang;
     private javax.swing.JButton jButtonVPP;
-    private com.toedter.calendar.JDateChooser jDateChooserNgayLap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEmail;
     private javax.swing.JLabel jLabelMaHD;
     private javax.swing.JLabel jLabelMaKH;
     private javax.swing.JLabel jLabelMaNV;
-    private javax.swing.JLabel jLabelNgayLap;
     private javax.swing.JLabel jLabelSoDienThoai;
     private javax.swing.JLabel jLabelSoLuong;
     private javax.swing.JLabel jLabelTenKH;
@@ -976,6 +1102,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldMaNV;
     private javax.swing.JTextField jTextFieldSoDT;
     private javax.swing.JTextField jTextFieldSoLuong;
+    private javax.swing.JTextField jTextFieldSoLuongBan;
     private javax.swing.JTextField jTextFieldTenKH;
     private javax.swing.JTextField jTextFieldTenNV;
     private javax.swing.JTextField jTextFieldTimKiem;

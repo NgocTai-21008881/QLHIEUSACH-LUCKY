@@ -43,7 +43,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
 
         jMenuBar7.setBackground(new java.awt.Color(0, 0, 0));
 
-        jMenu17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/book.png"))); // NOI18N
         jMenu17.setText("Phiếu nhập");
         jMenu17.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
@@ -56,7 +55,6 @@ public class QuanLyPhieuNhap extends javax.swing.JPanel {
         });
         jMenuBar7.add(jMenu17);
 
-        jMenu15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/pen24.png"))); // NOI18N
         jMenu15.setText("Nhập hàng");
         jMenu15.addMenuListener(new javax.swing.event.MenuListener() {
             public void menuCanceled(javax.swing.event.MenuEvent evt) {
