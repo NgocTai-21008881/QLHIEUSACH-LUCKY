@@ -64,6 +64,23 @@ public class SanPhamDAO {
         return -1;
     }
     
+    public int capNhatGiaBan(SanPham sanPham){
+        ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+
+        try {
+            String sql  ="update SanPham set donGiaBan = ? where maSP = ?";
+            PreparedStatement stmt = con.prepareCall(sql);
+            stmt.setDouble(1, sanPham.getDonGiaBan());
+            stmt.setString(2, sanPham.getMaSP());
+            
+            return stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
     public SanPham getSanPhamById(String id) {
         NhaCungCapDAO nhaCungCapDao = new NhaCungCapDAO();
 
