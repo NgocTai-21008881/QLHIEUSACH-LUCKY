@@ -59,12 +59,14 @@ public class Tab_HoaDon extends javax.swing.JPanel {
         int tongHoaDon = listHoaDon.size();
         double tongThanhTien = 0;
         dtm = (DefaultTableModel) jTableDSHD.getModel();
-        for (HoaDon hoaDon : listHoaDon) {
-            double tongTien = hoaDon.tongTien();
-            tongThanhTien += tongTien;
+        for (HoaDon hd : listHoaDon) {
+            double tienHoaDon = hd.tongTien();
+            double thue = tienHoaDon * 0.1;
+            double thanhTien = tienHoaDon - thue;
+            tongThanhTien += thanhTien;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String date = sdf.format(hoaDon.getNgayLapHD());
-            Object[] rowData = {hoaDon.getMaHD(), date, hoaDon.getNhanVien().getTenNhanVien(), hoaDon.getKhachHang().getTenKhachHang(), NumberFormat.getInstance().format(tongTien)};
+            String date = sdf.format(hd.getNgayLapHD());
+            Object[] rowData = {hd.getMaHD(), date, hd.getNhanVien().getTenNhanVien(), hd.getKhachHang().getTenKhachHang(), NumberFormat.getInstance().format(tienHoaDon), NumberFormat.getInstance().format(thue), NumberFormat.getInstance().format(thanhTien)};
             dtm.addRow(rowData);
         }
         jLabelTongHD.setText(NumberFormat.getInstance().format(tongHoaDon));
@@ -97,11 +99,13 @@ public class Tab_HoaDon extends javax.swing.JPanel {
 
         DefaultTableModel dtm = (DefaultTableModel) jTableDSHD.getModel();
         for (HoaDon hd : listHoaDon) {
-            double tongTien = hd.tongTien();
-            tongThanhTien += tongTien;
+            double tienHoaDon = hd.tongTien();
+            double thue = tienHoaDon * 0.2;
+            double thanhTien = tienHoaDon - thue;
+            tongThanhTien += thanhTien;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String date = sdf.format(hd.getNgayLapHD());
-            Object[] rowData = {hd.getMaHD(), date, hd.getNhanVien().getTenNhanVien(), hd.getKhachHang().getTenKhachHang(), NumberFormat.getInstance().format(tongTien)};
+            Object[] rowData = {hd.getMaHD(), date, hd.getNhanVien().getTenNhanVien(), hd.getKhachHang().getTenKhachHang(), NumberFormat.getInstance().format(tienHoaDon), NumberFormat.getInstance().format(thue), NumberFormat.getInstance().format(thanhTien)};
             dtm.addRow(rowData);
         }
 
@@ -278,7 +282,7 @@ public class Tab_HoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã hoá đơn", "Ngày lập hoá đơn", "Nhân viên", "Khách hàng", "Thành tiền"
+                "Mã hoá đơn", "Ngày lập hoá đơn", "Nhân viên", "Khách hàng", "Tiền hoá đơn", "Thuế", "Thành tiền"
             }
         ));
         jTableDSHD.setRowHeight(30);
