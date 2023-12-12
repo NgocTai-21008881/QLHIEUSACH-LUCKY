@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -57,7 +58,10 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     public Tab_NhapHang() {
         initComponents();
         PhieuNhap pn = new PhieuNhap();
-        jTextFieldMaPhieuNhap.setText(pn.getMaPhieuNhap());
+        jTextFieldNgayNhap.setText(pn.getMaPhieuNhap());
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        jTextFieldMaPhieuNhap.setText(date.toString());
         loadTblSanPham();
     }
 
@@ -101,8 +105,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         jLabelMaPhieuNhap = new javax.swing.JLabel();
         btnThem = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
-        jTextFieldMaPhieuNhap = new javax.swing.JTextField();
-        jDateChooserNhap = new com.toedter.calendar.JDateChooser();
+        jTextFieldNgayNhap = new javax.swing.JTextField();
         jLabelDonGiaMua = new javax.swing.JLabel();
         jTextFieldSoLuong = new javax.swing.JTextField();
         jLabelMaPhieuNhap2 = new javax.swing.JLabel();
@@ -113,6 +116,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         jTextFieldTenSP = new javax.swing.JTextField();
         jLabelLoaiSP = new javax.swing.JLabel();
         jComboBoxLoaiSP = new javax.swing.JComboBox<>();
+        jTextFieldMaPhieuNhap = new javax.swing.JTextField();
         jLabelQuanLyPhieuNhap = new javax.swing.JLabel();
         jPanelDanhSachSanPham = new javax.swing.JPanel();
         jScrollPaneChiTietHoaDon = new javax.swing.JScrollPane();
@@ -125,6 +129,10 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         jLabelTongTien = new javax.swing.JLabel();
         jTextFieldTongTien = new javax.swing.JTextField();
         btnNhapHang = new javax.swing.JButton();
+        jButtonT = new javax.swing.JButton();
+        jButtonG = new javax.swing.JButton();
+        jTextFieldChange = new javax.swing.JTextField();
+        jButtonXacNhan = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1260, 530));
@@ -185,10 +193,9 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         });
         jPanelThongTinNhap.add(btnLamMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 120, -1));
 
-        jTextFieldMaPhieuNhap.setEditable(false);
-        jTextFieldMaPhieuNhap.setEnabled(false);
-        jPanelThongTinNhap.add(jTextFieldMaPhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 260, 30));
-        jPanelThongTinNhap.add(jDateChooserNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 260, 30));
+        jTextFieldNgayNhap.setEditable(false);
+        jTextFieldNgayNhap.setEnabled(false);
+        jPanelThongTinNhap.add(jTextFieldNgayNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 260, 30));
 
         jLabelDonGiaMua.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelDonGiaMua.setText("ĐƠN GIÁ MUA");
@@ -216,6 +223,10 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         jComboBoxLoaiSP.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Loại", "Sách", "Văn Phòng Phẩm" }));
         jComboBoxLoaiSP.setName(""); // NOI18N
         jPanelThongTinNhap.add(jComboBoxLoaiSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, 170, 30));
+
+        jTextFieldMaPhieuNhap.setEditable(false);
+        jTextFieldMaPhieuNhap.setEnabled(false);
+        jPanelThongTinNhap.add(jTextFieldMaPhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 260, 30));
 
         add(jPanelThongTinNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1260, 140));
 
@@ -261,6 +272,11 @@ public class Tab_NhapHang extends javax.swing.JPanel {
             }
         ));
         jTable_ChiTietPhieuNhap.setRowHeight(30);
+        jTable_ChiTietPhieuNhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable_ChiTietPhieuNhapMousePressed(evt);
+            }
+        });
         jScrollPaneChiTietPhieuNhap.setViewportView(jTable_ChiTietPhieuNhap);
 
         jPanelChiTietPhieuNhap.add(jScrollPaneChiTietPhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 860, 140));
@@ -276,7 +292,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 btnXoaSPActionPerformed(evt);
             }
         });
-        jPanelChiTietPhieuNhap.add(btnXoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 20, 170, 40));
+        jPanelChiTietPhieuNhap.add(btnXoaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 170, 40));
 
         btnXoaAll.setBackground(new java.awt.Color(153, 255, 204));
         btnXoaAll.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -289,14 +305,14 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 btnXoaAllActionPerformed(evt);
             }
         });
-        jPanelChiTietPhieuNhap.add(btnXoaAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 170, 40));
+        jPanelChiTietPhieuNhap.add(btnXoaAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 70, 170, 40));
 
         jLabelTongTien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelTongTien.setText("TỔNG TIỀN");
-        jPanelChiTietPhieuNhap.add(jLabelTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 140, 40));
+        jPanelChiTietPhieuNhap.add(jLabelTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 90, 120, 30));
 
         jTextFieldTongTien.setEditable(false);
-        jPanelChiTietPhieuNhap.add(jTextFieldTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 70, 160, 30));
+        jPanelChiTietPhieuNhap.add(jTextFieldTongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 120, 180, 30));
 
         btnNhapHang.setBackground(new java.awt.Color(255, 102, 102));
         btnNhapHang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -309,11 +325,37 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 btnNhapHangActionPerformed(evt);
             }
         });
-        jPanelChiTietPhieuNhap.add(btnNhapHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 120, 170, 30));
+        jPanelChiTietPhieuNhap.add(btnNhapHang, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 120, 170, 30));
+
+        jButtonT.setText("+");
+        jButtonT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTActionPerformed(evt);
+            }
+        });
+        jPanelChiTietPhieuNhap.add(jButtonT, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 30, 40, -1));
+
+        jButtonG.setText("-");
+        jButtonG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGActionPerformed(evt);
+            }
+        });
+        jPanelChiTietPhieuNhap.add(jButtonG, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 30, 40, -1));
+        jPanelChiTietPhieuNhap.add(jTextFieldChange, new org.netbeans.lib.awtextra.AbsoluteConstraints(934, 30, 90, -1));
+
+        jButtonXacNhan.setBackground(new java.awt.Color(255, 102, 102));
+        jButtonXacNhan.setText("Xác nhận");
+        jButtonXacNhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonXacNhanActionPerformed(evt);
+            }
+        });
+        jPanelChiTietPhieuNhap.add(jButtonXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 60, -1, -1));
 
         add(jPanelChiTietPhieuNhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 1260, 170));
     }// </editor-fold>//GEN-END:initComponents
-
+    private int tongsoluong = 0;
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         try {
@@ -327,17 +369,37 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 SanPham sp = sanPham_DAO.getSanPhamById(maSP);
 
                 DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
-                Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, donGiaMua, soLuong * donGiaMua};
-                dtmCTPN.addRow(rowData);
                 double tien = 0;
+                int tang = 0;
+                int check = 0;
+                int checkSL = 0;
                 for (int i = 0; i < dtmCTPN.getRowCount(); i++) {
-                    tien += Double.parseDouble(dtmCTPN.getValueAt(i, 5).toString());
+                    if (sp.getMaSP().equals(jTable_ChiTietPhieuNhap.getValueAt(i, 0).toString())) {
+                        int slhc = Integer.parseInt(dtmCTPN.getValueAt(i, 3).toString());
+                        tongsoluong = slhc + soLuong;
+                        if (tongsoluong > sp.getSoLuongTK()) {
+                            JOptionPane.showMessageDialog(null, "Số lượng bán phải nhỏ hơn số lượng hiện có trong kho ở sản phẩm " + sp.getMaSP());
+                            checkSL = 1;
+                        } else {
+                            check = i;
+                            tang = 1;
+                            break;
+                        }
+
+                    }
                 }
-                tongTien = tien;
-                jTextFieldTongTien.setText(String.valueOf(tongTien));
-                jTextFieldDonGiaMua.setText("");
-                jTextFieldSoLuong.setText("");
-                jTable_DanhSachSanPham.clearSelection();
+                if (checkSL == 0) {
+                    if (tang == 0) {
+                        Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
+                        dtmCTPN.addRow(rowData);
+                    } else {
+                        dtmCTPN.setValueAt(tongsoluong, check, 3);
+                        dtmCTPN.setValueAt(tongsoluong * sp.getDonGiaBan(), check, 5);
+                        tang = 0;
+                    }
+                }
+                tinhTongTien();
+                lamMoi();
                 JOptionPane.showMessageDialog(null, "Thêm thành công");
             }
 
@@ -396,7 +458,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
-        PhieuNhap pn = new PhieuNhap(jTextFieldMaPhieuNhap.getText(), date);
+        PhieuNhap pn = new PhieuNhap(jTextFieldNgayNhap.getText(), date);
         phieuNhap_DAO.addPhieuNhap(pn);
         if (kiemTraHopLeNhapHang()) {
             for (int i = 0; i < jTable_ChiTietPhieuNhap.getRowCount(); i++) {
@@ -419,10 +481,10 @@ public class Tab_NhapHang extends javax.swing.JPanel {
             clearTableChiTietPhieuNhap();
             lamMoi();
             PhieuNhap pnnew = new PhieuNhap();
-            jTextFieldMaPhieuNhap.setText(pnnew.getMaPhieuNhap());
+            jTextFieldNgayNhap.setText(pnnew.getMaPhieuNhap());
             tongTien = 0;
             jTextFieldTongTien.setText("");
-        } 
+        }
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void btnXoaSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPActionPerformed
@@ -434,12 +496,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         } else {
             dtmCTPN.removeRow(row);
         }
-        double tien = 0;
-        for (int i = 0; i < jTable_ChiTietPhieuNhap.getRowCount(); i++) {
-            tien += Double.parseDouble(jTable_ChiTietPhieuNhap.getValueAt(i, 5).toString());
-        }
-        tongTien = tien;
-        jTextFieldTongTien.setText(String.valueOf(tongTien));
+        tinhTongTien();
 
     }//GEN-LAST:event_btnXoaSPActionPerformed
 
@@ -448,6 +505,92 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         clearTableChiTietPhieuNhap();
         jTextFieldTongTien.setText("");
     }//GEN-LAST:event_btnXoaAllActionPerformed
+
+    private void jButtonGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGActionPerformed
+        // TODO add your handling code here:
+        try {
+            int row = jTable_ChiTietPhieuNhap.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+            }
+            int giam = Integer.parseInt(jTextFieldChange.getText()) - 1;
+            jTextFieldChange.setText(String.valueOf(giam));
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButtonGActionPerformed
+
+    private void jButtonXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonXacNhanActionPerformed
+        // TODO add your handling code here:
+        try {
+            int check = 0;
+            int row = jTable_ChiTietPhieuNhap.getSelectedRow();
+            DefaultTableModel dtmNhap = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+            } else {
+                ArrayList<SanPham> listSanPham = sanPham_DAO.getAllSanPham();
+                int soLuong = Integer.parseInt(jTextFieldChange.getText());
+                if (soLuong < 1) {
+                    int option = JOptionPane.showConfirmDialog(null, "Số lượng nhập nhỏ hơn 1 nên sản phẩm sẽ bị xoá. Bạn chắc chứ?");
+                    if (option == JOptionPane.YES_OPTION) {
+                        dtmNhap.removeRow(row);
+                        JOptionPane.showMessageDialog(null, "Xoá thành công");
+                    } else {
+                        check = 1;
+                    }
+                }
+                if (check == 0) {
+                    JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+                    dtmNhap.setValueAt(soLuong, row, 3);
+                    double donGia = Double.parseDouble(dtmNhap.getValueAt(row, 4).toString());
+                    int sl = Integer.parseInt(dtmNhap.getValueAt(row, 3).toString());
+                    double thanhTien = sl * donGia;
+                    dtmNhap.setValueAt(thanhTien, row, 5);
+                    tinhTongTien();
+                }
+            }
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_jButtonXacNhanActionPerformed
+
+    private void jTable_ChiTietPhieuNhapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ChiTietPhieuNhapMousePressed
+        // TODO add your handling code here:
+        int row = jTable_ChiTietPhieuNhap.getSelectedRow();
+        DefaultTableModel dtmBan = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+        }
+        jTextFieldChange.setText(dtmBan.getValueAt(row, 3).toString());
+    }//GEN-LAST:event_jTable_ChiTietPhieuNhapMousePressed
+
+    private void jButtonTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTActionPerformed
+        // TODO add your handling code here:
+        try {
+            int row = jTable_ChiTietPhieuNhap.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn sản phẩm cần thay đổi");
+            }
+            int tang = Integer.parseInt(jTextFieldChange.getText()) + 1;
+            jTextFieldChange.setText(String.valueOf(tang));
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButtonTActionPerformed
+
+    private void tinhTongTien() {
+        DefaultTableModel dtmNhap = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
+        double tien = 0;
+        for (int i = 0; i < dtmNhap.getRowCount(); i++) {
+            tien += Double.parseDouble(dtmNhap.getValueAt(i, 5).toString());
+        }
+        tongTien = tien;
+        jTextFieldTongTien.setText(NumberFormat.getInstance().format(tongTien));
+        jTextFieldDonGiaMua.setText("");
+        jTextFieldSoLuong.setText("");
+        jTextFieldChange.setText("");
+        jTable_DanhSachSanPham.clearSelection();
+        jTable_ChiTietPhieuNhap.clearSelection();
+    }
 
     private void lamMoi() {
         jTextFieldDonGiaMua.setText("");
@@ -458,6 +601,8 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         jTextFieldDonGiaMua.setEditable(false);
         jComboBoxLoaiSP.setSelectedIndex(0);
         jTable_DanhSachSanPham.clearSelection();
+        jTable_ChiTietPhieuNhap.clearSelection();
+        jTextFieldChange.setText("");
     }
 
     private boolean kiemTraHopLe() {
@@ -629,7 +774,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
-    
+
     private void openPhieuNhap(String maPhieuNhap) {
         File file = new File("");
         String path = file.getAbsolutePath();
@@ -648,8 +793,13 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoaAll;
     private javax.swing.JButton btnXoaSP;
+    private javax.swing.JButton jButtonG;
+    private javax.swing.JButton jButtonGiam;
+    private javax.swing.JButton jButtonGiam1;
+    private javax.swing.JButton jButtonGiam2;
+    private javax.swing.JButton jButtonT;
+    private javax.swing.JButton jButtonXacNhan;
     private javax.swing.JComboBox<String> jComboBoxLoaiSP;
-    private com.toedter.calendar.JDateChooser jDateChooserNhap;
     private javax.swing.JLabel jLabelDonGiaMua;
     private javax.swing.JLabel jLabelLoaiSP;
     private javax.swing.JLabel jLabelMaPhieuNhap;
@@ -667,9 +817,11 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPaneChiTietPhieuNhap;
     private javax.swing.JTable jTable_ChiTietPhieuNhap;
     private javax.swing.JTable jTable_DanhSachSanPham;
+    private javax.swing.JTextField jTextFieldChange;
     private javax.swing.JTextField jTextFieldDonGiaMua;
     private javax.swing.JTextField jTextFieldMaPhieuNhap;
     private javax.swing.JTextField jTextFieldMaSP;
+    private javax.swing.JTextField jTextFieldNgayNhap;
     private javax.swing.JTextField jTextFieldSoLuong;
     private javax.swing.JTextField jTextFieldTenSP;
     private javax.swing.JTextField jTextFieldTongTien;
