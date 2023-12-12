@@ -8,7 +8,11 @@ package Gui;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -20,6 +24,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import dao.NhaCungCapDAO;
 
@@ -142,7 +151,7 @@ public class Tab_VPP extends javax.swing.JPanel {
         btnXuatExcel.setBorder(null);
         btnXuatExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
+                btnXuatExcelActionPerformed(evt);
             }
         });
         jPanel1.add(btnXuatExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, 180, 40));
@@ -406,9 +415,58 @@ public class Tab_VPP extends javax.swing.JPanel {
        txtDonGiaBan.setText(String.valueOf(vpp.getDonGiaBan()));
        
     }
-    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+    private static String[] Columns= {"MÃ SẢN PHẨM", "TÊN SẢN PHẨM", "NHÀ CUNG CẤP","HÌNH ẢNH", "XUẤT XỨ", "MÀU SẮC","CHẤT LIỆU","SỐ LƯỢNG", "ĐƠN GIÁ"};
+    private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         // TODO add your handling code here:
+    	XSSFWorkbook excelJTableExport = new XSSFWorkbook();
+  	  XSSFSheet excelSheet = excelJTableExport.createSheet("Danh sách sản phẩm Văn phòng phẩm");
+        BufferedOutputStream excelBos = null;
+  	try {
+  		 //Chọn nơi lưu
+          JFileChooser excelFileChooser = new JFileChooser();
+          //Tiêu đề ô save
+          excelFileChooser.setDialogTitle("Save As ..");
+          //Định dạng chỉ xls, xlsx, xlsm files
+          FileNameExtensionFilter fnef = new FileNameExtensionFilter("Files", "xls", "xlsx", "xlsm");
+          excelFileChooser.setFileFilter(fnef);
+          int chooser = excelFileChooser.showSaveDialog(null);
+          XSSFCell excelCell = null;
+  		if(chooser==JFileChooser.APPROVE_OPTION){
+  			 XSSFRow excelRow = excelSheet.createRow(0);
+  			 for(int j=0; j< jTable_Sach.getColumnCount();j++) {
+  				 excelCell = excelRow.createCell(j);
+                   excelCell.setCellValue(Columns[j]);
+  			 }
+  			 for(int i=1;i<= jTable_Sach.getRowCount();i++) {
+  				 excelRow = excelSheet.createRow(i);
+                   for (int j = 0; j < jTable_Sach.getColumnCount(); j++) {
+                       excelCell = excelRow.createCell(j);
+                       excelCell.setCellValue(jTable_Sach.getValueAt(i - 1, j).toString());
+                   }
+  			 }
+  			 FileOutputStream excelFos = new FileOutputStream(excelFileChooser.getSelectedFile() + ".xlsx");
+               excelBos = new BufferedOutputStream(excelFos);
+               excelJTableExport.write(excelBos);
+               JOptionPane.showMessageDialog(null, "Xuất danh sản phẩm Văn phòng phẩm thành công");
+  		}
+  	}catch (FileNotFoundException ex) {
+          JOptionPane.showMessageDialog(null, ex);
+      } catch (IOException ex) {
+          JOptionPane.showMessageDialog(null, ex);
+      } finally {
+          try {
+              if (excelBos != null) {
+                  excelBos.close();
+              }
+              if (excelJTableExport != null) {
+                  excelJTableExport.close();
+              }
+          } catch (IOException ex) {
+              JOptionPane.showMessageDialog(null, ex);
+          }
+      }
     }//GEN-LAST:event_btn2ActionPerformed
+    
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         // TODO add your handling code here:
@@ -532,6 +590,10 @@ public class Tab_VPP extends javax.swing.JPanel {
     	btnThem.setText("Hủy");
     	btnSua.setEnabled(false);
     	btnXoaTrang.setEnabled(false);
+    	txtSoLuong.setText("0");
+    	txtDonGiaBan.setText("0");
+    	txtSoLuong.setEnabled(false);
+    	txtDonGiaBan.setEnabled(false);
     	txtMaSP.setText(vpp.auto_ID());
     	}else if(btnThem.getText().equalsIgnoreCase("Hủy")) {
     		btnThem.setText("Thêm");
@@ -541,6 +603,8 @@ public class Tab_VPP extends javax.swing.JPanel {
         	btnChonAnh.setEnabled(false);
         	btnLuu.setEnabled(false);
     		lblHinhAnh.setIcon(null);
+    		txtSoLuong.setEnabled(true);
+        	txtDonGiaBan.setEnabled(true);
     	}
     }//GEN-LAST:event_btn3ActionPerformed
 

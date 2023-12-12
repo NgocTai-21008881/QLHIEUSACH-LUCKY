@@ -10,7 +10,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -22,6 +26,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+
+import org.apache.poi.ss.formula.functions.Columns;
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import dao.NhaCungCapDAO;
 import dao.NhaXuatBanDao;
@@ -159,7 +170,7 @@ public class Tab_Sach extends javax.swing.JPanel implements ActionListener,Mouse
         btnXuatExcel.setBorder(null);
         btnXuatExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
+                btnXuatExcelActionPerformed(evt);
             }
         });
         jPanel1.add(btnXuatExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 210, 180, 40));
@@ -388,8 +399,56 @@ public class Tab_Sach extends javax.swing.JPanel implements ActionListener,Mouse
         txtSoLuong.setText(String.valueOf(sach.getSoLuongTK()));
         txtDonGia.setText(String.valueOf(sach.getDonGiaBan()));
     }
-    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+    private static String[] Columns= {"MÃ SÁCH", "TÊN SÁCH", "THỂ LOẠI","HÌNH ẢNH", "NHÀ CUNG CẤP", "NHÀ XUẤT BẢN", "TÁC GIẢ", "SỐ LƯỢNG", "ĐƠN GIÁ"};
+    private void btnXuatExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         // TODO add your handling code here:
+    	XSSFWorkbook excelJTableExport = new XSSFWorkbook();
+    	  XSSFSheet excelSheet = excelJTableExport.createSheet("Danh sách sản phẩm Sách");
+          BufferedOutputStream excelBos = null;
+    	try {
+    		 //Chọn nơi lưu
+            JFileChooser excelFileChooser = new JFileChooser();
+            //Tiêu đề ô save
+            excelFileChooser.setDialogTitle("Save As ..");
+            //Định dạng chỉ xls, xlsx, xlsm files
+            FileNameExtensionFilter fnef = new FileNameExtensionFilter("Files", "xls", "xlsx", "xlsm");
+            excelFileChooser.setFileFilter(fnef);
+            int chooser = excelFileChooser.showSaveDialog(null);
+            XSSFCell excelCell = null;
+    		if(chooser==JFileChooser.APPROVE_OPTION){
+    			 XSSFRow excelRow = excelSheet.createRow(0);
+    			 for(int j=0; j< jTable_Sach.getColumnCount();j++) {
+    				 excelCell = excelRow.createCell(j);
+                     excelCell.setCellValue(Columns[j]);
+    			 }
+    			 for(int i=1;i<= jTable_Sach.getRowCount();i++) {
+    				 excelRow = excelSheet.createRow(i);
+                     for (int j = 0; j < jTable_Sach.getColumnCount(); j++) {
+                         excelCell = excelRow.createCell(j);
+                         excelCell.setCellValue(jTable_Sach.getValueAt(i - 1, j).toString());
+                     }
+    			 }
+    			 FileOutputStream excelFos = new FileOutputStream(excelFileChooser.getSelectedFile() + ".xlsx");
+                 excelBos = new BufferedOutputStream(excelFos);
+                 excelJTableExport.write(excelBos);
+                 JOptionPane.showMessageDialog(null, "Xuất danh sản phẩm sách thành công");
+    		}
+    	}catch (FileNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        } finally {
+            try {
+                if (excelBos != null) {
+                    excelBos.close();
+                }
+                if (excelJTableExport != null) {
+                    excelJTableExport.close();
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+            }
+        }
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -514,6 +573,10 @@ public class Tab_Sach extends javax.swing.JPanel implements ActionListener,Mouse
     	btnThem.setText("Hủy");
     	btnSua.setEnabled(false);
     	btnXoaTrang.setEnabled(false);
+    	txtDonGia.setText("0");
+    	txtDonGia.setEnabled(false);
+    	txtSoLuong.setText("0");
+    	txtSoLuong.setEnabled(false);
     	txtMaSach.setText(sach.auto_ID());
     	}else if(btnThem.getText().equalsIgnoreCase("Hủy")) {
     		btnThem.setText("Thêm");
@@ -523,6 +586,8 @@ public class Tab_Sach extends javax.swing.JPanel implements ActionListener,Mouse
         	btnChonAnh.setEnabled(false);
         	btnLuu.setEnabled(false);
     		lblHinhAnh.setIcon(null);
+    		txtDonGia.setEnabled(true);
+    		txtSoLuong.setEnabled(true);
     	}
     }//GEN-LAST:event_btn3ActionPerformed
     public Sach getDataOnTextField() {
