@@ -68,6 +68,9 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         nv = nhanVien_DAO.getNhanVienByID(Login.tenTaiKhoan);
         jTextFieldMaNV.setText(nv.getMaNhanVien());
         jTextFieldTenNV.setText(nv.getTenNhanVien());
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        jTextFieldNgayLap.setText(date.toString());
         loadTblSach();
     }
 
@@ -192,6 +195,8 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         jButtonTang = new javax.swing.JButton();
         jButtonGiam = new javax.swing.JButton();
         btnXacNhan = new javax.swing.JButton();
+        jLabelNgayLap = new javax.swing.JLabel();
+        jTextFieldNgayLap = new javax.swing.JTextField();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -528,6 +533,12 @@ public class QuanLyBanHang extends javax.swing.JPanel {
             }
         });
         add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 540, 130, 40));
+
+        jLabelNgayLap.setText("NGÀY LẬP");
+        add(jLabelNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 90, 40));
+
+        jTextFieldNgayLap.setEnabled(false);
+        add(jTextFieldNgayLap, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 210, 170, 40));
     }// </editor-fold>//GEN-END:initComponents
     private int tongsoluong = 0;
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -595,14 +606,14 @@ public class QuanLyBanHang extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (kiemTraHopLeThanhToan()) {
             DefaultTableModel dtmDSSPBan = (DefaultTableModel) jTable_DSSPBan.getModel();
-            String maHD = jTextFieldMaHD.getText().toString();
+            String maHD = jTextFieldMaHD.getText();
             long milis = System.currentTimeMillis();
             Date now = new Date(milis);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String day = formatter.format(now);
             Date ngayLap = Date.valueOf(day);
-            NhanVien nv = nhanVien_DAO.getNhanVienByID(jTextFieldMaNV.getText().toString());
-            KhachHang kh = khachHang_DAO.getKhachHangBySdt(jTextFieldSoDT.getText().toString());
+            NhanVien nv = nhanVien_DAO.getNhanVienByID(jTextFieldMaNV.getText());
+            KhachHang kh = khachHang_DAO.getKhachHangBySdt(jTextFieldSoDT.getText());
             HoaDon hd = new HoaDon(maHD, ngayLap, nv, kh);
             hoaDon_DAO.addHoaDon(hd);
             for (int i = 0; i < jTable_DSSPBan.getRowCount(); i++) {
@@ -777,7 +788,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            
+            JOptionPane.showMessageDialog(null, "Số lượng thay đổi phải là 1 con số");
         }
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
@@ -878,7 +889,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
 
             File file = new File("");
             String path = file.getAbsolutePath();
-            String pathFull = path + "/src/HoaDon/" + hd.getMaHD() + ".pdf";
+            String pathFull = "/" + path + "/" + hd.getMaHD() + ".pdf";
 
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(pathFull));
@@ -1032,7 +1043,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private void openHoaDon(String maHoaDon) {
         File file = new File("");
         String path = file.getAbsolutePath();
-        File URL = new File(path + "/src/HoaDon/" + maHoaDon + ".pdf");
+        File URL = new File("/" + path + "/" + maHoaDon + ".pdf");
         try {
             Desktop.getDesktop().open(URL);
         } catch (Exception e) {
@@ -1058,6 +1069,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelMaHD;
     private javax.swing.JLabel jLabelMaKH;
     private javax.swing.JLabel jLabelMaNV;
+    private javax.swing.JLabel jLabelNgayLap;
     private javax.swing.JLabel jLabelSoDienThoai;
     private javax.swing.JLabel jLabelSoLuong;
     private javax.swing.JLabel jLabelTenKH;
@@ -1100,6 +1112,7 @@ public class QuanLyBanHang extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldMaHD;
     private javax.swing.JTextField jTextFieldMaKH;
     private javax.swing.JTextField jTextFieldMaNV;
+    private javax.swing.JTextField jTextFieldNgayLap;
     private javax.swing.JTextField jTextFieldSoDT;
     private javax.swing.JTextField jTextFieldSoLuong;
     private javax.swing.JTextField jTextFieldSoLuongBan;
