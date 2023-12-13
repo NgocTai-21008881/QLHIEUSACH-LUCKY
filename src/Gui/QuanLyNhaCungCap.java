@@ -216,11 +216,11 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
             txt_MaNCC.setEnabled(false);
             btn_Them.setText("Huỷ");
             btn_Sua.setEnabled(false);
-
             txt_TimKiem.setEnabled(false);
         } else if (isSuaActive) {
             btn_Sua.setText("Huỷ");
             btn_Them.setEnabled(false);
+            txt_TimKiem.setEnabled(false);
 
         }
         btn_Luu.setEnabled(true);
@@ -472,6 +472,7 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
             clearInput();
         } else if (btn_Them.getText().equals("Huỷ")) {
             huyThaoTac();
+            txt_TimKiem.setEnabled(true);
         }
     }
 
@@ -491,14 +492,17 @@ public class QuanLyNhaCungCap extends javax.swing.JPanel {
             isThemNhaCCClicked(isThemActive);
         } else if (btn_Sua.getText().equals("Huỷ")) {
             huyThaoTac();
+            txt_TimKiem.setEnabled(true);
         }
     }
 
     private void btn_luuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         if (isThemActive) {
             themNhaCC();
+            txt_TimKiem.setEnabled(true);
         } else if (isSuaActive) {
             capNhatNhaCC();
+            txt_TimKiem.setEnabled(true);
         }
     }
 

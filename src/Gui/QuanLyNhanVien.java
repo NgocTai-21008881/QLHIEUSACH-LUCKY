@@ -140,7 +140,6 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     }
 
     private void clearInput() {
-
         jtextfield_Email.setText("");
         jtextfield_SoDienThoai.setText("");
         jtextfield_TenNhanVien.setText("");
@@ -168,6 +167,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             jtextfield_Timkiem.setEnabled(false);
         } else if (isSuaActive) {
             btn_Sua.setText("Huỷ");
+            jtextfield_Timkiem.setEnabled(false);
             btn_Them.setEnabled(false);
         }
         btn_Luu.setEnabled(true);
@@ -180,6 +180,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             isThemNhanVienClicked(isThemActive);
             clearInput();
         } else if (btn_Them.getText().equals("Huỷ")) {
+        	jtextfield_Timkiem.setEnabled(true);
             huyThaoTac();
         }
     }
@@ -199,6 +200,7 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
             isThemActive = false;
             isThemNhanVienClicked(isThemActive);
         } else if (btn_Sua.getText().equals("Huỷ")) {
+        	jtextfield_Timkiem.setEnabled(true);
             huyThaoTac();
         }
     }
@@ -206,8 +208,10 @@ public class QuanLyNhanVien extends javax.swing.JPanel {
     private void btn_luuActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         if (isThemActive) {
             themNhanVien();
+            jtextfield_Timkiem.setEnabled(true);
         } else if (isSuaActive) {
             capNhatNhanVien();
+            jtextfield_Timkiem.setEnabled(true);
         }
     }
 
