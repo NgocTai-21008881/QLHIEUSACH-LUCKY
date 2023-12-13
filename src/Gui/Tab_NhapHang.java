@@ -58,10 +58,10 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     public Tab_NhapHang() {
         initComponents();
         PhieuNhap pn = new PhieuNhap();
-        jTextFieldNgayNhap.setText(pn.getMaPhieuNhap());
+        jTextFieldMaPhieuNhap.setText(pn.getMaPhieuNhap());
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
-        jTextFieldMaPhieuNhap.setText(date.toString());
+        jTextFieldNgayNhap.setText(date.toString());
         loadTblSanPham();
     }
 
@@ -377,21 +377,22 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                     if (sp.getMaSP().equals(jTable_ChiTietPhieuNhap.getValueAt(i, 0).toString())) {
                         int slhc = Integer.parseInt(dtmCTPN.getValueAt(i, 3).toString());
                         tongsoluong = slhc + soLuong;
-                        if (tongsoluong > sp.getSoLuongTK()) {
-                            JOptionPane.showMessageDialog(null, "Số lượng bán phải nhỏ hơn số lượng hiện có trong kho ở sản phẩm " + sp.getMaSP());
-                            checkSL = 1;
-                        } else {
-                            check = i;
-                            tang = 1;
-                            break;
-                        }
-
+                        check = i;
+                        tang = 1;
+                        break;
                     }
                 }
                 if (checkSL == 0) {
                     if (tang == 0) {
-                        Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
-                        dtmCTPN.addRow(rowData);
+                        if (Double.parseDouble(dtmDSSP.getValueAt(row, 4).toString()) == 0) {
+                            Double donGia = Double.parseDouble(jTextFieldDonGiaMua.getText());
+                            Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, donGia, soLuong * donGia};
+                            dtmCTPN.addRow(rowData);
+                        } else {
+                            Object[] rowData = {sp.getMaSP(), sp.getTenSP(), sp.getLoaiSP(), soLuong, sp.getDonGiaBan(), soLuong * sp.getDonGiaBan()};
+                            dtmCTPN.addRow(rowData);
+                        }
+
                     } else {
                         dtmCTPN.setValueAt(tongsoluong, check, 3);
                         dtmCTPN.setValueAt(tongsoluong * sp.getDonGiaBan(), check, 5);
@@ -458,7 +459,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         DefaultTableModel dtmCTPN = (DefaultTableModel) jTable_ChiTietPhieuNhap.getModel();
         long millis = System.currentTimeMillis();
         Date date = new Date(millis);
-        PhieuNhap pn = new PhieuNhap(jTextFieldNgayNhap.getText(), date);
+        PhieuNhap pn = new PhieuNhap(jTextFieldMaPhieuNhap.getText(), date);
         phieuNhap_DAO.addPhieuNhap(pn);
         if (kiemTraHopLeNhapHang()) {
             for (int i = 0; i < jTable_ChiTietPhieuNhap.getRowCount(); i++) {
@@ -481,7 +482,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
             clearTableChiTietPhieuNhap();
             lamMoi();
             PhieuNhap pnnew = new PhieuNhap();
-            jTextFieldNgayNhap.setText(pnnew.getMaPhieuNhap());
+            jTextFieldMaPhieuNhap.setText(pnnew.getMaPhieuNhap());
             tongTien = 0;
             jTextFieldTongTien.setText("");
         }
@@ -550,7 +551,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-
+            JOptionPane.showMessageDialog(null, "Số lượng thay đổi phải là 1 con số");
         }
     }//GEN-LAST:event_jButtonXacNhanActionPerformed
 
@@ -660,7 +661,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
         try {
             File file = new File("");
             String path = file.getAbsolutePath();
-            String pathFull = path + "/src/PhieuNhap/" + pn.getMaPhieuNhap() + ".pdf";
+            String pathFull = "/" + path + "/" + pn.getMaPhieuNhap() + ".pdf";
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(pathFull));
             document.open();
@@ -778,7 +779,7 @@ public class Tab_NhapHang extends javax.swing.JPanel {
     private void openPhieuNhap(String maPhieuNhap) {
         File file = new File("");
         String path = file.getAbsolutePath();
-        File URL = new File(path + "/src/PhieuNhap/" + maPhieuNhap + ".pdf");
+        File URL = new File("/" + path + "/" + maPhieuNhap + ".pdf");
         try {
             Desktop.getDesktop().open(URL);
         } catch (Exception e) {
